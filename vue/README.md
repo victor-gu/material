@@ -4,7 +4,7 @@
 
 ## 项目安装
 
-1. vue init -g webpack-simple 项目名
+1. vue init webpack-simple 项目名
 2. cd  项目名
 3. npm install 
 4. npm run dev
