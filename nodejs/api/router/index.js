@@ -25,6 +25,7 @@ app.all('*', function(req, res, next) {
     }
 });
 
+// 访问静态资源的代码
 app.use(express.static(path.join(path.resolve(__dirname,'../'),'/')));
 
 // express的post需要，任何路由都要经过这里
