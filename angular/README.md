@@ -21,3 +21,10 @@
 #### 新建模块 (Module)	ng generate module my-new-module	  简写：ng g m my-new-module
 #### 新建管道 (Pipe)	ng generate pipe my-new-pipe	  简写：ng g p my-new-pipe
 #### 新建服务 (Service)	ng generate service my-new-service	简写：ng g s my-new-service
+
+### element-angular的使用
+- 在根模块中app.module.ts引入
+ 1. import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+ 2. import { ElModule } from 'element-angular';
+ 3. 并将其放入imports数组中
+- 在全局样式中style.css中引入代码  @import "~element-angular/theme/index.css";
