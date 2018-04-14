@@ -26,5 +26,5 @@
 - 在根模块中app.module.ts引入
  1. import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  2. import { ElModule } from 'element-angular';
- 3. 并将其放入imports数组中
+ 3. 并将其放入imports数组中[BrowserAnimationsModule,ElModule.forRoot()]
 - 在全局样式中style.css中引入代码  @import "~element-angular/theme/index.css";
