@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>上传文件</title>
+</head>
+<body>
+    <img id="newImage" src="" width="100px" height="100px" >
+    <input id="image" type='file' name='myFile' size='15' onchange="showPicture(this)"/>
+    <script type="text/javascript">
+        function showPicture(imgFile){
+            alert(window.URL.createObjectURL(imgFile.files[0]));
+            document.getElementById("newImage").src = window.URL.createObjectURL(imgFile.files[0]);
+        }
+    </script>
+</body>
+</html>
