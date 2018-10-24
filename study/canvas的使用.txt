@@ -1,0 +1,64 @@
+1. canvas中间的文字在浏览器不支持canvas的情况下才会显示。
+
+2. canvas有两个原生属性width，height，默认为300 x 150px，不要用css控制它的宽和高，否则可能会导致画布上的图形变形。
+
+3. 有了画布之后，要开始作画就需要一直画笔，这只画笔就是canvas对象，canvas对象是画布的上下文，也称为绘制环境，是所有的绘制操作api的入口，var context = canvas.getContext("2d");
+
+4. moveTo(x, y)：绘制的起点。
+
+5. lineTo(x, y)：绘制一条直线到起点或者上一个线头点。
+
+6. beginPath()：将不同线条绘制的形状进行隔离，每次执行此方法，表示重新绘制一个路径，跟之前的路径可以进行分开样式的设置和管理。
+
+7. closePath()：自动把最后的线头和开始的线头连在一起。
+
+8. stroke()：描边，路径只是草稿，真正的绘制必须执行stroke()方法根据路径进行描边。
+
+9. fill()：填充当前图形。
+
+10. canvas.getBoundingClientRect().left,canvas.getBoundingClientRect().top：用来获取canvas对象在浏览器窗口中的位置。
+
+11. strokeRect(x, y, width, height)：绘制矩形边框。x，y代表矩形起点的横纵坐标，width，height代表绘制矩形的宽和高。
+
+12. fillRect(x, y, width, height)：绘制填充矩形。
+
+13. clearRect(x, y, width, height)：清除矩形内绘制的内容。
+
+14. fillStyle：设置图形的填充颜色。
+
+15. strokeStyle：设置描边的颜色。
+
+16. lineWidth：用来设置线条的粗细。
+
+17. context.arc(x, y, radius, startAngle, endAngle, bAntiClockwise)：x, y为中心坐标，radius为半径，startAngle，endAngle为开始弧度和结束弧度，bAntiClockwise代表是否为逆时针。
+
+18. context.drawImage(image, dx, dy):绘制原图。context.drawImage(image, dx, dy, dWidth, dHeigth)：缩放原图。context.drawImage(image, sx, sy, sWidth, sHeigth, dx, dy, dWidth, dHeigth)：切片原图---(image代表图片的来源，dx，dy代表在image目标中的横纵坐标，sx，sy是image在源中起始坐标，sWidth, sHeight代表源中图片的宽和高，dWidth,dHeight代表目标的宽和高)
+
+19. clip()：从原始画布上剪切任意形状和尺寸的区域。
+
+20. save()：保存画布的绘制状态。
+
+21. restore：移除自上一次调用save()方法所添加的任何效果。
+
+
+-------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

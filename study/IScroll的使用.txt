@@ -1,0 +1,68 @@
+简介：
+iScroll是一个高性能，资源占用少，无依赖，多平台的javascript滚动插件。
+
+使用：
+1. IScroll是一个类，每个需要使用滚动功能的区域均要进行初始化。
+2. iScroll作用于滚动区域的外层。只有容器元素的第一个子元素能进行滚动，其他子元素完全被忽略。
+3. 初始化的方式：var myScroll = new IScroll('#wrapper');
+4. 脚本需要知道滚动区域的高度和宽度。如果你有一些图片在滚动区域导致不能立马获取区域的高度和宽度，iScroll的滚动尺寸有可能会错误。最保险的方式是在window的onload事件中启动它。（为滚动起容器增加position:relative或者absolute样式。这将解决大多数滚动器容器大小计算不正确的问题。如果你有一个复杂的DOM结构，最好在onload事件之后适当的延迟，再去初始化iScroll。最好给浏览器100或者200毫秒的间隙再去初始化iScroll。）
+5. 可以通过console.dir(myScroll.options);来访问标准化值，所谓的标准化意味着如果你设置useTransform:true，但是浏览器并不支持CSS transforms，那么useTransform属性值将为false。
+6. options.bounce 当滚动器到达容器边界时他将执行一个小反弹动画。在老的或者性能低的设备上禁用反弹对实现平滑的滚动有帮助。
+7. options.click 为了重写原生滚动条，iScroll禁止了一些默认的浏览器行为，比如鼠标的点击。如果你想你的应用程序响应click事件，那么该设置次属性为true。默认属性：false。
+8. options.disableMouse、options.disablePointer、options.disableTouch 默认情况下，iScroll监听所有的指针事件，并且对这些事件中第一个被触发的做出反应。这看上去是浪费资源，但是在大量的浏览器/设备上兼容，特定的事件侦测证明是无效的，所以listen-to-all是一个安全的做法。分别为禁用鼠标，指针,触摸事件
+9. options.eventPassthrough 留原生纵向的滚动条但想为横向滚动条增加iScroll功能。这个值也可以设置为'horizontal'，其作用和上面介绍的相反（横向滚动条保持原生，纵向滚动条使用iScroll）。
+10. options.freeScroll 通常情况下你开始滚动一个方向上的滚动条，另外一个方向上会被锁定不动。有些时候，你需要无约束的移动（横向和纵向可以同时响应），在这样的情况下此属性需要设置为true。默认值：false
+11. options.keyBindings 此属性为true时激活键盘（和远程控制）绑定。默认值：false
+12. options.invertWheelDirection 当鼠标滚轮支持激活后，在有些情况下需要反转滚动的方向。（比如，鼠标滚轮向下滚动条向上，反之亦然）。默认值：false
+13. options.momentum 在用户快速触摸屏幕时，你可以开/关势能动画。关闭此功能将大幅度提升性能。（此会降低用户体验）默认值：true
+14. options.mouseWheel  侦听鼠标滚轮事件。默认值：false（有滚动条）
+15. options.preventDefault 是否显示为默认的滚动条。默认值：false
+16. options.scrollX、options.scrollY 默认情况下只有纵向滚动条可以使用。如果你需要使用横向滚动条，需要将scrollX 属性值设置为 true
+16. options.startX、options.startY默认情况下iScroll从0, 0 (top left)位置开始，通过此属性可以让滚动条从不同的位置开始滚动。默认值：0。
+
+
+
+
+
+
+注意：可滚动区域的第一个孩子一定要比它的父元素的宽和高都大才有效果。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

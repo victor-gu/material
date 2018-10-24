@@ -1,0 +1,158 @@
+1. input[type='date‘]调起时间产生问题总结：
+①、页面默认展示的是2017/12/13 ,但实际通过value获取到的格式是2017-12-13；
+②、移动端调起input[type=’date]，ios上input的value默认值需设置’yyyy-mm-dd‘这样的日期格式，不能是其他字符，不然无法调起。android没有这个问题；
+③、ios日期键盘上有‘清除’和‘确认’两个按钮，由于ios上需设置默认值来调起键盘，点击弹出日期键盘后，在不更改日期直接点击确认的情况下，由于值没有改变，不会执行change事件，但点击确认或清除按钮，待键盘收回时均能触发blur事件，故ios上最好使用blur事件； 
+④、android上调起日期键盘一般有三个按钮（清除 、取消、设置），选择日期点击设置会触发blur 
+事件，但某些操作情况下点击按键，日期键盘消失后不会触发blur事件（比如先点击清除–>重新调起弹窗–>不更改日期点击设置），故android上需使用change事件。
+
+2. 移除原生控件样式：-webkit-appearance : none;
+
+3. 禁止用户复制粘贴：-webkit-user-select:none;
+
+4. 在移动端当添加了overflow:hidden;出现卡顿，可以添加：-webkit-overflow-scrolling:touch;
+
+5. 在移动端当使用了input->CheckBox/radio时，各个的默认样式不一样，我们可以使用label和伪类来实现重置样式；（讲input隐藏掉，给label添加个伪类来代替input，当input选中时添加为label添加样式，就可以自定义input样式）
+
+6. 当在移动端使用input->date时，placeholder属性会失效，PC端的chrome默认显示是“年/月/日”，但在移动端就是一片空白了。可以用伪类去为input模拟一个placeholder。
+css部分：input[type="date"]:before{
+    		content: attr(placeholder);
+    		color:red;
+	}
+JS部分：var o = document.getElementById('date');
+		o.onfocus = function(){
+    		this.removeAttribute('placeholder');
+	};
+	o.onblur = function(){
+    		if(this.value == '') this.setAttribute('placeholder','我是日期');
+	};
+7. 非date类型的input设置placeholder颜色的css
+::-webkit-input-placeholder{
+    color:red;
+}          参考：https://www.cnblogs.com/liangcheng11/p/5434507.html
+
+8. 前端加密方法：参考http://www.cnblogs.com/fendou0320/p/6523311.html
+
+9. 给select增加placeholder：增加一个不可选中的option。<option value='' disabled selected style='display:none;'>Please Choose</option>
+
+10. cookie/session机制：http://www.360doc.com/content/11/1227/00/198_175229712.shtml
+
+11. 为什么 window.location.search 为空?
+	“http://localhost:63342/index.html#/version？type=35&id=5”那么使用window.location.search得到的就是空（“”）。因为“？type=35&id=5”串字符是属于“#/version？type=35&id=5”这个串字符的，也就是说查询字符串search只能在取到“？”后面和“#”之前的内容
+
+12. 移动端---img标签设置了宽高但是src不给路径会出现边框，因为浏览器找不到图片，就会用一个边框来表示。解决办法：img[src=""]{ opacity:0; }
+
+13. Global对象的encodeURI()和encodeURIComponent()方法可以对URI进行编码，以便发送给浏览器。encodeURI()不会对本身属于URI的特殊字符进行编码，例如冒号、正斜杠、问号和井字号；而encodeURIComponent()则会对它发现的任何非标准字符进行编码。
+
+14. 长单词换行：word-break:break-all;只对英文起作用，以字母作为换行依据。word-wrap:break-word; 只对英文起作用，以单词作为换行依据。white-space:pre-wrap; 只对中文起作用，强制换行，nowrap; 强制不换行。注意，一定要指定容器的宽度，不然的话是没有用的。     https://www.cnblogs.com/zhangshuda/p/7640422.html
+
+15. 在移动端会出现alert，confirm有URL的情况，可以重写alert，confirm方法
+	window.alert = function(name){
+        	var iframe = document.createElement("IFRAME");
+        	iframe.style.display="none";
+        	iframe.setAttribute("src", 'data:text/plain,');
+        	document.documentElement.appendChild(iframe);
+        	window.frames[0].window.alert(name);
+        	iframe.parentNode.removeChild(iframe);
+    	};
+
+	window.confirm = function (message) {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            var alertFrame = window.frames[0];
+            var result = alertFrame.window.confirm(message);
+            iframe.parentNode.removeChild(iframe);
+            return result;
+    	};
+	
+16. jq给同一个元素添加相同的事件都会执行，原生给同一个原素添加相同事件后面的事件会覆盖前面的事件。
+
+17. Jquery的each里用return true或false代替break或continue：在each代码块内不能使用break和continue,要实现break和continue的功能的话，要使用其它的方式；break----用return false; continue --用return ture; 
+
+18. formdata：网址：https://blog.csdn.net/u014607184/article/details/52372551
+
+19. 浏览器的三种刷新方式：（1）location.reload()：刷新当前文档，类似于你浏览器上的刷新页面按钮。（2）replace()：可用一个新文档取代当前文档。（3）<meta http-equiv="refresh" content="5">：加入<head>区域中自动刷新，content为每隔多少秒刷新的时间。
+
+20. 记住获取textarea的值用val()，不要用html()。
+
+21. 后端交互有那些：https://www.cnblogs.com/cxying93/p/6100959.html
+
+22. canvas的quality 图片质量。0 到 1 之间的数字，并且只在格式为 image/jpeg 或 image/webp 时才有效，如果参数值格式不合法，将会被忽略并使用默认值。
+
+23. $.trim：去掉前后空格。
+
+24. 回调函数：回调函数最多的应用场景就是异步操作，因为异步的操作我们不知道这个操作到底何时结束，那么我们后续执行的代码就无法按照应有的流程走下去。
+https://www.jb51.net/article/136848.htm
+
+25. window.location.href跳转可能会有缓存问题，可以在跳转的时候添加一个随机数。
+
+26. Javascript异常处理机制详解：try…catch语句，finally语句，throw：https://blog.csdn.net/u012468376/article/details/57411822?utm_source=itdadao&utm_medium=referral
+
+27. 用window.onerror捕获并上报Js错误：try&catch是一个捕获前端错误的常见方法，旦发生错误就会被try捕获，然后交给catch去处理。但弊端是必须统一一个脚本入口，并且把入口放在try里面，所以在实现时会比较麻烦。理想情况下，处理错误信息的脚本应该尽可能做到无痕，为了实现这一点，可以借助window.onerror事件。
+	window.onerror = function (errorMessage, scriptURI, lineNumber, columnNumber, errorObj) {
+            var info = "错误信息：" + errorMessage + "\r\n" +
+                    "出错文件：" + scriptURI + "\r\n" +
+                    "出错行号：" + lineNumber + "\r\n" +
+                    "出错列号：" + columnNumber + "\r\n" +
+                    "错误详情：" + errorObj;
+            alert(info)
+        }
+这段代码只要最好放到head标签里，放在所有script之前，这样当用户浏览时发生的JS错误就会上报到服务器了。
+https://www.cnblogs.com/suizhikuo/p/4758905.htmlhttps://www.baidufe.com/item/7ee009bfbcd0fe94bd3e.html
+
+28. 使用 for - in 循环遍历对象的属性时，原型链上的所有属性都将被访问，可以遍历数组，对象。for - of原型链上的属性不会被访问，可以遍历数组，不能遍历对象。使用for - in避免遍历到原型链上可以使用hasOwnProperty 方法。
+		for(var key in obj){   
+        		if (obj.hasOwnProperty(key) === true){}                 
+        	}   
+
+
+29. 移动端web开发---Touch事件：https://blog.csdn.net/u012468376/article/details/72808761
+
+30. jQuery扩展Object.prototype。这将破坏jQuery中的所有循环功能，不要随便用prototype。
+
+31. HTML5 自定义属性不能包含大写字母，data-app-id;
+
+32. jquery ajax全局方法的使用:ajaxStart：ajax请求开始前。ajaxSend：ajax请求时。ajaxSuccess：ajax获取数据后。ajaxComplete：ajax请求完成时。ajaxError：ajax请求发生错误后。ajaxStop：ajax请求停止后。
+https://blog.csdn.net/zhang197093/article/details/50683269
+
+33. 深入探究iOS下fixed定位导致的问题：https://segmentfault.com/a/1190000010510291
+
+34. table中如何用CSS控制<tr>><td>的宽度和高度：（1）table中的width和height设置及其作用：table中设置的height其实是设置个最小值，也就是当表格中的内容或者行高总值超过这个设置值时，会自动延长表格的height值，当表格中的内容或者行高没有达到这个值时，会自动扩大到这个值。table中设置的width值一般为表格宽度的最大值，不能改变，即使内部的内容宽度超过也不能改变。（这个内部内容如果是图片的话是可以改变表格宽度的。）（2）tr标签中width和height设置及其作用：tr标签里面的width设置不起任何作用，因为从第一点可以看出，表格的width是不能改变的，tr标签当然就不起作用了。所以在tr中只有讨论height设置的可能了，tr中的height设置和几个tr之间的设置有关。当几个tr都设置了height的具体数值时，各个tr的height按照设置的值的比例来分配总的height值，注意这里说的是总的height值。当几个tr都没有设置height具体值时，平均分配总的height值。当有的tr设置了具体的数值，有的没有设置具体的数值为默认时，先保证各个tr的基本需要，剩下的再满足设置了具体值的tr，之后再全部给没有设置具体值的tr。最后一种情况还要考虑总的宽度不够tr总的设置值的情况，不够的话要满足tr的基本需要，这里会自动延长表格的height的。然后再考虑设置了height的tr，最后考虑没有设置height的tr。（3）td标签中width和height设置及其作用：td标签里面的width和height都是起作用的。先看td的width吧，某一个td的width是和所处的一列每个td的width都相关的，取其中最大的width作为这一列中每个td的width，这点是让我们最混淆的地方，一定要从全局把握某个td的width，不能从这一个的width设置就断言它的宽度就是多少，这样是不准确的。
+https://zhidao.baidu.com/question/238710469.html
+
+35. IndexedDB：https://www.zhangxinxu.com/wordpress/2017/07/html5-indexeddb-js-example/
+
+36. 借助Service Worker和cacheStorage缓存及离线开发：https://www.zhangxinxu.com/wordpress/2017/07/service-worker-cachestorage-offline-develop/
+
+37. video.js：https://www.awaimai.com/2053.html	，  https://www.cnblogs.com/afrog/p/6689179.html
+	自定义控制条：https://blog.csdn.net/software1/article/details/53906992
+
+38. 解决浏览器自动将数字识别为电话号码：<meta name = "format-detection" content = "telephone=no">
+
+39. this指向，call，apply：https://www.jianshu.com/p/00dc4ad9b83f
+
+40. 单标签的理解：http://www.360doc.com/content/14/0317/10/13247663_361227619.shtml
+
+41. label添加click事件：当用户选择该标签时，浏览器就会自动将焦点转到和标签相关的表单控件上。当label执行click事件时，那么它会传递给input再执行一次同一click事件。所以给label添加click事件时可以绑定到input上。
+
+42. display:table：垂直居中对齐：父元素display:table，子元素display:table-cell，vertical-align:middle，text-align:center。自动划分使其一行显示：父元素：display:table，子元素：display:table-cell。两端对齐：不用使用float，父元素：display:table，子元素：display:table-cell。https://www.cnblogs.com/design-engineer/p/5414177.html
+https://www.cnblogs.com/StormSpirit/archive/2012/10/24/2736453.html
+
+43. 本地图片压缩：https://tinypng.com/
+
+44. vw：相对于乘以视口的宽度均分为100单位的vw。vh：相对于乘以视口的高度均分为100单位的vw。vmax：相对于视口的宽度或高度中较大的那个乘以其中最大的那个被均分为100单位的vmax。vmin：相对于视口的宽度或高度中较小的那个乘以其中最小的那个被均分为100单位的vmax。
+
+45. 在不同浏览器下，overflow剪裁的方式会不相同，overflow就会规定，如果超出了自身内容大小，就会规定是否需要剪裁到它的padding edge。因此，在火狐和IE浏览器看起来似乎更加符合规范。因此，在火狐和IE浏览器看起来似乎更加符合规范。只会在ie跟火狐出现，可以用伪类来实现：.div2::after{ display:block; height:20px;content:''; visibility: hidden; }
+
+46. 原型对象的一些理解：https://www.jb51.net/article/39917.htm
+
+
+
+
+
+
+
+
+
+

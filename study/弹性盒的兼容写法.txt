@@ -1,0 +1,33 @@
+定义弹性盒：
+display:flex;    display:-webkit-box; display:-moz-box; display:-ms-flexbox; display:-webkit-flex; display:flex; 
+
+定义主轴向下：
+flex-direction:column;  -webkit-box-orient:vertical; -webkit-box-direction:normal; -moz-box-orient:vertical; -moz-box-direction:normal; flex-direction:column; -webkit-flex-direction:column;
+
+定义子元素换行：
+flex-wrap:wrap;  -webkit-flex-wrap:wrap; -webkit-box-lines:multiple; -moz-flex-wrap:wrap; flex-wrap:wrap;
+
+子元素在主轴方向上的对其方式：
+justify-content:cneter;  -webkit-justify-content:center; justify-content:center; -moz-box-pack:center; -webkit--moz-box-pack:center; box-pack:center;
+
+子元素在侧轴方向上的对其方式：
+align-items:center;  align-items:center; -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+
+比份：
+flex:1;   box-flex:1; -webkit-box-flex:1; -moz-box-flex:1; flex:1; -webkit-flex:1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
