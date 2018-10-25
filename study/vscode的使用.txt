@@ -1,13 +1,13 @@
 常用插件安装：
-Chinese：中文语言包
-View In Browser：在浏览器里打开
-vscode-icons：让vscode资源目录加上图标
-Auto Rename Tag：修改html标签，自动帮你完成尾部闭合标签的同步修改
-Auto Close Tag：自动闭合HTML/XML标签
-cssrem：将px转为rem，在左下角点设置，搜索cssrem，设置对应参数
-Vetur：vue插件
-Bracket Pair Colorizer：给括号加上不同的颜色
-Beautify：格式化代码（在工作目录下建立.jsbeautifyrc文件，内容{
+1. Chinese：中文语言包
+2. View In Browser：在浏览器里打开
+3. vscode-icons：让vscode资源目录加上图标
+4. Auto Rename Tag：修改html标签，自动帮你完成尾部闭合标签的同步修改
+5. Auto Close Tag：自动闭合HTML/XML标签
+6. cssrem：将px转为rem，在左下角点设置，搜索cssrem，设置对应参数
+7. Vetur：vue插件
+8. Bracket Pair Colorizer：给括号加上不同的颜色
+9. Beautify：格式化代码（在工作目录下建立.jsbeautifyrc文件，内容{
    								"brace_style": "none,preserve-inline",
    								"indent_size": 2,
    								"indent_char": " ",
@@ -18,10 +18,15 @@ Beautify：格式化代码（在工作目录下建立.jsbeautifyrc文件，内容{
    								}
  							}
 ）
+10. Debugger for Chrome：映射vscode上的断点到chrome上，https://blog.csdn.net/weixin_40965293/article/details/80525317
+11. GitLens：方便查看git日志
+12. Markdown Preview Enhanced：实时预览markdown
+13. markdownlint：markdown语法纠错
+14. React/Redux/react-router Snippets：React/Redux/react-router语法智能提示
 
-https://jingyan.baidu.com/article/e52e36157c65c140c60c5185.html 断点测试
-https://blog.csdn.net/shunfa888/article/details/79606277
-test
+
+
+
 
 
 
