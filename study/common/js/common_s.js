@@ -541,13 +541,12 @@ var common = {
 
     /**
      * [当前日期格式化]
-     * @param  {string} time [如果为dayTime则返回“年-月-日”，如果为minuteTime则返回“年-月-日 时:分”,如果为secondTime则返回“年-月-日 时:分:秒”，如果不填则返回“年-月-日 时:分:秒 毫秒”]
+     * @param  {string} string [如果为dayTime则返回“年-月-日”，如果为minuteTime则返回“年-月-日 时:分”,如果为secondTime则返回“年-月-日 时:分:秒”，如果为shortTime则返回时:分:秒, 如果不填则返回“年-月-日 时:分:秒 毫秒”]
      * @return  {string}  [返回相应的格式的时间]
      */
-    newDate: function(time){
+    newDate: function(string){
         //判断由哪里进来显示日期时间
         var theDate = new Date();
-        var dateTime="";
         var dateY = parseInt(theDate.getFullYear()),
             dateM = parseInt(theDate.getMonth()) + 1,
             dateD = parseInt(theDate.getDate()),
@@ -558,14 +557,17 @@ var common = {
             
         //当前日期
         var dateText = dateY + "-" + (dateM < 10 ? "0" + dateM : dateM) + "-" + (dateD < 10 ? "0" + dateD : dateD);
-        if(time == "dayTime"){
+        if(string == "dayTime"){
             return dateText;
-        }else if(time == "minuteTime"){
+        }else if(string == "minuteTime"){
             var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI);
             return dateText + " " + timeText;
-        }else if(time == "secondTime"){
+        }else if(string == "secondTime"){
             var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI) + ":"+ (dateS < 10 ? "0" + dateS : dateS);
             return dateText + " " + timeText;
+        }else if(string == "shortTime"){
+            var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI) + ":"+ (dateS < 10 ? "0" + dateS : dateS);
+            return timeText;
         }else{
             var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI) + ":"+ (dateS < 10 ? "0" + dateS : dateS) +"."+dateL;
             return dateText + " " + timeText;
@@ -589,7 +591,7 @@ var common = {
         
         $("body").append(selText);
 
-        $(".gu_select ul").animate({"top": "50%"});
+        $(".gu_select ul").animate({"top": "50%"}, "fast");
        
         $(".gu_select li").click(function(){
             var text = $(this).text();
@@ -621,7 +623,7 @@ var common = {
 
         $("body").append(text);
 
-        $(".gu_tip span").animate({"bottom": "50%"});
+        $(".gu_tip span").animate({"bottom": "50%"}, "fast");
         
         if(def.selfClosing == "true"){
             setTimeout(function(){
@@ -634,25 +636,28 @@ var common = {
 
     /**
      * [text文本提示框, 尽量内容在12个字之内]
-     * @param  {string} content [需要提示的内容]
+     * @param  {object} par [content:需要提示的内容, sure:在确认需要显示的字符，默认是"确认", cancel:在取消需要显示的字符,默认是"取消"]
      * @param  {Function} callback [必填，确定成功回调]
      * @param  {Function} closeCallback [取消回调]
      */
-    popupTextShow: function (content, callback, closeCallback) {
+    popupTextShow: function (par, callback, closeCallback) {
+        par.sure = par.sure || "确认";
+        par.cancel = par.cancel || "取消";
+        callback = callback || function(){};
         closeCallback = closeCallback || function(){};
         var text = '<div class="gu_text">'+
                         '<div class="text">'+
                             '<p class="title">提示</p>'+
-                            '<div class="content">' + content + '</div>'+
+                            '<div class="content">' + par.content + '</div>'+
                             '<div class="deal">'+
-                                '<span class="sure">确定</span><span class="cancel">取消</span>'+
+                                '<span class="sure">'+par.sure+'</span><span class="cancel">'+par.cancel+'</span>'+
                             '</div>'+
                         '</div>'+
                     '</div>';
 
         $("body").append(text);
 
-        $(".gu_text .text").animate({"top": "50%"});
+        $(".gu_text .text").animate({"top": "50%"}, "fast");
 
         $(".gu_text .sure").click(function(){
             callback();
@@ -723,7 +728,7 @@ var common = {
      * @param  {Array} data [需要显示的数组内容]
      * @param  {Function} callback [携带当前选中的文本信息，以逗号分隔]
      */
-    popupCheckBox: function (data, callback) {
+    popupCheckBox: function(data, callback) {
         callback = callback || function () {};
         var checkText01 = '<div class="gu_checkBox"><div class="main"><ul>';
         var checkText03 = '</ul><div class="finish">完成</div></div></div>';
@@ -735,7 +740,7 @@ var common = {
         
         $("body").append(checkText);
        
-        $(".gu_checkBox .main").animate({"top": "50%"});
+        $(".gu_checkBox .main").animate({"top": "50%"}, "fast");
 
         $(".gu_checkBox li").click(function(){
             $(this).toggleClass("active");
@@ -757,7 +762,7 @@ var common = {
 
 
     /**
-     * [生成一个范围内的随机整数]
+     * [生成一个范围内的随机整数,包括两端的数字]
      * @param  {Number} min [范围最小值]
      * @param  {Number} max [范围内最大值]
      * @return {Number}     [返回随机整数]
@@ -851,7 +856,7 @@ var common = {
         var hour = hour<10? "0"+hour:hour;
         var minutes = minutes<10? "0"+minutes:minutes;
         var seconds = seconds<10? "0"+seconds:seconds;
-        return year+"年"+month+"月"+day+"日星期"+arr[week]+","+hour+"时"+minutes+"分"+seconds+"秒";
+        return year+"年"+month+"月"+day+"日星期"+arr[week]+" "+hour+"时"+minutes+"分"+seconds+"秒";
     },
 
 
