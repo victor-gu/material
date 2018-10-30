@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" id="vp"/>
+    <title>下拉刷新，上拉加载</title>
+    <script src="../js/jquery-3.2.1.js"></script>  
+    <script src="../js/common_s.js"></script>
+    <script src="../js/flex.js"></script>
+    <link rel="stylesheet" href="../css/common_s.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <script src="../../iscroll/iscroll-probe.js"></script>
+    <style> 
+        /* body{ background:#ccc; } */
+        div{ width:100%; height:100%; overflow:hidden; }
+        /* ul{ background:red; }
+        li{ line-height: .46875rem; padding: .15625rem; } */
+    </style>
+    
+</head>
+<body>
+    <div id="wrapper">
+        <ul>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
+            
+        </ul>
+    </div>
+    <script>
+        var myScroll;
+        myScroll = new IScroll('#wrapper', {
+            scrollX: false,
+            scrollY: true,
+            click: false,
+            probeType: 3,
+            bounce: true
+        });
+    </script>
+</body>
+</html>
