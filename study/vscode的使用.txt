@@ -64,11 +64,10 @@
 文件之间切换：Ctrl + Tab
 查找：Ctrl + F
 查找替换：Ctrl + H
-整个文件夹中查找：Ctrl+Shift+F
+整个文件夹中查找：Ctrl + Shift + F
 全屏：F11
 放大/缩小：Ctrl +/-
 显示资源管理器：Ctrl + Shift + E
-显示搜索：Ctrl + Shift + F
 
 显示Git：Ctrl + Shift + G
 显示Debug：Ctrl + Shift + D

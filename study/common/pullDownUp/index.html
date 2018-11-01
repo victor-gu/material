@@ -65,19 +65,27 @@
         myScroll.scrollTo(0, -height);
 
         var x, y;
-        myScroll.on('scroll', function () {
-            var y = myScroll.y;
-            // myScroll2.scrollTo(0, y);
-            // myScroll1.scrollTo(x, 0);
-            console.log(y);
-            if(y>0){
-                common.loadingShow();
-                setTimeout(function(){
-                    location.reload();
-                }, 3000);
-            }
+        // myScroll.on('scroll', function () {
+        //     var y = myScroll.y;
+        //     // myScroll2.scrollTo(0, y);
+        //     // myScroll1.scrollTo(x, 0);
+        //     console.log(y);
+        //     if(y>0){
+        //         common.loadingShow();
+        //         setTimeout(function(){
+        //             location.reload();
+        //         }, 3000);
+        //     }
             
+        // });
+        
+
+        myScroll.on('scrollEnd', function () {
+            if(myScroll.maxScrollY == myScroll.y){
+                console.log("我已滚动到底部");
+                }
         });
+
     </script>
 </body>
 </html>
