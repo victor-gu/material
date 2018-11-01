@@ -1247,8 +1247,8 @@ var LocalObj = {
 
 
 
-var browser = { 
-    versions: function() { 
+var browser = {
+    versions: function(){ 
         var u = navigator.userAgent, app = navigator.appVersion, ua = navigator.userAgent.toLowerCase();
         return { 
             trident: u.indexOf('Trident') > -1, //IE内核 
@@ -1262,8 +1262,8 @@ var browser = {
             iPad: u.indexOf('iPad') > -1, //是否iPad 
             webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部 
             wx: ua.match(/MicroMessenger/i)=="micromessenger" //是否为微信
-        }; 
-    }(), language: (navigator.browserLanguage || navigator.language).toLowerCase() 
+        };
+    }(), language: (navigator.browserLanguage || navigator.language).toLowerCase()
 }
 
 
