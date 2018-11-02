@@ -53,6 +53,7 @@
         </div>
     </div>
     <script>
+
         var myScroll;
         myScroll = new IScroll('#wrapper', {
             scrollX: false,
@@ -61,23 +62,24 @@
             probeType: 3,
             bounce: true
         });
+
         var height = $(".pullDown").height();
         myScroll.scrollTo(0, -height);
 
         var x, y;
-        // myScroll.on('scroll', function () {
-        //     var y = myScroll.y;
-        //     // myScroll2.scrollTo(0, y);
-        //     // myScroll1.scrollTo(x, 0);
-        //     console.log(y);
-        //     if(y>0){
-        //         common.loadingShow();
-        //         setTimeout(function(){
-        //             location.reload();
-        //         }, 3000);
-        //     }
+        myScroll.on('scroll', function () {
+            var y = myScroll.y;
+            // myScroll2.scrollTo(0, y);
+            // myScroll1.scrollTo(x, 0);
+            console.log(myScroll.minScrollY);
+            if(y>0){
+                common.loadingShow();
+                setTimeout(function(){
+                    location.reload();
+                }, 3000);
+            }
             
-        // });
+        });
         
 
         myScroll.on('scrollEnd', function () {
@@ -85,6 +87,10 @@
                 console.log("我已滚动到底部");
                 }
         });
+
+
+
+
 
     </script>
 </body>
