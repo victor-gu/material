@@ -79,7 +79,7 @@
             bounce: true
         });
 
-        var pullDown = 1;
+        var pullDown = 1;     // 避免多次执行
         var pullUp = 1;
         var downHeight = $(".pullDown").height();
         var upHeight = $(".pullUp").height();
@@ -113,6 +113,7 @@
                 $(".upLoosen").text("正在加载...");
                 setTimeout(function(){
                     add();
+                    // 重置
                     $(".pullUp").removeClass("loading").show();
                     $(".upLoosen").text("松开加载...").hide();
                     myScroll.refresh();

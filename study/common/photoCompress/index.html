@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" id="vp"/>
+    <title>图片压缩插件</title>
+    <link rel="stylesheet" href="../css/common_s.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <script src="../js/jquery-3.2.1.js"></script>  
+    <script src="../js/common_s.js"></script>
+    <script src="../js/flex.js"></script>
+    <script src="../js/lrz.all.bundle.js"></script>
+</head>
+<body>
+    <input type="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+    <script>
+        // 插件只支持传入一张图片的压缩
+        $('input').on('change', function(){
+            lrz(this.files[0], {width: 320})   //width:640这个代表的是图片的宽度。值越小，占空间越小
+            .then(function (rst) {
+                //处理成功会执行
+                console.log(rst.base64);
+                })
+            .catch(function (err) {
+                //捕获错误，而且一旦出错上面的then都不会执行
+            })
+            .always(function () {
+                //无论成败都会执行这里
+            });
+        });
+
+        // 可以直接传入图片路径
+        lrz('http://t2.hddhhn.com/uploads/tu/201801/9999/c63fb8c291.jpg', {width: 640})
+        .then(function (rst) {
+            // 处理成功会执行
+            console.log(rst.base64);
+        })
+        .catch(function (err){
+            // 处理失败会执行
+        })
+        .always(function () {
+            // 不管是成功失败，都会执行
+        });
+    </script>
+</body>
+</html>

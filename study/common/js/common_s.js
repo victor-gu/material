@@ -1261,7 +1261,7 @@ var browser = {
             iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器 
             iPad: u.indexOf('iPad') > -1, //是否iPad 
             webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部 
-            wx: ua.match(/MicroMessenger/i)=="micromessenger" //是否为微信
+            wx: ua.match(/MicroMessenger/i)=="micromessenger" //是否为微信端
         };
     }(), language: (navigator.browserLanguage || navigator.language).toLowerCase()
 }
