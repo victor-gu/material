@@ -9,12 +9,16 @@
     <script src="js/flex.js"></script>
     <link rel="stylesheet" href="css/common_s.css">
     <link rel="stylesheet" href="css/base.css">
-    <style> 
-        .test{ width:150PX; height:150PX; }
+    <style>
+        .test{ width:150px; height:150px; }
+        .pp{ width:100px; height:1000px; background:red; display:block; }
     </style>
 </head>
 <body>
     <input type="button" value="test" class="test">
+    <span>100</span><sup>2</sup><span>==10000</span>
+    <a href="#id">ff</a>
+    <a href="fdfd" class="pp" name="id">fffffddddddddddddddddddddddddddddfd</a>
     <script>
         $(".test").click(function(){
             common.popupCheckBox(["福建省的交付老师的", "fd", "房间打开", "fdsfds", "fdsfds", "f发动机了发送到发", "fsdfdsdfds", "发了肯德基了房间爱上了对方"], function(e){
@@ -22,6 +26,7 @@
             });
         });
         console.dir(common.afterDate(new Date(), 100));
+        console.dir(common.autoTime());
     </script>
 </body>
 </html>
