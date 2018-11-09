@@ -85,6 +85,7 @@
         var upHeight = $(".pullUp").height();
         myScroll.on('scroll', function(){
             var y = myScroll.y;
+            console.log(y);
             if(y >= downHeight && pullDown){
                 $(".pullDown").addClass("refresh").hide();
                 $(".downLoosen").show();

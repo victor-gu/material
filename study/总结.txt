@@ -147,7 +147,7 @@ https://www.cnblogs.com/StormSpirit/archive/2012/10/24/2736453.html
 
 46. 原型对象的一些理解：https://www.jb51.net/article/39917.htm
 
-
+47. setTimeout代替setInterval：https://segmentfault.com/a/1190000011282175， https://blog.csdn.net/sun_DongLiang/article/details/82696522
 
 
 
