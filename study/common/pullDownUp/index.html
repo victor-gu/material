@@ -81,6 +81,7 @@
 
         var pullDown = 1;     // 避免多次执行
         var pullUp = 1;
+        var xx = 1;
         var downHeight = $(".pullDown").height();
         var upHeight = $(".pullUp").height();
         myScroll.on('scroll', function(){
@@ -91,7 +92,16 @@
                 $(".downLoosen").show();
                 myScroll.refresh();
                 pullDown = 0;
+                xx = 1;
+                myScroll.minScrollY = 0;
             }
+            // if(y < downHeight && xx){
+            //     $(".pullDown").hide();
+            //     // $(".downLoosen").hide();
+            //     myScroll.refresh();
+            //     xx = 0;
+            //     pullDown = 1;
+            // }       
             if(y < (myScroll.maxScrollY - upHeight) && pullUp){
                 $(".pullUp").addClass("loading").hide();
                 $(".upLoosen").show();
@@ -99,28 +109,34 @@
                 pullUp = 0;
             }
         });
-        
+
 
         myScroll.on('scrollEnd', function(){
-            if($(".pullDown").hasClass("refresh")){
-                $(".downLoosen").text("正在刷新...");
-                common.loadingShow();
-                setTimeout(function(){
-                    location.reload();
-                }, 2000);
-            }
+            // if($(".pullDown").hasClass("refresh")){
+            //     $(".downLoosen").text("正在刷新...");
+            //     common.loadingShow();
+            //     setTimeout(function(){
+            //         location.reload();
+            //     }, 2000);
+            // }
 
-            if($(".pullUp").hasClass("loading")){
-                $(".upLoosen").text("正在加载...");
-                setTimeout(function(){
-                    add();
-                    // 重置
-                    $(".pullUp").removeClass("loading").show();
-                    $(".upLoosen").text("松开加载...").hide();
-                    myScroll.refresh();
-                    pullUp = 1;
-                }, 1000);
-            }
+            // if($(".pullUp").hasClass("loading")){
+            //     $(".upLoosen").text("正在加载...");
+            //     setTimeout(function(){
+            //         add();
+            //         // 重置
+            //         $(".pullUp").removeClass("loading").show();
+            //         $(".upLoosen").text("松开加载...").hide();
+            //         myScroll.refresh();
+            //         pullUp = 1;
+            //     }, 1000);
+            // }
+        });
+
+        myScroll.on('refresh', function(){
+            // var pullDown = 1;     // 避免多次执行
+            // var pullUp = 1;
+            // var xx = 1;
         });
 
 
