@@ -70,6 +70,8 @@
 
     <script>
 
+        
+
         var myScroll;
         myScroll = new IScroll('#wrapper', {
             scrollX: false,
@@ -81,35 +83,52 @@
 
         var pullDown = 1;     // 避免多次执行
         var pullUp = 1;
-        var xx = 1;
+        isTouch = false;
         var downHeight = $(".pullDown").height();
         var upHeight = $(".pullUp").height();
-        myScroll.on('scroll', function(){
-            var y = myScroll.y;
-            console.log(y);
-            if(y >= downHeight && pullDown){
-                $(".pullDown").addClass("refresh").hide();
-                $(".downLoosen").show();
-                myScroll.refresh();
-                pullDown = 0;
-                xx = 1;
-                myScroll.minScrollY = 0;
-            }
-            // if(y < downHeight && xx){
-            //     $(".pullDown").hide();
-            //     // $(".downLoosen").hide();
-            //     myScroll.refresh();
-            //     xx = 0;
-            //     pullDown = 1;
-            // }       
-            if(y < (myScroll.maxScrollY - upHeight) && pullUp){
-                $(".pullUp").addClass("loading").hide();
-                $(".upLoosen").show();
-                myScroll.refresh();
-                pullUp = 0;
-            }
+
+
+        $(document).on("touchend", function(event){
+            isTouch = true;
+        });
+        
+        $(document).on("touchstart", function(event){
+            isTouch = false;
         });
 
+        myScroll.on('scroll', function(){
+            var y = myScroll.y;
+            // console.log(y);
+            console.log(isTouch);
+            if(y >= downHeight){
+                // $(".pullDown").addClass("refresh").hide();
+                // $(".downLoosen").show();
+                // myScroll.refresh();
+                $(".pullDown").html("松开刷新...");
+                pullDown = 1;
+                myScroll.minScrollY = 0;
+            }    
+            if(y <= downHeight && y >= 0){
+                // $(".pullUp").addClass("loading").hide();
+                // $(".upLoosen").show();
+                // myScroll.refresh();
+                // pullUp = 0;
+                $(".pullDown").html("下拉刷新...");
+                pullDown = 0;
+                myScroll.minScrollY = 0;
+            }
+            if(y >= downHeight && pullDown){
+                // $(".pullDown").addClass("refresh").hide();
+                // $(".downLoosen").show();
+                // myScroll.refresh();
+                // $(".pullDown").html("松开刷新...");
+                // console.log(6666);
+                // myScroll.scrollTo(0, 400)
+                pullDown = 0;
+                myScroll.minScrollY = 40;
+            } 
+        });
+        
 
         myScroll.on('scrollEnd', function(){
             // if($(".pullDown").hasClass("refresh")){
