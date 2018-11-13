@@ -149,7 +149,7 @@ https://www.cnblogs.com/StormSpirit/archive/2012/10/24/2736453.html
 
 47. setTimeout代替setInterval：https://segmentfault.com/a/1190000011282175， https://blog.csdn.net/sun_DongLiang/article/details/82696522
 
-
+48. iscroll5修改源码支持minScrollY: http://ju.outofmemory.cn/entry/140905
 
 
 

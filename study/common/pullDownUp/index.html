@@ -19,8 +19,6 @@
         .pullDown{ position:absolute; top:-1.25rem; left:0; width:100%; z-index:100; }
         .pullUp{ position:absolute; bottom:-1.25rem; left:0; width:100%; z-index:100; }
         li{ line-height:.46875rem; padding:.3125rem; color:#000; }
-        .downLoosen{ display:none; }
-        .upLoosen{ display:none; }
     </style>
 </head>
 <body>
@@ -31,7 +29,6 @@
     <div id="wrapper">
         <div>
             <p class="pullDown">下拉刷新...</p>
-            <p class="downLoosen">松开刷新...</p>
             <ul class="dataLine">
                 <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
                 <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
@@ -60,7 +57,6 @@
                 <li>fdsfs辅导老师激发了电视剧福建省得了福建省的</li>
             </ul>
             <p class="pullUp">上拉加载...</p>
-            <p class="upLoosen">松开加载...</p>
         </div>
     </div>
 
@@ -69,93 +65,68 @@
     </div>
 
     <script>
-
-        
-
         var myScroll;
         myScroll = new IScroll('#wrapper', {
             scrollX: false,
             scrollY: true,
-            click: false,
             probeType: 2,
-            bounce: true
+            fadeScrollbars: false
         });
 
-        var pullDown = 1;     // 避免多次执行
-        var pullUp = 1;
-        isTouch = false;
+        var pullDown = 1;     // 下拉刷新避免多次执行
+        var pullUp = 1;       // 上拉加载避免多次执行
         var downHeight = $(".pullDown").height();
         var upHeight = $(".pullUp").height();
 
-
-        $(document).on("touchend", function(event){
-            isTouch = true;
-        });
-        
-        $(document).on("touchstart", function(event){
-            isTouch = false;
-        });
-
         myScroll.on('scroll', function(){
             var y = myScroll.y;
-            // console.log(y);
-            console.log(isTouch);
-            if(y >= downHeight){
-                // $(".pullDown").addClass("refresh").hide();
-                // $(".downLoosen").show();
-                // myScroll.refresh();
-                $(".pullDown").html("松开刷新...");
+            // 下拉加载
+            if(y >= downHeight && pullDown){
+                $(".pullDown").addClass("refresh").html("松开刷新...");
+                myScroll.minScrollY = downHeight;
+                pullDown = 0;
+            }    
+            if(y <= downHeight && y >= 0 && !pullDown){
+                $(".pullDown").removeClass("refresh").html("下拉刷新...");
                 pullDown = 1;
                 myScroll.minScrollY = 0;
-            }    
-            if(y <= downHeight && y >= 0){
-                // $(".pullUp").addClass("loading").hide();
-                // $(".upLoosen").show();
-                // myScroll.refresh();
-                // pullUp = 0;
-                $(".pullDown").html("下拉刷新...");
-                pullDown = 0;
-                myScroll.minScrollY = 0;
             }
-            if(y >= downHeight && pullDown){
-                // $(".pullDown").addClass("refresh").hide();
-                // $(".downLoosen").show();
-                // myScroll.refresh();
-                // $(".pullDown").html("松开刷新...");
-                // console.log(6666);
-                // myScroll.scrollTo(0, 400)
-                pullDown = 0;
-                myScroll.minScrollY = 40;
-            } 
+
+            // 上拉刷新
+            var maxHeight = myScroll.maxScrollY;
+            if(y < (maxHeight - upHeight) && pullUp){
+                $(".pullUp").addClass("loading").html("松开加载...");
+                myScroll.maxScrollY = maxHeight - upHeight;
+                pullUp = 0;
+            }
+            if(y > maxHeight && y < (maxHeight + upHeight) && !pullUp){
+                $(".pullUp").removeClass("loading").html("上拉加载...");
+                myScroll.maxScrollY = maxHeight + upHeight;
+                pullUp = 1;
+            }
         });
-        
 
         myScroll.on('scrollEnd', function(){
-            // if($(".pullDown").hasClass("refresh")){
-            //     $(".downLoosen").text("正在刷新...");
-            //     common.loadingShow();
-            //     setTimeout(function(){
-            //         location.reload();
-            //     }, 2000);
-            // }
+            if($(".pullDown").hasClass("refresh")){
+                $(".pullDown").text("正在刷新...");
+                common.loadingShow();
+                setTimeout(function(){
+                    location.reload();
+                }, 2000);
+            }
 
-            // if($(".pullUp").hasClass("loading")){
-            //     $(".upLoosen").text("正在加载...");
-            //     setTimeout(function(){
-            //         add();
-            //         // 重置
-            //         $(".pullUp").removeClass("loading").show();
-            //         $(".upLoosen").text("松开加载...").hide();
-            //         myScroll.refresh();
-            //         pullUp = 1;
-            //     }, 1000);
-            // }
+            if($(".pullUp").hasClass("loading")){
+                $(".pullUp").text("正在加载...");
+                setTimeout(function(){
+                    add();
+                    myScroll.refresh();
+                }, 1000);
+            }
         });
 
         myScroll.on('refresh', function(){
-            // var pullDown = 1;     // 避免多次执行
-            // var pullUp = 1;
-            // var xx = 1;
+            $(".pullUp").removeClass("loading").html("上拉加载...");
+            pullUp = 1;
         });
 
 
