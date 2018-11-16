@@ -11,50 +11,67 @@
     <link rel="stylesheet" href="css/base.css">
     <style>
         *{ padding:0; margin:0; }
-        table{ height:100px; width:1000px; }
-        .one{ height:100px; }
-        .two{ height:0px; background:red; line-height:0; overflow:hidden; opacity:0; }
+        body,html {
+            background: #000000;
+            padding-top: 50px;
+        }
+        .spinner {
+            position: relative;
+            margin: auto;
+            box-sizing: border-box;
+            background-clip: padding-box;
+            width: 200px;
+            height: 200px;
+            border-radius: 100px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            -webkit-mask: linear-gradient(rgba(0, 0, 0, 0.1), #000000 90%);
+            transform-origin: 50% 60%;
+            transform: perspective(200px) rotateX(66deg);
+            animation: spinner-wiggle 1.2s infinite;
+        }
+        .spinner:before, .spinner:after {
+            content: "";
+            position: absolute;
+            margin: -4px;
+            box-sizing: inherit;
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+            opacity: .05;
+            border: inherit;
+            border-color: transparent;
+            animation: spinner-spin 1.2s cubic-bezier(0.6, 0.2, 0, 0.8) infinite, spinner-fade 1.2s linear infinite;
+        }
+
+        .spinner:before {
+            border-top-color: #66e6ff;
+        }
+
+        .spinner:after {
+            border-top-color: #f0db75;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes spinner-spin {
+            100% {
+                transform: rotate(360deg);
+            }
+            }
+            @keyframes spinner-fade {
+            20% {
+                opacity: .1;
+            }
+            40% {
+                opacity: 1;
+            }
+            60% {
+                opacity: .1;
+            }
+        }
     </style>
 </head>
 <body>
-    <table border="1" cellspacing="0">
-        <tr class="one">
-            <td>防守</td>
-            <td>防守</td>
-            <td>防守</td>
-            <td>防守</td>
-        </tr>
-        <tr class="two" height="1px">
-            <td>防守fds发达撒发达撒发送的发生的佛山大发送到发生的飞洒地方大神发达撒辅导辅导辅导辅导</td>
-            <td>防守</td>
-            <td>防守</td>
-            <td>防守</td>
-        </tr>
-        <tr class="two" height="1px">
-            <td>防守fds发达撒发达撒发送的发生的佛山大发送到发生的飞洒地方大神发达撒辅导辅导辅导辅导</td>
-            <td>防守</td>
-            <td>防守</td>
-            <td>防守</td>
-        </tr>
-        <tr class="two" height="1px">
-            <td>防守fds发达撒发达撒发送的发生的佛山大发送到发生的飞洒地方大神发达撒辅导辅导辅导辅导</td>
-            <td>防守</td>
-            <td>防守</td>
-            <td>防守</td>
-        </tr>
-        <tr class="two" height="1px">
-            <td>防守fds发达撒发达撒发送的发生的佛山大发送到发生的飞洒地方大神发达撒辅导辅导辅导辅导</td>
-            <td>防守</td>
-            <td>防守</td>
-            <td>防守</td>
-        </tr>
-        <tr class="two" height="1px">
-            <td>防守fds发达撒发达撒发送的发生的佛山大发送到发生的飞洒地方大神发达撒辅导辅导辅导辅导</td>
-            <td>防守</td>
-            <td>防守</td>
-            <td>防守</td>
-        </tr>
-    </table>
+    <div class="spinner"></div>
     <script>
     </script>
 </body>
