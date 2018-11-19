@@ -10,32 +10,38 @@
     <link rel="stylesheet" href="css/common_s.css">
     <link rel="stylesheet" href="css/base.css">
     <style>
-        h2{
-            text-align: center;
-        }
-        .box{
-            width: 500px;
-            height: 250px;
-            border: 1px solid #f00;
-            margin: auto;
-            display: flex;
-        }
-        .content{
-            width: 400px;
-            height: 200px;
-            background: #ccc;
-            margin: auto;
-        }
+    h2{
+        text-align: center;
+    }
+    .box{
+        width: 500px;
+        height: 250px;
+        border: 1px solid #f00;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+    }
+    .content{
+        width: 400px;
+        background: #ccc;
+    }
+    .box:before, .box:after{
+        content: '';
+        display: block;
+        width:100%;
+    }
     </style>
 </head>
 <body>
-        <h2>9.Flex + margin</h2>
-        <div class="box box9">
+        <h2>Flex + align-self</h2>
+        <div class="box">
             <div class="content">
-                立马来看Amos实际完成的    <a href="http://csscoke.com/2015/07/31/nth-child_rwd_album/">
-                CSS3精美相册效果    </a>
-                效果吧！別忘了拖拉一下窗口看看 RWD 效果喔！  
-                <p>test</p>
+                <a href="#/">
+                    Flex + align-self
+                </a>
+                <p>多行文字的垂直居中技巧</p>
             </div>
         </div>
 </body>
