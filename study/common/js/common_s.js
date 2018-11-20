@@ -880,7 +880,7 @@ var common = {
      * @return {String}     [返回转义后的字符串]
      */
     escapeHtml:function(string){
-        if(!string){ 
+        if(!string){
             return "";
         };
         var reg = "";
@@ -1248,7 +1248,7 @@ var LocalObj = {
 
 
 var browser = {
-    versions: function(){ 
+    versions: function(){
         var u = navigator.userAgent, app = navigator.appVersion, ua = navigator.userAgent.toLowerCase();
         return { 
             trident: u.indexOf('Trident') > -1, //IE内核 
@@ -1267,8 +1267,57 @@ var browser = {
 }
 
 
+/**
+     * [移动端模拟长按事件]
+     * @param  {options} object [longTime：多少时间算长按事件，默认是800毫秒
+     *                           longFn：长按后的回调函数
+     *                           clickFn：单击的回调函数
+     *                           endFn：手指离开的回到函数]
+*/
 
-
+$.fn.longPress = function(options){
+    options = options || {};
+    options.longTime = options.longTime || 800;
+    options.longFn = options.longFn || function(){};
+    options.clickFn = options.clickFn || function(){};
+    options.endFn = options.endFn || function(){};
+    var longTimeout = 0,lStatX,lStatY,lendX,lendY,lMoveX,lMoveY;
+    var $this = this,$the = $(this);
+    for(var i = 0; i < $this.length; i++){
+        $this[i].addEventListener("touchstart", function(e){
+            lStatX = e.touches[0].pageX;
+            lStatY = e.touches[0].pageY;
+            var the1 = $(this);
+            longTimeout = setTimeout(function(){
+                longTimeout = 0;
+                options.longFn(the1)
+            }, options.longTime);
+            // e.preventDefault();
+        },false);
+        $this[i].addEventListener("touchmove", function(e){
+            lendX = e.touches[0].pageX;
+            lendY = e.touches[0].pageY;
+            lMoveX = lendX - lStatX;
+            lMoveY = lendY - lStatY;
+            lMoveX = lMoveX < 0 ? -lMoveX : lMoveX;
+            lMoveY = lMoveY < 0 ? -lMoveY : lMoveY;
+            if(lMoveX > 10 || lMoveY >10){
+                clearTimeout(longTimeout);
+                longTimeout = 0;
+            }
+        }, false);
+        $this[i].addEventListener("touchend", function(e){
+            var the2 = $(this);
+            clearTimeout(longTimeout);
+            if(longTimeout != 0){
+                options.clickFn(the2);
+            }else{
+                options.endFn(the2);
+            }
+            return false;
+        }, false);
+    }
+};
 
 
 

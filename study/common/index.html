@@ -10,39 +10,19 @@
     <link rel="stylesheet" href="css/common_s.css">
     <link rel="stylesheet" href="css/base.css">
     <style>
-    h2{
-        text-align: center;
-    }
-    .box{
-        width: 500px;
-        height: 250px;
-        border: 1px solid #f00;
-        margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-content: center;
-    }
-    .content{
-        width: 400px;
-        background: #ccc;
-    }
-    .box:before, .box:after{
-        content: '';
-        display: block;
-        width:100%;
-    }
+        
     </style>
 </head>
 <body>
-        <h2>Flex + align-self</h2>
-        <div class="box">
-            <div class="content">
-                <a href="#/">
-                    Flex + align-self
-                </a>
-                <p>多行文字的垂直居中技巧</p>
-            </div>
-        </div>
+    <h2>长按事件</h2>
+    <script>
+        $("h2").longPress({clickFn: function(){
+            alert("点击");
+        }, longFn: function(){
+            alert("长按");
+        }, endFn: function(){
+            alert("结束");
+        }, longTime: 800})
+    </script>
 </body>
 </html>
