@@ -2,27 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" id="vp"/>
-    <title>封装常用方法</title>
-    <script src="js/jquery-3.2.1.js"></script>  
-    <script src="js/common_s.js"></script>
-    <script src="js/flex.js"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>下拉刷新，上拉加载</title>
     <link rel="stylesheet" href="css/common_s.css">
     <link rel="stylesheet" href="css/base.css">
-    <style>
-        
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/common_s.js"></script>
+    <script src="js/flex.js"></script>
+    <script src="../iscroll/iscroll-probe.js"></script>
+    <style> 
+
     </style>
 </head>
 <body>
-    <h2>长按事件</h2>
+    <h1>监听浏览器返回</h1>
     <script>
-        $("h2").longPress({clickFn: function(){
-            alert("点击");
-        }, longFn: function(){
-            alert("长按");
-        }, endFn: function(){
-            alert("结束");
-        }, longTime: 800})
+        Session.saveObject("page", {pageNum:1});
+        function historyBack(){/* 监听拦截返回按钮事件 */
+            pushHistory();
+            //监听"返回"事件
+            // setTimeout(function(){  
+            //     window.addEventListener("popstate", function(e) {  
+            //         pushHistory(); 
+            //         //页面跳转条件判断
+            //         switch(Session.loadObject("page").pageNum){
+            //             case 1:
+            //                 //alert('关注飞机页');
+            //                 //关闭微信内置浏览器
+            //                 common.popupTextShow('确定退出故障签署？',function(){
+            //                     //APP退出故障签署
+            //                     window.location="cube://exit";
+            //                 });
+            //                 break;
+
+            //             case 2:
+            //                 //alert('故障录入页');
+            //                 common.popupTextShow('是否返回到关注飞机页',function(){
+            //                     common.loadingShow();
+            //                     window.location.href='../com.csair.vit.flight/index.html';
+            //                 });
+            //                 break;
+                            
+            //             case 3:
+            //                 //alert('查阅aps页');
+            //                 common.popupTextShow('是否返回到故障录入页',function(){
+            //                     common.loadingShow();
+            //                     //清空历史数据
+            //                     if(Session.loadObject("d-gzlx")){$("#defectTypeText").val('');Session.saveObject("d-gzlx",'') }
+            //                     if(Session.loadObject("d-gzlb")){$("#defectCateText").val('' );Session.saveObject("d-gzlb",'') }
+            //                     if(Session.loadObject("d-yswjlb")){$("#sourceFileTypeText").val('');Session.saveObject("d-yswjlb",'')}
+            //                     if(Session.loadObject("d-zjh")){$("#d-zjh").val('');Session.saveObject("ata",'') }
+            //                     if(Session.loadObject("chnDesc")){$("#chnDesc").val('');Session.saveObject("chnDesc",'') }
+            //                     if(Session.loadObject("dEnli")){$("#dEnli").val('');Session.saveObject("dEnli",'')}
+            //                     if(Session.loadObject("documentNotext")){$("#documentNotext").val('');Session.saveObject("documentNotext",'') }
+            //                     if(Session.loadObject("sourceNoText")){$("#sourceNoText").val('');Session.saveObject("sourceNoText",'') }
+            //                     if(Session.loadObject("workOrder")){Session.saveObject("workOrder",'') }
+            //                     window.location.href='../com.csair.vit.defect/index.html';
+            //                 });
+            //                 break;
+                            
+            //             case 4:
+            //                 //alert('航材申请页');
+            //                 common.popupTextShow('是否返回到查阅aps页',function(){
+            //                     common.loadingShow();
+            //                     Session.saveObject("apspdfFrom","");
+            //                     window.location.href='../com.csair.vit.apspdf/index.html';
+            //                 });
+            //                 break;
+                            
+            //             case 5:
+            //                 //alert('工作签署页');
+            //                 common.popupTextShow('是否返回到航材申请页',function(){
+            //                     common.loadingShow();
+            //                     window.location.href='../com.csair.vit.part/index.html';
+            //                 });
+            //                 break;
+
+            //             case 6:
+            //                 //alert('拆换件登记');
+            //                 common.popupTextShow('是否返回到拆换件登记',function(){
+            //                     common.loadingShow();
+            //                     window.location.href='../com.csair.vit.change/index.html';
+            //                 });
+            //                 break;
+
+            //             case 7:
+            //                 //alert('工作签署-保留类型');
+            //                 common.popupTextShow('是否返回到工作签署页',function(){
+            //                     common.loadingShow();
+            //                     window.location.href='../com.csair.vit.sign/index.html';
+            //                 });
+            //                 break;
+
+            //             default:
+            //                 common.popupTextShow('系统异常请重试！',function(){
+            //                     common.loadingShow();
+            //                     window.location.href='../com.csair.vit.flight/index.html';
+            //                 });
+            //                 break;
+            //         } 
+            //     }, false);  
+            // }, 200);  
+            //向历史记录中插入一条“#”记录
+            function pushHistory() {  
+                var state = { title: "title",  url: "#"  };  
+                window.history.pushState(state, "title", "#");  
+            }
+        }    
+
+        historyBack();
     </script>
 </body>
 </html>
