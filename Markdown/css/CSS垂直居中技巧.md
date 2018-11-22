@@ -274,3 +274,6 @@
 [余](https://mp.weixin.qq.com/s/bdhjmcIIh5TYcd2d_g11aw)
 [网格布局](https://blog.csdn.net/ceshi986745/article/details/51733383)
 [网格布局](https://blog.jirengu.com/?p=990)
+
+
+*一辈子很短，努力的做好两件事就好；第一件事是热爱生活，好好的去爱身边的人；第二件事是努力学习，在工作中取得不一样的成绩，实现自己的价值。*
