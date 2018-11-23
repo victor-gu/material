@@ -31,6 +31,63 @@
 
 > 需要注意的是每次hash发生变化时都会触发onhashchange事件。而onpopstate事件只会在历史记录(history entry)变化时触发，比如执行浏览器的前进/后退操作。
 
+#### document.visibilitychange
+
+1. 页面可见性
+> 页面可见性API通过document的visibilitychange让脚本知道用户是否已经看不到这个页面了。可以在特定的时候暂缓一些不必要的操作，以减少客户端、服务端压力。
+
+2. 应用场景
+> 监控用户行为，当用户的视角不在当前页面时，暂停加载广告，幻灯片、停止加载视频、开始加载小动画等。减少对用户宽带的占用，减少服务器压力，节省用户内存，以及到达更好的播放效果
+
+3. 属性
+> document.visibilityState
+
+4. 注意事项
+> 在目前，浏览器对 Page Visibility 的支持还是通过私有属性支持，因此在检测或利用 Page Visibility 提供的属性时需要加上浏览器私有前缀，例如在 Chrome 中检测上面的 visibilityState 属性时，就需要检测 document.webkitVisibilityState 而不是 document.visibilityState 。所以，需要首先检测浏览器类型，然后才使用 Page Visibility 的 API
+
+5. 兼容写法
+
+示例
+
+    var hidden, visibilityChange;
+    if (typeof document.hidden !== "undefined") {
+        hidden = "hidden";
+        visibilityChange = "visibilitychange";
+    } else if (typeof document.mozHidden !== "undefined") {
+        hidden = "mozHidden";
+        visibilityChange = "mozvisibilitychange";
+    } else if (typeof document.msHidden !== "undefined") {
+        hidden = "msHidden";
+        visibilityChange = "msvisibilitychange";
+    } else if (typeof document.webkitHidden !== "undefined") {
+        hidden = "webkitHidden";
+        visibilityChange = "webkitvisibilitychange";
+    }
+    
+    // 添加监听器
+    document.addEventListener(visibilityChange, function() {
+        console.log("当前页面是否被隐藏：" + document[hidden]);
+    }, false);
+
+#### document.hidden
+> bool型，表示页面是否处于隐藏状态。页面隐藏包括页面在后台标签页或者浏览器最小化
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 *一辈子很短，努力的做好两件事就好；第一件事是热爱生活，好好的去爱身边的人；第二件事是努力学习，在工作中取得不一样的成绩，实现自己的价值。*
