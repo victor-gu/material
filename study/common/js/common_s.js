@@ -960,7 +960,7 @@ var Cookie = {
         var res = '';
 
         cookies = cookies.split('; ');
-        for(var i=0;i<cookies.length;i++){
+        for(var i=0; i<cookies.length; i++){
             var arr = cookies[i].split('=');
             if(arr[0] === name){
                 res = arr[1];
