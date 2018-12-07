@@ -899,10 +899,38 @@ var common = {
         return String(string).replace(reg, function(s){
             return entityMap[s];
         });
+    },
+
+
+    /**
+     * [进入全屏]
+     * @param  {Object} ele [元素对象]
+     */
+    FullScreen: function(ele){
+        if(ele.requestFullscreen){
+            ele.requestFullscreen();
+        }else if(ele .mozRequestFullScreen){
+            ele.mozRequestFullScreen();
+        }else if(ele .webkitRequestFullScreen){
+            ele.webkitRequestFullScreen();
+        }
+    },
+
+
+    /**
+     * [退出全屏]
+     * @param  {Object} ele [元素对象]
+     */
+    exitFullscreen: function(ele){
+        if(ele.exitFullscreen){
+            ele.exitFullscreen();
+        }else if(ele.mozCancelFullScreen){
+            ele.mozCancelFullScreen();
+        }else if(ele.webkitCancelFullScreen){
+            ele.webkitCancelFullScreen();
+        }
     }
-
-};
-
+}
 
 
 
