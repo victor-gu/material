@@ -42,46 +42,23 @@
         
 
         $.ajax({
-            type: 'post',
-            url: 'http://route.showapi.com/1287-1',
+            type: 'get',
+            url: 'http://wthrcdn.etouch.cn/weather_mini',
             dataType: 'json',
             data: {
-                "showapi_timestamp": formatterDateTime(),
-                "showapi_appid": '82135', //这里需要改成自己的appid
-                "showapi_sign": 'a64348be58b7486bb31af997f729fd7d',  //这里需要改成自己的应用的密钥secret
-
+                city: "广州"
             },
 
             error: function(XmlHttpRequest, textStatus, errorThrown) {
                 alert("操作失败!");
             },
             success: function(result) {
-                console.log(result) //console变量在ie低版本下不能用
-                alert(result.showapi_res_code)
+                console.log(result) 
             }
         });
 
-        $.ajax({
-            type: 'post',
-            url: 'http://route.showapi.com/1546-1',
-            dataType: 'json',
-            data: {
-                "showapi_timestamp": formatterDateTime(),
-                "showapi_appid": '82135', //这里需要改成自己的appid
-                "showapi_sign": 'a64348be58b7486bb31af997f729fd7d',  //这里需要改成自己的应用的密钥secret
-                "name":"苍井空",
-                "n":"1"
 
-            },
 
-            error: function(XmlHttpRequest, textStatus, errorThrown) {
-                alert("操作失败!");
-            },
-            success: function(result) {
-                console.log(result) //console变量在ie低版本下不能用
-                alert(result.showapi_res_code)
-            }
-        });
     </script>
 </body>
 </html>

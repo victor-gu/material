@@ -929,6 +929,21 @@ var common = {
         }else if(ele.webkitCancelFullScreen){
             ele.webkitCancelFullScreen();
         }
+    },
+
+
+    /**
+     * [预加载图片]
+     * @return {Object}     [返回promise对象，调用promise的then方法可以在图片加载成功后执行操作]
+     */
+    preloadImage: function(path){
+        return new Promise(function (resolve, reject) {
+            var image = new Image();
+            image.onload  = function(){
+                resolve(image);
+            }
+            image.src = path;
+        });
     }
 }
 
