@@ -257,19 +257,7 @@
 
 
 
-// // if(!Object.prototype.type){
-// //     Object.prototype.type = function(){
-// //         return Object.prototype.toString.call(this).slice(8,-1).toLowerCase();//[object Function],[object Null],[object Number]
-// //     }
-// // }
-// /**
-//  * [数据类型判断]
-//  * @param  {All} data [数据类型]
-//  * @return {String}      [返回数据类型字符串]
-//  */
-// function type(data){
-//     return Object.prototype.toString.call(data).slice(8,-1).toLowerCase();
-// }
+
 
 
 
@@ -944,6 +932,16 @@ var common = {
             }
             image.src = path;
         });
+    },
+
+
+    /**
+     * [数据类型判断]
+     * @param  {All}    data [数据类型]
+     * @return {String}      [返回数据类型字符串]
+     */
+    type: function(data){
+        return Object.prototype.toString.call(data).slice(8,-1).toLowerCase();
     }
 }
 
