@@ -1362,6 +1362,12 @@ $.fn.longPress = function(options){
 
 
 
+// 兼容trim方法
+!String.prototype.trim && (String.prototype.trim = function(){
+    return this.replace(/^\s+|\s+$/g, '');
+});
+
+
 
 
 
