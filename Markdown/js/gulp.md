@@ -1,7 +1,87 @@
 ## gulp
+> gulp是当下最流行的自动化工具 ，可以自动化完成我们开发过程中大量的重复工作
 
+#### 安装与运行
+> 前提是安装了nodejs环境
 
+* 全局安装 gulp
+> npm install -g gulp，全局安装gulp目的是为了通过它执行gulp任务
+* 本地安装gulp
+> npm install gulp，本地安装gulp是为了调用gulp插件的功能，这步操作前先新建package.json文件(npm init)
+* 创建gulpfile.js文件
+> 在项目根目录下创建一个名为 gulpfile.js 的文件，gulpfile.js是gulp项目的配置文件
+* 运行 gulp
+> gulp <任务名称>
 
+#### gulp工作流程
+
+1. 先通过 gulp.src() 方法获取到想要处理的文件，并返回文件流
+2. 然后文件流通过 pipe 方法导入到 gulp 的插件中
+3. 经过插件处理后的文件流再通过pipe方法导入到 gulp.dest() 方法中
+4. 最后通过gulp.dest() 方法把流中的内容写入到文件中
+> 文件流=>文件在内存中的状态
+
+#### API
+
+1. 创建任务
+
+        gulp.task('buildsass',function(){
+
+        });
+2. 匹配要处理的文件
+
+        gulp.src(globs[, options])
+        // options 有3个属性buffer、read、base
+3. 输出文件
+> 把文件流中的内容中输出到指定目录
+
+        gulp.dest(path[, options])
+4. 监听文件修改，并执行相应任务
+
+    gulp.watch(glob [, opts], tasks)
+    gulp.watch(glob [, opts, cb])
+
+#### gulp插件
+[gulp中文网](https://www.gulpjs.com.cn/docs/getting-started/ "gulp中文网") [npm中文网](https://www.npmjs.com/ "npm中文网")
+
+1. 安装插件
+> 可一次性安装多个插件，插件间用空格隔开，卸载插件npm uninstall ...
+
+        npm install --save gulp-htmlmin
+2. 引包：require()
+
+        var htmlmin = require('gulp-htmlmin')
+3. 使用：pipe()
+
+        gulp.task('htmlmin',function(){
+            gulp.src('src/html/*.html')
+            .pipe(htmlmin())
+            .pipe(gulp.dest('dist/html'));
+        });
+
+#### 常用gulp插件
+
+* htmml压缩：gulp-htmlmin
+* css压缩：gulp-clean-css
+* js压缩：gulp-uglify
+* 合并文件：gulp-concat
+* 文件重命名：gulp-rename
+* 编译Sass: gulp-sass
+* 编译 Less：gulp-less
+* 浏览器同步测试：browser-sync
+* 创建node服务器：http-server
+
+#### globs语法
+> globs需要处理的源文件匹配符路径，语法如下
+
+* 匹配单个文件：`gulp.src('src/js/index.js')`
+* 匹配多个文件：`gulp.src(['src/js/index.js','src/js/detail.js']) //多个文件以数组形式传入`
+* 匹配所有文件：`gulp.src('src/js/*.js')`
+* 匹配符：
+    * !：排除文件，
+    * *：匹配所有文件，
+    * **：匹配0个或多个子文件夹，
+    * {}：匹配多个属性
 
 
 #### npm的 --save 和 --save-dev 之间的区别
@@ -24,7 +104,160 @@
 * 如果带上后缀npm install --production则只会安装生产环境的所有模块，而无视开发环境的相关模块
 
 
+## sass
+> SASS是一个成熟、稳定、强大的 CSS 扩展语言解析器，提供变量、嵌套、混合、继承等特性，大大节省了设计者的时间，使得CSS的开发变得简单和可维护
+
+#### 语法
+
+1. 注释
+    * 多行注释 /* */ (会出现在css中)
+    * 单行注释 // (不会出现在css中)
+
+2. 变量
+> sass的变量必须是$开头，后面紧跟变量名，而变量值和变量名之间就需要使用冒号(:)分隔开
+
+* 全局变量与局部变量
+> 定义在任何选择器之外的变量被认为是全局变量，定义在选择器内的变量称之为局部变量,但启用了global后，即使写在局部也能覆盖全局变量
+
+        $color:#fff !global;
+
+* 默认变量
+> sass的默认变量仅需要在值后面加上!default即可,覆盖的方式只需要在默认变量之前重新声明下变量即可
+
+    $baseLineHeight:2;
+    $baseLineHeight:1.5 !default;
+    body{
+        line-height: $baseLineHeight; 
+    }
+    输出：
+    body{
+        line-height:2;
+    }
+可以看出现在编译后的line-height为2，而不是我们默认的1.5。默认变量的价值在进行组件化开发的时候会非常有用
+
+* 特殊变量
+> 一般我们定义的变量都为属性值，可直接使用，但是如果变量作为属性或在某些特殊情况下等,则必须要以#{$variables}形式使用
+
+        $borderDirection:top !default;
+            //应用于class和属性
+            .border-#{$borderDirection}{
+            border-#{$borderDirection}:1px solid #ccc;
+        }
+
+* 多值变量
+> 值变量分为list类型和map类型，简单来说list类型有点像js中的数组，而map类型有点像js中的对象
+
+        //list类型
+        $pd: 5px 10px 20px 30px;
+
+        //使用
+        .content{padding:$pd;}
+        .btop{border-top:nth($pd,1);}
 
 
-[gulp中文网](https://www.gulpjs.com.cn/docs/getting-started/ "gulp中文网")
-[npm中文网](https://www.npmjs.com/ "npm中文网")
+        //map类型
+        $headings: (h1: 2em, h2: 1.5em, h3: 1.2em);
+
+        //使用
+        h1{map-get($headings,h1)}
+
+3. 嵌套
+> 在嵌套中用&表示父元素选择器
+
+4. 混合器
+> 变量可以实现简单样式的重用（如color,width等），但是当你的样式变得越来越复杂，你需要大段大段的重用样式的代码，可以通过sass的混合器实现重用
+
+sass中使用@mixin声明混合，通过@include来调用
+
+* 无参数mixin
+* 有参数mixin：参数名以$符号开始
+* 多个参数mixin：多个参数以逗号分开
+* @content
+
+        @mixin max-screen($res){
+            @media only screen and (max-width:$res){
+                @content;
+            }
+        }
+        @include max-screen(480px){
+            body{ 
+                color:red;
+            }
+        }
+        结果
+        @media only screen and (max-width: 480px) { body { color: red; } }
+
+>@mixin通过@include调用后解析出来的样式是以拷贝形式存在的，而下面的继承则是以联合声明的方式存在的，所以从3.2.0版本以后，建议传递参数的用@mixin，而非传递参数类的使用下面的继承
+
+5. 继承
+> 使用选择器的继承，要使用关键词@extend
+
+* 继承一般样式
+`@extend h1`
+* 占位选择器%
+
+        %ir{
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+        @extend %ir;
+
+6. 函数
+
+* 常用函数
+    * percentage($value)：将一个不带单位的数转换成百分比值；
+    * round($value)：将数值四舍五入，转换成一个最接近的整数；
+    * ceil($value)：将大于自己的小数转换成下一位整数；
+    * floor($value)：将一个数去除他的小数部分；
+    * abs($value)：返回一个数的绝对值；
+    * min($numbers…)：找出几个数值之间的最小值；
+    * max($numbers…)：找出几个数值之间的最大值。
+    * lighten($color,$percent)
+    * darken($color,$percent)，$color颜色值，$percent百分比
+> 数值可以带单位
+
+* 自定义函数
+> 格式：@fuction 函数名。sass变量带上$，关键字带上@
+
+
+        $oneWidth: 10px;  
+        $twoWidth: 40px;
+        @function widthFn($n){ 
+            @return $n * $twoWidth + ($n - 1) * $oneWidth;  
+        }  
+        .leng {
+            width: widthFn($n : 5);  
+        }
+
+7. 运算
+> sass具有运算的特性，可以对数值型的Value(如：数字、颜色、变量等)进行加减乘除四则运算。请注意运算符前后请留一个空格，不然会出错, 可以带单位
+
+8. 条件判断及循环
+
+* @if判断
+    @if可一个条件单独使用，也可以和@else结合多条件使用， @else后面的if不用带上@
+
+        @if $type == ocean {
+            color: blue;
+        } @else if $type == matador {
+            color: red;
+        } @else {
+            color: black;
+        }
+
+* for循环
+
+        @for $var from <start> through <end>（包含end值）
+        @for $var from <start> to <end>（不包含en值）
+
+9. 导入
+> sass中导入其他sass文件，最后编译为一个css文件，优于纯css的@import
+
+`@import 'reset';`
+
+
+
+async
+gulp.series

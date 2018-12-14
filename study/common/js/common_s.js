@@ -131,15 +131,6 @@
 
 
 
-// // 需求驱动开发
-// // Cookie.set('goodslist',JSON.stringify(goodslist),null,'')
-// // Cookie.set('top','200px')
-// // now = new Date()
-// // now.setDate(now.getDate()+7)
-// // Cookie.set('left','100px',{expires:now,path:'/'})
-// // Cookie.get('top');//得到top的cookie值
-// // Cookie.remove('top');
-
 
 
 
@@ -263,197 +254,10 @@
 
 
 
-// /**
-//  * [格式化日期]
-//  * @param  {string} string [传入日期模型]
-//  * @return {string} string [返回格式化后的日期]
-//  */
-// if(!Date.prototype.format){
-//     Date.prototype.format = function(fmt){
-
-//         fmt = fmt.toUpperCase();
-        
-//         var o = {
-//             "M+":this.getMonth()+1,
-//             "D+":this.getDate(),
-//             "H+":this.getHours(),
-//             "M+":this.getMinutes(),
-//             "S+":this.getSeconds()
-//         };
-
-//         if(/(Y+)/.test(fmt)){
-//             var res = String(this.getFullYear()).substr(4 - RegExp.$1.length);
-//             fmt = fmt.replace(RegExp.$1, res);
-//         }
-
-//         for(var str in o){
-//             var reg = new RegExp("("+str+")");
-//             if(reg.test(fmt)){
-//                 var res = RegExp.$1.length>1 ? ('00' + o[str]).substr(String(o[str]).length) : o[str];
-//                 fmt = fmt.replace(RegExp.$1, res);
-//             }
-//         }
-//         return fmt;
-//     }
-// }
 
 
 
 
-// function Ajax(options){
-//     // 默认值
-//     var defaults = {
-//         type:'get',//post,put,delete...,jsonp
-//         async:true,
-//         jsonpName:'callback'
-//     }
-
-//     // 扩展参数
-//     var opt = Object.assign({},defaults,options);
-
-//     this.init(opt);
-// }
-
-// Ajax.prototype = {
-//     init(opt){
-//         // 处理请求类型大小
-//         opt.type = opt.type.toLowerCase();
-
-//         // opt.data:{pageNo:1,qty:2} => 'pageNo=1&qty=2';
-//         // 改变参数格式
-//         var params = '';
-
-//         for(var attr in opt.data){
-//             params += attr + '=' + opt.data[attr] + '&';
-//         }
-
-//         // 去除多余的&
-//         params = params.slice(0,-1);
-
-//         var type = ['get','jsonp'];
-//         // if(opt.type === 'get' || opt.type === 'jsonp'){
-//         if(type.indexOf(opt.type) >= 0){
-//             var op = opt.url.indexOf('?') >=0 ? '&':'?';//?,&
-//             opt.url += op + params;
-
-//             params = null;
-//         }
-
-
-//         // jsonp请求
-//         if(opt.type === 'jsonp'){
-//             var callbackName = 'getData' + Date.now();//getData1213165465432165
-
-//             var script;
-
-//             // 创建全局函数
-//             window[callbackName] = function(data){
-//                 var res = data;
-//                 try{
-//                     res = JSON.parse(res);
-//                 }catch(err){
-//                     try{
-//                         res = eval('(' + res + ')');
-//                     }catch(er){
-//                         res = res;
-//                     }
-//                 }
-
-//                 opt.success(res);
-
-//                 // 请求完成后，删除script标签
-//                 script.parentNode.removeChild(script)
-//             }
-
-//             // 生成script标签
-//             script = document.createElement('script');
-//             script.src = opt.url + '&'+opt.jsonpName+'=' + callbackName;
-//             document.body.appendChild(script);
-
-//             return;
-//         }
-
-
-//         var xhr = null;
-//         try{
-//             xhr = new XMLHttpRequest();
-//         }catch(error){
-//             try{
-//                  // ie低版本浏览有多种异步请求的实现
-//                  xhr = new ActiveXObject("Msxml2.XMLHTTP");
-//             }catch(err){
-//                 try{
-//                     xhr = new new ActiveXObject("Microsoft.XMLHTTP");
-//                 }catch(e){
-//                     alert('你的浏览器太low，赶紧换电脑');
-//                 }
-//             }
-//         }
-
-//         var arr_status = [200,304];
-
-
-//         // 处理返回数据
-//         xhr.onload = function(){
-//             if(arr_status.indexOf(xhr.status) >= 0){
-//                 var res = xhr.responseText;
-//                 try{
-//                     res = JSON.parse(res);
-//                 }catch(err){
-//                     try{
-//                         res = eval('(' + res + ')');
-//                     }catch(er){
-//                         res = res;
-//                     }
-//                 }
-
-//                 opt.success(res);
-//             }
-//         }
-
-        
-
-
-
-//         // 配置参数，建立与服务器连接
-//         xhr.open(opt.type,opt.url,opt.async);
-
-//         // post请求，设置请求头
-//         if(opt.type === 'post'){
-//             xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
-//         }
-
-//         xhr.send(params);
-//     },
-//     format(){
-
-//     },
-//     jsonp(){
-
-//     }
-// }
-
-// Object.defineProperty(Ajax.prototype,'constructor',{
-//     configurable:true,
-//     value:Ajax
-// });
-
-// function ajax(options){
-//     return new Ajax(options);
-// }
-
-// ajax.get = function(options){
-//     options.type = 'get';
-//     return new Ajax(options);
-// }
-// ajax.post = function(options){
-//     options.type = 'post';
-//     return new Ajax(options);
-// }
-// ajax.jsonp = function(options){
-//     options.type = 'jsonp';
-//     return new Ajax(options);
-// }
 
 
 
@@ -527,41 +331,7 @@ var common = {
     },
 
 
-    /**
-     * [当前日期格式化]
-     * @param  {string} string [如果为dayTime则返回“年-月-日”，如果为minuteTime则返回“年-月-日 时:分”,如果为secondTime则返回“年-月-日 时:分:秒”，如果为shortTime则返回时:分:秒, 如果不填则返回“年-月-日 时:分:秒 毫秒”]
-     * @return  {string}  [返回相应的格式的时间]
-     */
-    newDate: function(string){
-        //判断由哪里进来显示日期时间
-        var theDate = new Date();
-        var dateY = parseInt(theDate.getFullYear()),
-            dateM = parseInt(theDate.getMonth()) + 1,
-            dateD = parseInt(theDate.getDate()),
-            dateH = parseInt(theDate.getHours()),
-            dateI = parseInt(theDate.getMinutes());
-            dateS = parseInt(theDate.getSeconds());
-            dateL = parseInt(theDate.getMilliseconds());
-            
-        //当前日期
-        var dateText = dateY + "-" + (dateM < 10 ? "0" + dateM : dateM) + "-" + (dateD < 10 ? "0" + dateD : dateD);
-        if(string == "dayTime"){
-            return dateText;
-        }else if(string == "minuteTime"){
-            var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI);
-            return dateText + " " + timeText;
-        }else if(string == "secondTime"){
-            var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI) + ":"+ (dateS < 10 ? "0" + dateS : dateS);
-            return dateText + " " + timeText;
-        }else if(string == "shortTime"){
-            var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI) + ":"+ (dateS < 10 ? "0" + dateS : dateS);
-            return timeText;
-        }else{
-            var timeText = (dateH < 10 ? "0" + dateH : dateH) + ":" + (dateI < 10 ? "0" + dateI : dateI) + ":"+ (dateS < 10 ? "0" + dateS : dateS) +"."+dateL;
-            return dateText + " " + timeText;
-        }
-    },
-
+ 
     /**
      * [select下拉框]
      * @param  {Array} data [需要显示的数组内容]
@@ -828,27 +598,6 @@ var common = {
 
 
     /**
-     * [将当前日期格式化为汉子形式]
-     * @return {String} [返回时间字符串]
-     */
-    autoTime: function(){
-        var time = new Date();
-        var year = time.getFullYear();
-        var month = time.getMonth()+1;
-        var day = time.getDate();
-        var week = time.getDay();
-        var hour = time.getHours();
-        var minutes = time.getMinutes();
-        var seconds = time.getSeconds();
-        var arr = ["天","一","二","三","四","五","六"];
-        var hour = hour<10? "0"+hour:hour;
-        var minutes = minutes<10? "0"+minutes:minutes;
-        var seconds = seconds<10? "0"+seconds:seconds;
-        return year+"年"+month+"月"+day+"日星期"+arr[week]+" "+hour+"时"+minutes+"分"+seconds+"秒";
-    },
-
-
-    /**
      * [得到日期date的n天后的日期]
      * @param  {Date} date [当前日期]
      * @param  {Number} n [n天时间]
@@ -927,10 +676,10 @@ var common = {
     preloadImage: function(path){
         return new Promise(function (resolve, reject) {
             var image = new Image();
+            image.src = path;
             image.onload  = function(){
                 resolve(image);
             }
-            image.src = path;
         });
     },
 
@@ -942,6 +691,38 @@ var common = {
      */
     type: function(data){
         return Object.prototype.toString.call(data).slice(8,-1).toLowerCase();
+    },
+
+
+
+    /**
+     * [预定义时间格式化]
+     * @param  {Date} data [需格式化时间]
+     * @param  {string} fmt [定义时间格式，例如："YYYY-MM-DD hh:mm:ss"]
+     * @return  {string} fmt [返回时间]
+    */
+    format: function(data, fmt){
+        var o = {
+            "M+": data.getMonth() + 1,
+            "D+": data.getDate(),
+            "h+": data.getHours(),
+            "m+": data.getMinutes(),
+            "s+": data.getSeconds()
+        };
+        if(/(Y+)/.test(fmt)){
+        	var res = String(data.getFullYear()).substring(4 - RegExp.$1.length);
+        	fmt = fmt.replace(RegExp.$1, res);
+        }
+
+        for(var str in o){
+        	var reg = new RegExp('(' + str + ')');
+        	if(reg.test(fmt)){
+        		var res = RegExp.$1.length>1 ? ('00' + o[str]).substring(String(o[str]).length) : o[str];
+        		fmt = fmt.replace(RegExp.$1, res);
+        	}
+        }
+
+        return fmt;
     }
 }
 
@@ -1368,8 +1149,161 @@ $.fn.longPress = function(options){
 });
 
 
+/**
+     * [拓展Date原型对象，格式化时间]
+     * @param  {options} fmt [定义时间格式，例如："YYYY-MM-DD hh:mm:ss"]
+*/
+if(!Date.prototype.format){
+    Date.prototype.format = function(fmt){
+    	var o = {
+            "M+": this.getMonth() + 1,
+            "D+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds()
+        };
+        if(/(Y+)/.test(fmt)){
+        	var res = String(this.getFullYear()).substring(4 - RegExp.$1.length);
+        	fmt = fmt.replace(RegExp.$1, res);
+        }
+
+        for(var str in o){
+        	var reg = new RegExp('(' + str + ')');
+        	if(reg.test(fmt)){
+        		var res = RegExp.$1.length>1 ? ('00' + o[str]).substring(String(o[str]).length) : o[str];
+        		fmt = fmt.replace(RegExp.$1, res);
+        	}
+        }
+
+        return fmt;
+    }
+};
 
 
+
+/**
+     * [封装ajax]
+     * @param  {object} options [默认参数：tyep:get, async:true, jsonpName。
+     *                           可传参数：data:{}, success:function(){}]
+*/
+function Ajax(options){
+    var defaults = {
+        type:'get',
+        async:true,
+        jsonpName:'callback'
+    }
+    var opt = Object.assign({},defaults,options);
+    this.init(opt);
+}
+
+Ajax.prototype = {
+    init(opt){
+        opt.type = opt.type.toLowerCase();
+        var params = '';
+        for(var attr in opt.data){
+            params += attr + '=' + opt.data[attr] + '&';
+        };
+        params = params.slice(0,-1);
+        var type = ['get','jsonp'];
+        if(type.indexOf(opt.type) >= 0){
+            var op = opt.url.indexOf('?') >=0 ? '&':'?';//?,&
+            opt.url += op + params;
+            params = null;
+        }
+
+        // jsonp请求
+        if(opt.type === 'jsonp'){
+            var callbackName = 'getData' + Date.now();
+            var script;
+            // 创建全局函数
+            window[callbackName] = function(data){
+                var res = data;
+                try{
+                    res = JSON.parse(res);
+                }catch(err){
+                    try{
+                        res = eval('(' + res + ')');
+                    }catch(er){
+                        res = res;
+                    }
+                }
+                opt.success(res);
+                // 请求完成后，删除script标签
+                script.parentNode.removeChild(script)
+            }
+            // 生成script标签
+            script = document.createElement('script');
+            script.src = opt.url + '&'+opt.jsonpName+'=' + callbackName;
+            document.body.appendChild(script);
+            return false;
+        }
+
+        var xhr = null;
+        try{
+            xhr = new XMLHttpRequest();
+        }catch(error){
+            try{
+                 // ie低版本浏览有多种异步请求的实现
+                 xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            }catch(err){
+                try{
+                    xhr = new new ActiveXObject("Microsoft.XMLHTTP");
+                }catch(e){
+                    alert('你的浏览器太low，赶紧换电脑');
+                }
+            }
+        }
+
+        var arr_status = [200,304];
+        // 处理返回数据
+        xhr.onload = function(){
+            if(arr_status.indexOf(xhr.status) >= 0){
+                var res = xhr.responseText;
+                try{
+                    res = JSON.parse(res);
+                }catch(err){
+                    try{
+                        res = eval('(' + res + ')');
+                    }catch(er){
+                        res = res;
+                    }
+                }
+
+                opt.success(res);
+            }
+        }
+
+        // 配置参数，建立与服务器连接
+        xhr.open(opt.type,opt.url,opt.async);
+        // post请求，设置请求头
+        if(opt.type === 'post'){
+            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+        }
+        xhr.send(params);
+    }
+}
+
+Object.defineProperty(Ajax.prototype, 'constructor', {
+    configurable:true,
+    value:Ajax
+});
+
+function ajax(options){
+    return new Ajax(options);
+}
+
+ajax.get = function(options){
+    options.type = 'get';
+    return new Ajax(options);
+}
+ajax.post = function(options){
+    options.type = 'post';
+    return new Ajax(options);
+}
+ajax.jsonp = function(options){
+    options.type = 'jsonp';
+    return new Ajax(options);
+}
 
 
 

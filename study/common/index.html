@@ -41,22 +41,17 @@
 
         
 
-        $.ajax({
+        ajax({
             type: 'get',
             url: 'http://wthrcdn.etouch.cn/weather_mini',
             dataType: 'json',
             data: {
                 city: "广州"
             },
-
-            error: function(XmlHttpRequest, textStatus, errorThrown) {
-                alert("操作失败!");
-            },
             success: function(result) {
                 console.log(result) 
             }
         });
-
 
 
     </script>

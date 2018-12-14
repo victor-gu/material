@@ -157,3 +157,4 @@ https://www.cnblogs.com/StormSpirit/archive/2012/10/24/2736453.html
 
 51. 网个布局： https://blog.csdn.net/ceshi986745/article/details/517333831
 
+52. slice,substr和substring的区别：https://www.cnblogs.com/littledu/archive/2011/04/18/2019475.html
