@@ -11,7 +11,7 @@
 * 创建gulpfile.js文件
 > 在项目根目录下创建一个名为 gulpfile.js 的文件，gulpfile.js是gulp项目的配置文件
 * 运行 gulp
-> gulp <任务名称>
+> gulp <任务名称>，如果有不需要编译的文件，只需要在文件前加下划线
 
 #### gulp工作流程
 
@@ -63,13 +63,73 @@
 
 * htmml压缩：gulp-htmlmin
 * css压缩：gulp-clean-css
-* js压缩：gulp-uglify
+* js压缩：gulp-uglify(ES6的有些语法可能不支持,所以压缩之前先用babel转成es5)
 * 合并文件：gulp-concat
 * 文件重命名：gulp-rename
 * 编译Sass: gulp-sass
 * 编译 Less：gulp-less
 * 浏览器同步测试：browser-sync
 * 创建node服务器：http-server
+
+gulp-sass
+
+    gulp.task('compileSass', async()=>{
+        gulp.src("./src/sass/*.scss")
+        .pipe(sass({outputStyle: 'compact'}))
+        .pipe(gulp.dest("./src/css"))
+    });
+
+sass监听
+
+    gulp.task("jtSass", function(){
+        gulp.watch("./src/sass", gulp.series("compileSass"));
+    });
+
+gulp-uglify, gulp-concat, gulp-rename
+
+    gulp.task("merge", async()=>{
+        gulp.src(["./src/js/*.js", "!./src/js/{all, all.min}.js"])
+        // 合并
+        .pipe(concat("all.js"))
+        .pipe(gulp.dest("./src/js"))
+        // 压缩
+        .pipe(uglify({compress: true}))
+        // 重命名
+        .pipe(rename({suffix: ".min"}))
+        .pipe(gulp.dest("./src/js"))
+    });
+
+babel
+
+1. 全局安装babel-cli
+2. 局部安装babel-preset-es2015, babel
+3. 在项目目录建立.babelrc文件，内容：`{"presets": ["es2015"],"plugins": []}`
+4. 输出
+    * 转码结果写入一个文件，-out-file 或 -o 参数指定输出文件：`babel example.js -o compiled.js`
+    * 整个目录转码，--out-dir 或 -d 参数指定输出目录：`babel src -d lib`
+
+http-server
+
+1. 全局安装http-server
+2. 启动：http-server，可以指定端口-p: `http-server -p 1000`
+
+browser-sync
+
+    gulp.task("server", async()=>{
+        browserSync({
+            // 创建一个静态服务器
+            server: "./src",
+            // 监听文件
+            files: ["./src/**/*.html", "./src/**/*.css"],
+            // 指定端口
+            port: 10000,
+            // 代理服务器，代理php服务器，能够识别php
+            proxy: "http://localhost:10000"
+        })
+        // 监听sass的修改
+        gulp.watch("./src/sass", gulp.series("compileSass"));
+    });
+
 
 #### globs语法
 > globs需要处理的源文件匹配符路径，语法如下
@@ -114,7 +174,7 @@
     * 单行注释 // (不会出现在css中)
 
 2. 变量
-> sass的变量必须是$开头，后面紧跟变量名，而变量值和变量名之间就需要使用冒号(:)分隔开
+> sass的变量必须是$开头，后面紧跟变量名，而变量值和变量名之间就需要使用冒号(:)分隔开，可以建一个var.scss文件
 
 * 全局变量与局部变量
 > 定义在任何选择器之外的变量被认为是全局变量，定义在选择器内的变量称之为局部变量,但启用了global后，即使写在局部也能覆盖全局变量
@@ -219,7 +279,7 @@ sass中使用@mixin声明混合，通过@include来调用
 > 数值可以带单位
 
 * 自定义函数
-> 格式：@fuction 函数名。sass变量带上$，关键字带上@
+> 格式：@fuction 函数名。sass变量带上$，关键字带上@，函数声明必须在使用前
 
 
         $oneWidth: 10px;  
@@ -257,7 +317,9 @@ sass中使用@mixin声明混合，通过@include来调用
 
 `@import 'reset';`
 
+* 默认为当前scss路径
+* 可以省略后缀名(scss)
+* 可以省略下滑线(_)
 
 
-async
-gulp.series
+*一辈子很短，努力的做好两件事就好；第一件事是热爱生活，好好的去爱身边的人；第二件事是努力学习，在工作中取得不一样的成绩，实现自己的价值。*
