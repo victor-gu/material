@@ -2,12 +2,12 @@
 > gulp是当下最流行的自动化工具 ，可以自动化完成我们开发过程中大量的重复工作
 
 #### 安装与运行
-> 前提是安装了nodejs环境
+> 前提是安装了nodejs环境，测试nodeJs (node -v)，测试npm (npm -v)
 
 * 全局安装 gulp
 > npm install -g gulp，全局安装gulp目的是为了通过它执行gulp任务
 * 本地安装gulp
-> npm install gulp，本地安装gulp是为了调用gulp插件的功能，这步操作前先新建package.json文件(npm init)
+> npm install gulp，本地 安装gulp是为了调用gulp插件的功能，这步操作前先新建package.json文件(npm init)
 * 创建gulpfile.js文件
 > 在项目根目录下创建一个名为 gulpfile.js 的文件，gulpfile.js是gulp项目的配置文件
 * 运行 gulp
@@ -182,6 +182,10 @@ gulp-clean-css
     * **：匹配0个或多个子文件夹，
     * {}：匹配多个属性
 
+#### cnpm
+> 因为npm安装插件是从国外服务器下载，受网络影响大，可能出现异常，如果npm的服务器在中国就好了，所以我们乐于分享的淘宝团队干了这事
+
+> cnpm跟npm用法完全一致，只是在执行命令时将npm改为cnpm
 
 #### npm的 --save 和 --save-dev 之间的区别
 > npm包管理器在安装包的时候，会有两种安装方式，一种是–save，另一种是–save-dev
