@@ -45,7 +45,7 @@
 [gulp中文网](https://www.gulpjs.com.cn/docs/getting-started/ "gulp中文网") [npm中文网](https://www.npmjs.com/ "npm中文网")
 
 1. 安装插件
-> 可一次性安装多个插件，插件间用空格隔开，卸载插件npm uninstall ...
+> 可一次性安装多个插件，插件间用空格隔开，卸载插件npm uninstall ...(卸载不需要写--save, --save-dev就可以更新package.json文件)
 
         npm install --save gulp-htmlmin
 2. 引包：require()
@@ -62,7 +62,6 @@
 #### 常用gulp插件
 
 * htmml压缩：gulp-htmlmin
-* css压缩：gulp-clean-css
 * js压缩：gulp-uglify(ES6的有些语法可能不支持,所以压缩之前先用babel转成es5)
 * 合并文件：gulp-concat
 * 文件重命名：gulp-rename
@@ -70,6 +69,9 @@
 * 编译 Less：gulp-less
 * 浏览器同步测试：browser-sync
 * 创建node服务器：http-server
+* 图片压缩：gulp-image
+* css压缩：gulp-clean-css
+* 补全浏览器兼容的css：gulp-autoprefixer
 
 gulp-sass
 
@@ -78,6 +80,12 @@ gulp-sass
         .pipe(sass({outputStyle: 'compact'}))
         .pipe(gulp.dest("./src/css"))
     });
+
+    <!-- 配置参数 -->
+    nested(默认）
+    expanded：展开
+    compact：单行
+    compressed：压缩
 
 sass监听
 
@@ -130,6 +138,37 @@ browser-sync
         gulp.watch("./src/sass", gulp.series("compileSass"));
     });
 
+gulp-image
+
+    gulp.task("imageMin", async()=>{
+        gulp.src("./src/img/*")
+        .pipe(image())
+        .pipe(gulp.dest("./image"))
+    });
+
+gulp-autoprefixer
+
+    gulp.task('cssPre', async()=>{
+        gulp.src('./src/css/*.css')
+            .pipe(autoprefixer({
+                browsers: ['last 2 versions'],
+                cascade: false
+            }))
+            .pipe(gulp.dest('./cssTest'))
+    });
+
+gulp-clean-css
+
+    gulp.task("cssMin", async()=>{
+        gulp.src('./cssTest/*.css')
+            .pipe(cssmin({
+                advanced: true,//类型：Boolean 默认：true [是否开启高级优化（合并选择器等）]
+                compatibility: 'ie7',//保留ie7及以下兼容写法 类型：String 默认：''or'*' [启用兼容模式； 'ie7'：IE7兼容模式，'ie8'：IE8兼容模式，'*'：IE9+兼容模式]
+                keepBreaks: false,//类型：Boolean 默认：false [是否保留换行]
+                keepSpecialComments: '*'//保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
+            }))
+            .pipe(gulp.dest('./cssMin')) // 将会在dist/css下生成index.css
+    });
 
 #### globs语法
 > globs需要处理的源文件匹配符路径，语法如下
@@ -174,7 +213,7 @@ browser-sync
     * 单行注释 // (不会出现在css中)
 
 2. 变量
-> sass的变量必须是$开头，后面紧跟变量名，而变量值和变量名之间就需要使用冒号(:)分隔开，可以建一个var.scss文件
+> sass的变量必须是$开头，后面紧跟变量名，而变量值和变量名之间就需要使用冒号(:)分隔开，可以建一个var.scss文件，存放公共变量
 
 * 全局变量与局部变量
 > 定义在任何选择器之外的变量被认为是全局变量，定义在选择器内的变量称之为局部变量,但启用了global后，即使写在局部也能覆盖全局变量
