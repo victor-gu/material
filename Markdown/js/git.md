@@ -45,14 +45,14 @@
             * 格式：git remote add 远程仓库名 远程仓库地址
             * 输入git remote，如果有出现远程仓库名则连接成功，或者git remote -v详细的
             * 删除远程仓库连接：git remote remove 远程仓库名
+            * 合并不相关的历史：`git pull origin master --allow-unrelated-histories`
         2. 克隆（适用于先有远程库，后有本地仓库的情况）（推荐使用）
             * 格式：git clone 远程仓库地址
             * 当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin
 
 4. 推送到远程仓库
 * 格式：git push 远程仓库名 本地分支名:远程分支名
-* 把本地分支内容推送到远程分支（远程分支名省略表示推送到与本地分支相同的分支）
-* （做push之前先pull以下）如果远程有更新，pull可能会出错，这时执行git pull origin master --allow-unrelated-histories
+* 把本地分支内容推送到远程分支（远程分支名省略表示推送到与本地分支相同的分支）（做push之前先pull以下）
 
 5. 拉取与合并
 * 格式：git pull 远程仓库名 远程分支名:本地分支名
