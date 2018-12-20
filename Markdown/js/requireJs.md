@@ -7,7 +7,7 @@
 2. 管理模块之间的依赖性，便于代码的编写和维护
 
 #### 使用
-> 按照requireJS当中的规范要求，你只需加载一个文件就可以而，并指定页面主模块main.js，由于requirejs默认的文件后缀名是js，所以可以把main.js简写成main(把一个文件当做一个模块)
+> 按照requireJS当中的规范要求，你只需加载一个文件就可以，并指定页面主模块main.js，由于requirejs默认的文件后缀名是js，所以可以把main.js简写成main(把一个文件当做一个模块)
 
 `<script src ="require.js" data-main ="main"></script>`
 

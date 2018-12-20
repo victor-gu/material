@@ -1,59 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <title>测试</title>
-    <!-- <link rel="stylesheet" href="css/common_s.css">
-    <link rel="stylesheet" href="css/base.css"> -->
-    <script src="js/jquery-3.2.1.js"></script>
-    <script src="js/common_s.js"></script>
-    <!-- <script src="js/flex.js"></script> -->
-    <!-- <script src="../iscroll/iscroll-probe.js"></script> -->
-    <script src="js/jsencrypt.js"></script>
-    <style>
-
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
 </head>
 <body>
+    <div id="app" @click="click(10)">
+        {{watchText}}
+    </div>
     <script>
-        function formatterDateTime() {
-        var date=new Date()
-        var month=date.getMonth() + 1
-                var datetime = date.getFullYear()
-                        + ""// "年"
-                        + (month >= 10 ? month : "0"+ month)
-                        + ""// "月"
-                        + (date.getDate() < 10 ? "0" + date.getDate() : date
-                                .getDate())
-                        + ""
-                        + (date.getHours() < 10 ? "0" + date.getHours() : date
-                                .getHours())
-                        + ""
-                        + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date
-                                .getMinutes())
-                        + ""
-                        + (date.getSeconds() < 10 ? "0" + date.getSeconds() : date
-                                .getSeconds());
-                return datetime;
-            }
-      
-
-        
-
-        ajax({
-            type: 'get',
-            url: 'http://wthrcdn.etouch.cn/weather_mini',
-            dataType: 'json',
+        var vm = new Vue({
+            el: "#app",
             data: {
-                city: "广州"
+                text: "test"
             },
-            success: function(result) {
-                console.log(result) 
+            methods: {
+                click: function(e){
+                    this.watchText = "666";
+                }
+            },
+            computed: {
+                watchText: {
+                    get: function(){
+                        console.log("get");
+                        return this.text+" get";
+                    },
+                    set: function(){
+                        console.log("set")
+                        this.text = "set";
+                    }
+                }
             }
-        });
-
-
+        })
     </script>
 </body>
 </html>
