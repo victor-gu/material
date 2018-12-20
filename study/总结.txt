@@ -43,7 +43,7 @@ JS部分：var o = document.getElementById('date');
 
 13. Global对象的encodeURI()和encodeURIComponent()方法可以对URI进行编码，以便发送给浏览器。encodeURI()不会对本身属于URI的特殊字符进行编码，例如冒号、正斜杠、问号和井字号；而encodeURIComponent()则会对它发现的任何非标准字符进行编码。
 
-14. 长单词换行：word-break:break-all;只对英文起作用，以字母作为换行依据。word-wrap:break-word; 只对英文起作用，以单词作为换行依据。white-space:pre-wrap; 只对中文起作用，强制换行，nowrap; 强制不换行。注意，一定要指定容器的宽度，不然的话是没有用的。     https://www.cnblogs.com/zhangshuda/p/7640422.html
+14. 长单词换行：word-break:break-all;只对英文起作用，以字母作为换行依据。  只对英文起作用，以单词作为换行依据。white-space:pre-wrap; 只对中文起作用，强制换行，nowrap; 强制不换行。注意，一定要指定容器的宽度，不然的话是没有用的。     https://www.cnblogs.com/zhangshuda/p/7640422.html
 
 15. 在移动端会出现alert，confirm有URL的情况，可以重写alert，confirm方法
 	window.alert = function(name){
