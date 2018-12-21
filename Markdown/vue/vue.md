@@ -28,14 +28,14 @@
 12. v-once: 内容只解释一次
 13. v-for: (number, string, object) `<ul v-for="(item, index) in data"></ul>`
 
-#### 实例化时基本属性
+#### 实例化基本属性
 
 1. 实例元素: el
 > 实例元素指的是 Vue 实例化时编译的容器元素，或者说是 Vue 作用的元素容器，
 
 * 可以有多个实例元素
 * 如果有多个相同的实例元素则只有第一个起效
-* 可以在实例化的时候不指定实例元素，后面用$mount()手动进行挂载 vm.$mount("#app")
+* 可以在实例化的时候不指定实例元素，后面用\$mount()手动进行挂载 vm.\$mount("#app")
 * 可以通过实例获取实例元素: `console.log(vm.$el)`
 
         var vm = new Vue({
@@ -89,6 +89,197 @@
 4. 计算属性 computed
 > computed 主要是针对 data 的属性进行操作，this 的指针默认指向实例 vm
 
+        <p>{{fullName}}</p>
+        <input type="text" v-model="newName">
+        <input type="button" value="changeName" @click="changeName">
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstName:'DK',
+                lastName: 'Lan',
+                newName: ''
+            },
+            computed: {
+                fullName:{
+                    get: function(){
+                        return this.firstName + '.' + this.lastName
+                    },
+                    set: function(newValue){
+                        this.firstName = newValue   // 传值
+                    }
+                }
+            },
+            methods: {
+                changeName: function(){
+                    this.fullName = this.newName;
+                }
+            }
+        })
+
+* 当我们在 V 层调用 {{fullName}} 的时候会自动触发 fullName.get()
+* 当改变fullName属性时，会自动触发 fullName.set() 方法, 可以向set()方法传递参数，参数值为fullName的值
+* Vue在getter上面作了基于对应属性的依赖缓存，也就是说多次调用同一个属性，get只会执行一次。而事件在每次触发时都会被调用，当然在改变该属性值的时候会再次被调用
+
+5. 监听器 watch
+> Vue 提供了对单个属性的监听器，当该属性发生改变的时候，自动触发，此项使用不当会影响性能，所以慎用
+
+        {
+            data: {
+                a: 1
+            },
+            watch: {
+                a: function (newVal, oldVal) {
+                    //自动触发此方法
+                    console.log('new: %s, old: %s', newVal, oldVal)    // 接收两个值，一个新值，一个旧值
+                },
+            }
+        }
+
+        也可以把方法放到 data 对象中
+        {
+            data: {
+                a: 1,
+                changeA: function (newVal, oldVal) {
+                    //自动触发此方法
+                    console.log('new: %s, old: %s', newVal, oldVal)
+                }
+            },
+            watch: {
+                a: 'changeA'
+            }
+        }
+
+###### watch 与 compute 区别
+
+* computed 创建新的属性， watch 监听 data 已有的属性
+* compute 会产生依赖缓存
+* 当 watch 监听 computed 时，watch 在这种情况下无效，仅会触发 computed.setter
+
+#### 绑定 class
+
+###### 对象语法：`<div :class="{classNam1: 1 == 1, className2: 1 == 2}"></div>`
+> v-bind:class="{样式名: 结果为 boolean 的表达式}"，表达式结果为 true，则元素 class="样式名"，否则元素 class=""
+
+###### 数组语法：`<div :class="[class1, class2, 'className3', active ? 'className4' : '']"></div>`
+> v-bind:class="[]"，数组元素可以为表达式，也可以为字符串，如果是字符串则直接输出为样式名
+
+#### 绑定 style
+> 在对象当中，CSS 的属性名要用驼峰式表达：fontSize 解析成 font-size
+
+###### 对象语法：`<div :style="{color: color, fontSize: fontSize, backgroundColor: '#ccc'}"></div>`
+
+###### 数组语法：`<div :style="[styleObject, {backgroundColor: '#ccc'}]"></div>`
+
+#### 自定义指令
+> 自定义指令和定义组件的方式很类式，也是有全局指令和局部指令之分
+
+###### 全局指令
+
+    Vue.directive('global',  function(element){
+        element.value = "世界和平";   // 参数 element：使用指令的元素
+        element.focus();
+    })
+###### 局部指令
+
+    var vm = new Vue({
+        el: '#app',
+        directives: {
+            private: function(element){
+                element.style.background = '#ccc';
+                element.value = "世界和平";
+            }
+        }
+    })
+
+#### 钩子函数
+> 钩子函数可以理解成是指令的生命周期
+
+    <div id="app">
+        <input type="text" v-model="text" v-demo="{color:'red'}">
+    </div>
+    Vue.directive('demo', {
+        //被绑定元素插入父节点时调用
+        //后于 bind 触发
+        //参数 element： 使用指令的元素
+        //参数 binding： 使用指令的属性对象
+        //参数 vnode： 整个 Vue 实例
+        inserted: function(element, binding, vnode){
+            console.log('inserted');
+        },
+
+        //只调用一次，指令第一次绑定到元素时调用，
+        //用这个钩子函数可以定义一个在绑定时执行一次的初始化动作
+        //先于 inserted 触发
+        bind: function(element, binding, vnode){
+            console.log('bind');
+            element.style.color = binding.value.color
+        },
+
+        //被绑定元素所在的模板更新时调用，而不论绑定值是否变化
+        update: function(element, binding, vnode){
+            console.log('update');
+        },
+
+        //被绑定元素所在模板完成一次更新周期时调用。
+        componentUpdated: function(element, binding, vnode){
+            console.log('componentUpdated');
+        }
+    })
+
+    var vm = new Vue({
+        el: '#app',
+        data:{
+            text: '钩子函数'
+        }
+    })
+
+#### $set 
+> 当实例对象 data 先设置好了结构，比如：data: {dataform: {}}，在后期想添加一个属性 username 时，这个 username 不会自动绑定到视图当中，所以调用 $set(原对象，新属性名，属性值) 进行绑定到视图当中
+
+        <div id="app">
+            <input type="button" value="set" @click="set">
+            <span>{{dataform.username}}</span>
+        </div>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dataform: {}
+            },
+            methods: {
+                set: function(){
+                    this.$set(this.dataform, 'username', '123')
+                }
+            }
+        })
+
+#### 事件修饰符
+> 对事件添加一些通用的限制，比如阻止事件冒泡，Vue 对这种事件的限制提供了特定的写法，称之为修饰符 用法：v-on:事件.修饰符
+
+* 阻止事件冒泡.stop: `<div @click.stop="event1(1)">`
+* 使用事件捕获模式.capture: `<div @click.capture="event1(1)">`
+* 事件只作用本身.self，类似于已阻止事件冒泡: `<div @click.self="event1(1)">`
+* 阻止浏览器默认行为.prevent: `<div @click.prevent="event1(1)">`
+* 只作用一次.once: `<div @click.stop="once(1)">`
+* 修饰符可以串联.click.prevent.once: `<div @click.prevent.once="event1(1)">`
+
+#### 按键修饰符
+
+* ASCII：`<input @keyup.13="submit">`
+* 回车键：`<input @keyup.enter="submit">`
+* 自定义按键：`<input @keyup.number1="submit"/>`
+    Vue.config.keyCodes.number1 = 49
+
+#### 表单修饰符
+
+* 在 "change" 而不是 "input" 事件中更新
+
+
+
+
+
+
+
+
 
 
 
@@ -109,7 +300,7 @@
 4. `npm install`
 5. `npm run dev`
 
-###### 由于windows系统的某方面问题，vue脚手架安装可能会出现第一证书丢失, 报错：vue-cli · Failed to download repo vuejs-templates/webpack-simple: unable to verify the first certificate，这时可以离线安装
+###### 由于windows系统的某方面问题，vue脚手架安装(vue init ...)可能会出现第一证书丢失, 报错：vue-cli · Failed to download repo vuejs-templates/webpack-simple: unable to verify the first certificate，这时可以离线安装
 
 1. 在https://github.com/vuejs-templates/下载相应的模板
 2. 把解压出的文件夹放在 `C:\Users\Administrator\.vue-templates`文件夹
@@ -130,3 +321,5 @@
 
 * 升级：npm install npm -g --ca=null
 * 或者 npm config set ca=""
+
+*一辈子很短，努力的做好两件事就好；第一件事是热爱生活，好好的去爱身边的人；第二件事是努力学习，在工作中取得不一样的成绩，实现自己的价值。*
