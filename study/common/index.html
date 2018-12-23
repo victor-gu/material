@@ -1,31 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.0.2/vue-router.js"></script>
 </head>
+
 <body>
-        <div id="app">
-                <input type="text" value="set" @keyup.nu="set">
-                <span>{{dataform}}</span>
-            </div>
+    <div id="app">
+        <h1>Hello VueRouter</h1>
+        <p>
+            <router-view></router-view>
+            <router-view name="a"></router-view>
+            <router-view name="b"></router-view>
+        </p>
+    </div>
 
     <script>
-        Vue.config.keyCodes.nu = 13;
-      var vm = new Vue({
-        el: '#app',
-        data: {
-            dataform: {}
-        },
-        methods: {
-            set: function(){
-                console.log(6665);
+        const router = new VueRouter({
+        routes: [
+            {
+                path: '/',
+                components: {
+                    default: {
+                        template: '<h1>defalut router view</h1>'
+                    },
+                    a: {
+                        template: '<h1>a router view</h1>'
+                    },
+                    b: {
+                        template: '<h1>b router view</h1>'
+                    }
+                }
             }
-        }
+        ]
+    })
+
+    new Vue({
+        el: '#app',
+        router
     })
     </script>
 </body>
+
 </html>

@@ -26,7 +26,7 @@
 10. v-pre: {{}} 不编译，当字符串输出
 11. v-cloak: 防止加载过慢, 出现{{}}
 12. v-once: 内容只解释一次
-13. v-for: (number, string, object) `<ul v-for="(item, index) in data"></ul>`
+13. v-for: (number, string, object) `<ul v-for="(item, index) in data"></ul>`, 每改变一次数据就要重新循环整个数据，当循环数据较多时，性能较差，加入`:key=""`后，就会对比数据，当没有变化的数据就不会循环
 
 #### 实例化基本属性
 
@@ -203,7 +203,7 @@
         //参数 element： 使用指令的元素
         //参数 binding： 使用指令的属性对象
         //参数 vnode： 整个 Vue 实例
-        inserted: function(element, binding, vnode){
+        inserted: function(eleement, binding, vnode){
             console.log('inserted');
         },
 
@@ -252,6 +252,9 @@
             }
         })
 
+#### $ref
+> 当必须要操作节点是可以用`ref`, 获取用`this.$refs.focus`,focus为定义的
+
 #### 事件修饰符
 > 对事件添加一些通用的限制，比如阻止事件冒泡，Vue 对这种事件的限制提供了特定的写法，称之为修饰符 用法：v-on:事件.修饰符
 
@@ -272,6 +275,424 @@
 #### 表单修饰符
 
 * 在 "change" 而不是 "input" 事件中更新
+    `<input v-model.lazy="counter">`
+* 自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值）
+    `<input v-model.number="counter" type="number">`
+* 自动过滤用户输入的首尾空格
+    `<input v-model.trim="counter">`
+
+#### 组件
+> 组件（Component）是前端在单页面应用（SPA）上最好的一种实现方式，把所有功能模块拆解成单独的组件，每个组件都有独立的作用域，且还可以相互通信
+
+###### 认识单页面应用（SPA）
+> 在传统的页面之间跳转，是通过刷新，重新渲染一个页面而实现，在渲染的过程中势必要加载外部资源文件，页面在服务器中渲染出来是通过一系列的生命周期，在这个过程中会因为网速等硬件问题直接影响页面的加载速度，为解决这一问题，前端在新的设计模式上引入了组件的概念，页面之间的跳转变成了组件之间的切换，不需要重新加载整个页面，也不用考虑页面的生命周期，换成组件的生命周期，在性能上大大的提升了
+
+* 全局组件
+> template里面只能有一个根元素，不能有兄弟元素
+
+        <div id="app">
+            <global-component></global-component>
+        </div>
+        Vue.component('global-component', {
+            template: '<h1>全局组件</h1>'
+        })
+
+* 局部组件
+> 在组件里面 data 一定是 function 并返回一个对象
+
+        <div id="app">
+            <private-component></private-component>
+        </div>
+        var vm = new Vue({
+            el: '#app',
+            components:{
+                'private-component': {
+                    template: '<h1>局部组件</h1>'
+                }
+            }
+        })
+
+* 组件是一个单独的作用域
+
+        var vm = new Vue({
+            components:{
+                'component1': {
+                    template: '<button>{{ count }}</button>',
+                    data: function(){
+                        //在组件里面 data 一定是 function 并返回一个对象
+                        return {
+                            count: 0
+                        }
+                    }
+                }
+            }
+        })
+
+* 特殊的 HTML 结构中使用 is
+> 特殊的 HTML 结构中使用 is
+
+        <div id="app">
+            <select>
+                <option is="privateOption"></option>
+            </select>
+        </div>
+
+* 动态组件 - :is
+> `<p :is="show"></p>`: 定义一个data: show，再在组件里面定义与data可能值相同的组件
+
+* 组件属性
+> 组件的属性要先声明后使用，props: ['属性名'...]
+
+        <div id="app">
+            <private-component title="组件属性" :text="mess"></private-component>
+        </div>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                mess: '-动态属性'
+            }
+            components:{
+                'private-component': {
+                    template: '<h1>{{title + text}}</h1>',
+                    props: ['title', 'text']
+                }
+            }
+        })
+
+* 组件自定义事件
+> <组件名 v-on:自定义事件名="">，必须用v-on定义，自定义事件名不需要声明，直接用 $emit() 触发
+
+    <div id="app">
+        <increment v-on:count="increment"></increment>
+    </div>
+    var vm = new Vue({
+         methods: {
+            increment: function(){
+            }
+        },
+        components: {
+            'increment': {
+                template: '<input type="button" @click="incrementTotal"/>',
+                methods: {
+                    incrementTotal: function(){
+                        this.$emit('count')
+                    }
+                }
+            }
+        }
+    })
+
+#### slot 分发内容
+> Vue 组件默认是覆盖渲染，为了解决这一问题，Vue 提出了 slot 分发内容
+
+        <div id="app">
+            <component1>
+                <h1>Sam</h1>
+                <h1>Lucy</h1>
+            </component1>
+        </div>
+        Vue.component('component1', {
+            template: `
+                <div>
+                    <h1>Tom</h1>
+                    <slot></slot>
+                </div>
+            `
+        })
+> conponent1中的内容默认放到slot里面
+
+###### 具名 slot
+> 如果要将组件里面不同的子元素放到不同的地方，那就为子元素加上一个属性 slot="名称"，然后在组件定义的时候用name对应位置 ，其它没有 slot 属性的子元素将统一分发到 slot 里面
+
+        <div id="app">
+            <component1>
+                <h1>Sam</h1>
+                <h1 slot="lucy">Lucy</h1>
+            </component1>
+        </div>
+        Vue.component('component1', {
+            template: `
+                <div>
+                    <slot name="lucy"></slot>
+                    <h1>Tom</h1>
+                    <slot></slot>
+                </div>
+            `
+        })
+
+#### 模版写法
+
+        <template id="component1">
+            <div>
+                <input type="text" v-model="name"/>
+                <p>{{name}}</p>			
+            </div>
+        </template>
+
+        <div id="app">
+            <component1/>
+        </div>  
+
+        var vm = new Vue({
+            el: '#app',
+            components: {
+                'component1': {
+                    template: '#component1',
+                    data: function(){
+                        return {name: 'Tom'};
+                    }
+                }
+            }
+        })
+
+#### 过渡效果
+
+###### 过渡效果应用场景
+
+* 条件渲染 (使用 v-if)
+* 条件展示 (使用 v-show)
+* 动态组件
+* 组件根节点
+
+###### 过渡状态
+> 每个状态在使用的时候都是在 CSS 中使用，结合组件 transition 的 name 属性。如 \<transition name="fade">\</transition>，对应的是 fade- 加上每个状态：.fade-enter。
+
+* enter：定义进入过渡的开始状态。在元素被插入时生效。
+* enter-active：定义过渡的状态。在元素整个过渡过程中作用，在元素被插入时生效。
+* enter-to: 2.1.8版及以上 定义进入过渡的结束状态。
+* leave：定义离开过渡的开始状态。在离开过渡被触发时生效。
+* leave-active：定义过渡的状态。在元素整个过渡过程中作用，在离开过渡被触发后立即生效。
+* leave-to: 2.1.8版及以上 定义离开过渡的结束状态。
+
+        <style type="text/css" media="screen">
+            .fade-enter, .fade-leave-to{ opacity:0; }
+            .fade-enter-active, .fade-leave-active{ transition:all .5s; }
+        </style>
+
+        <div id="app">
+            <input type="button" :value="show ? 'hide' : 'show'" @click="show = !show" />
+            <br/>
+            <transition name="fade">
+                <img src="imgs/green.jpg" v-show="show" />
+            </transition>
+        </div>
+
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    show: true
+                }
+            })
+        </script>
+
+#### CSS 动画
+
+        <style type="text/css" media="screen">
+            .fade-enter-active{animation: fade-in .5s;}
+            .fade-leave-active{animation: fade-out .5s;}
+            @keyframes fade-in{
+                from{
+                    opacity: 0;
+                }
+                to{
+                    opacity: 1;
+                }
+            }
+            @keyframes fade-out{
+                from{opacity: 1;}
+                to{opacity: 0;}
+            }
+        </style>
+        <div id="app">
+            <input type="button" :value="show ? 'hide' : 'show'" @click="show = !show" />
+            <br/>
+            <transition name="fade">
+                <img src="imgs/green.jpg" v-if="show" />
+            </transition>
+        </div>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    show: true
+                }
+            })
+        </script>
+
+#### 初始渲染的过渡
+> 第一次加载时的过渡效果，使用到组件transition的属性: appear appear-class appear-active-class
+
+        <style type="text/css" media="screen">
+            .fade-enter{opacity: 0;}
+            .fade-enter-active{transition: all 3s;}
+        </style>
+
+        <div id="app">
+            <transition appear appear-class="fade-enter" appear-active-class="fade-enter-active">
+                <img src="imgs/green.jpg" />
+            </transition>
+        </div>
+
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#app'
+            })
+        </script>
+
+#### 多个元素的过渡效果
+> 使用到组件 transition 的属性: mode
+
+* in-out：新元素先进行过渡，完成之后当前元素过渡离开
+* out-in：当前元素先进行过渡，完成之后新元素过渡进入
+
+        <style>
+            .fade-enter, .fade-leave-to{ opacity:0; }
+            .fade-enter-active, .fade-leave-active{ transition:all .5s; }
+        </style>
+        <div id="app">
+            <input type="button" value="click" @click="set">
+            <transition name="fade" mode="out-in">
+                <p v-if="show" key="red">{{ text }}</p>
+                <p v-else key="green">6666</p>
+            </transition> // 这里要加key
+        </div>
+
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    text: "text",
+                    show: true
+                },
+                methods: {
+                    set: function(){
+                        this.show = !this.show;
+                    }
+                }
+            })
+        </script>
+
+#### 列表(v-for)的过渡效果
+> v-for 生成列表过渡效果要使用组件 transition-group，组件提供属性 tag 表示该组件将会渲染成对应的 DOM 节点，其它的使用和 transition 一样
+
+        <style>
+            .fade-enter, .fade-leave-to{ opacity:0; }
+            .fade-enter-active, .fade-leave-active{ transition:all .5s; }
+        </style>
+        <div id="app">
+            <input type="button" value="click" @click="set">
+            <transition-group name="fade" tag="ul">
+                <li v-for="(item, index) in data" :key="item">{{item}}</li>
+            </transition-group>
+        </div>
+
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    data: [1,2,3]
+                },
+                methods: {
+                    set: function(){
+                        this.data.push("6");
+                    }
+                }
+            })
+        </script>
+
+#### 自定义过渡的类名
+> 对于 Vue 的过渡系统和其他第三方 CSS 动画库，如 Animate.css 结合使用十分有用
+
+* enter-class
+* enter-active-class
+* enter-to-class (2.1.8+)
+* leave-class
+* leave-active-class
+* leave-to-class
+
+        <link rel="stylesheet" type="text/css" href="animate.css">
+        <div id="app">
+            <button @click="show = !show">Toggle render</button>
+            <transition enter-active-class="animated jello" leave-active-class="animated bounceOutRight">
+                <div v-if="show"><img src="./imgs/green.jpg" /></div>
+            </transition>
+        </div>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    show: true
+                }
+            })
+        </script>
+
+#### 过渡效果钩子函数
+> 过渡效果钩子函数除了用CSS过渡的动画来实现vue的组件过渡，还可以用JavaScript的钩子函数来实现，在钩子函数中直接操作DOM。我们可以在属性中声明以下钩子
+
+        <transition
+            v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+            v-on:after-enter="afterEnter"
+            v-on:enter-cancelled="enterCancelled"
+            v-on:before-leave="beforeLeave"
+            v-on:leave="leave"
+            v-on:after-leave="afterLeave"
+            v-on:leave-cancelled="leaveCancelled"
+        >
+        </transition>
+        <script type="text/javascript">
+            var vm = new Vue({
+                el: '#app',
+                methods: {
+                    // 过渡进入
+                    // 设置过渡进入之前的组件状态
+                    beforeEnter: function (el) {
+                    // ...
+                    },
+                    // 设置过渡进入完成时的组件状态
+                    enter: function (el, done) {
+                    // ...
+                    done()
+                    },
+                    // 设置过渡进入完成之后的组件状态
+                    afterEnter: function (el) {
+                    // ...
+                    },
+                    enterCancelled: function (el) {
+                    // ...
+                    },
+                    // 过渡离开
+                    // 设置过渡离开之前的组件状态
+                    beforeLeave: function (el) {
+                    // ...
+                    },
+                    // 设置过渡离开完成时地组件状态
+                    leave: function (el, done) {
+                    // ...
+                    done()
+                    },
+                    // 设置过渡离开完成之后的组件状态
+                    afterLeave: function (el) {
+                    // ...
+                    },
+                    // leaveCancelled 只用于 v-show 中
+                    leaveCancelled: function (el) {
+                    // ...
+                    }
+                }
+            })
+        </script>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -300,6 +721,13 @@
 4. `npm install`
 5. `npm run dev`
 
+###### 参数
+
+* webpack.config.json类似于gulp的gulpfile.js文件
+* entry：打包入口文件
+* output：打包出来的文件配置
+* rules：打包规则
+
 ###### 由于windows系统的某方面问题，vue脚手架安装(vue init ...)可能会出现第一证书丢失, 报错：vue-cli · Failed to download repo vuejs-templates/webpack-simple: unable to verify the first certificate，这时可以离线安装
 
 1. 在https://github.com/vuejs-templates/下载相应的模板
@@ -321,5 +749,10 @@
 
 * 升级：npm install npm -g --ca=null
 * 或者 npm config set ca=""
+
+
+
+
+
 
 *一辈子很短，努力的做好两件事就好；第一件事是热爱生活，好好的去爱身边的人；第二件事是努力学习，在工作中取得不一样的成绩，实现自己的价值。*

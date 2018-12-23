@@ -7,3 +7,4 @@
 jsonp：https://blog.csdn.net/firebird_one/article/details/78675836
 
 vue，ios单页面的橡皮筋效果：https://github.com/cssmagic/blog/issues/1
+vue: 全选，反选
