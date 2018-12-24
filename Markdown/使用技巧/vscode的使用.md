@@ -12,18 +12,16 @@
 8. Bracket Pair Colorizer：给括号加上不同的颜色
 9. Beautify：格式化代码（在工作目录下建立.jsbeautifyrc文件），代码如下，可以根据自己的需求修改相应参数，格式化代码快捷键：alt + shift + k
 
-代码
-
-    {
-        "brace_style": "none,preserve-inline",
-        "indent_size": 4,
-        "indent_char": " ",
-        "jslint_happy": true,
-        "unformatted": [""],
-        "css": {
-            "indent_size": 2
+        {
+            "brace_style": "none,preserve-inline",
+            "indent_size": 4,
+            "indent_char": " ",
+            "jslint_happy": true,
+            "unformatted": [""],
+            "css": {
+                "indent_size": 2
+            }
         }
-    }
 10. Debugger for Chrome：映射vscode上的断点到chrome上：
 [详细可以参考我这篇博客](https://blog.csdn.net/guxingsheng/article/details/84203431 "
 VSCode配置 Debugger for Chrome插件")
@@ -31,6 +29,21 @@ VSCode配置 Debugger for Chrome插件")
 12. Markdown Preview Enhanced：实时预览markdown
 13. markdownlint：markdown语法纠错
 14. React/Redux/react-router Snippets：React/Redux/react-router语法智能提示
+15. settings Sync：同步vscode用户配置,详情：https://www.jianshu.com/p/c10ac793eec0
+    * github
+        * 登陆github>用户头像 > settings > developers > Personal access tokens > Generate new token
+        * 勾选gist
+        * 复制access token
+    * VSCode上传配置
+        * 快捷键 shift+alt+u 或 ctrl+p 输入>sync点击update/updload settings
+        * 把之前复制的access token粘贴后回车
+        * 成功后复制GITHUB GIST的内容，在需要同步的另一台电脑上使用
+    * VSCode下载配置
+        * 在需要同步的电脑打开VSCode,安装相同的插件
+        * 按快捷键 shift+alt+d 或 ctrl+p 输入>sync点击Download Settings
+        * 把GITHUB GIST的内容粘贴然后回车
+    * token : bbe06fcd057c8866f42e00dfaece71c70098f06f
+    * GIST ID : f7f4fc26e230f6321f43093ef7bdeb09
 
 #### 常用快捷键：
 
