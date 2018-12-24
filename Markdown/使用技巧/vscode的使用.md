@@ -42,7 +42,7 @@ VSCode配置 Debugger for Chrome插件")
         * 在需要同步的电脑打开VSCode,安装相同的插件
         * 按快捷键 shift+alt+d 或 ctrl+p 输入>sync点击Download Settings
         * 把GITHUB GIST的内容粘贴然后回车
-    * token : bbe06fcd057c8866f42e00dfaece71c70098f06f
+    * token : 75397d355541e59e018b83a506d5b15ca470ef50
     * GIST ID : f7f4fc26e230f6321f43093ef7bdeb09
 
 #### 常用快捷键：
