@@ -1,4 +1,4 @@
-## Vue
+## Vue 基础知识
 > Vue是一个构建数据驱动的 web 界面的渐进式框架。Vue.js 的目标是通过尽可能简单的 API 实现响应的数据绑定和组合的视图组件。它不仅易于上手，还便于与第三方库或既有项目整合
 
 #### 数据驱动模式
@@ -37,15 +37,16 @@
 * 如果有多个相同的实例元素则只有第一个起效
 * 可以在实例化的时候不指定实例元素，后面用\$mount()手动进行挂载 vm.\$mount("#app")
 * 可以通过实例获取实例元素: `console.log(vm.$el)`
+* 也支持class选择器
 
         var vm = new Vue({
-            el: '#app' // 可以后其他选择器
+            el: '#app'
         })
 
 2. 数据对象 data
 > 在 MVVM 模式中充当着M(Model)数据模型层，更多的体现于将 M 层映射到 V 层
 
-* 可以通过实例获取数据对象: `console.log(vm.$data)`
+* 可以通过实例获取数据对象: `console.log(vm.$data)一个对象, console.log(vm.key1)单个值`
 
         var vm = new Vue({
             el: '#app',
@@ -155,6 +156,31 @@
 * compute 会产生依赖缓存
 * 当 watch 监听 computed 时，watch 在这种情况下无效，仅会触发 computed.setter
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### 绑定 class
 
 ###### 对象语法：`<div :class="{classNam1: 1 == 1, className2: 1 == 2}"></div>`
@@ -234,7 +260,7 @@
     })
 
 #### $set 
-> 当实例对象 data 先设置好了结构，比如：data: {dataform: {}}，在后期想添加一个属性 username 时，这个 username 不会自动绑定到视图当中，所以调用 $set(原对象，新属性名，属性值) 进行绑定到视图当中
+> 当实例对象 data 先设置好了结构，比如：data: {dataform: {}}，在后期想添加一个属性 username 时，这个 username 不会自动绑定到视图当中，所以调用 $set(原对象，新属性名，属性值) 进行绑定到视图当中，只有当实例被创建时 data 中存在的属性才是响应式的
 
         <div id="app">
             <input type="button" value="set" @click="set">

@@ -12,37 +12,42 @@
 
 <body>
     <div id="app">
-        <h1>Hello VueRouter</h1>
-        <p>
-            <router-view></router-view>
-            <router-view name="a"></router-view>
-            <router-view name="b"></router-view>
-        </p>
+        {{a}}
     </div>
 
     <script>
-        const router = new VueRouter({
-        routes: [
-            {
-                path: '/',
-                components: {
-                    default: {
-                        template: '<h1>defalut router view</h1>'
-                    },
-                    a: {
-                        template: '<h1>a router view</h1>'
-                    },
-                    b: {
-                        template: '<h1>b router view</h1>'
-                    }
-                }
-            }
-        ]
-    })
-
-    new Vue({
+    var data = { a: 1 }
+    var vm = new Vue({
         el: '#app',
-        router
+        data: {
+            a: 1,
+            b: 2,
+            c: 3
+        },
+        beforeCreate: function(){
+            console.log("beforeCreate")
+        },
+        created: function(){
+            console.log("created")
+        },
+        beforeMount: function(){
+            console.log("beforeMounted")
+        },
+        mounted: function(){
+            console.log("mounted")
+        },
+        beforeUpdate: function(){
+            console.log("beforeUpdate")
+        },
+        updated: function(){
+            console.log("updated")
+        },
+        beforeDestroy: function(){
+            console.log("beforeDestroy")
+        },
+        destroyed: function(){
+            console.log("destroyed")
+        },
     })
     </script>
 </body>
