@@ -12,7 +12,21 @@
 
 <body>
     <div id="app">
-        {{a}}
+        <template v-show="1">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="555">
+        </template>
+        <!-- <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address">
+        </template> -->
+        <ul>
+            <li v-for="(item, index) in dataList">
+                {{item}}
+            </li>
+        </ul>
+
+        <input type="text" v-model="loginType">
     </div>
 
     <script>
@@ -20,34 +34,10 @@
     var vm = new Vue({
         el: '#app',
         data: {
-            a: 1,
-            b: 2,
-            c: 3
+            loginType: "username",
+            dataList: [1,2,3]
         },
-        beforeCreate: function(){
-            console.log("beforeCreate")
-        },
-        created: function(){
-            console.log("created")
-        },
-        beforeMount: function(){
-            console.log("beforeMounted")
-        },
-        mounted: function(){
-            console.log("mounted")
-        },
-        beforeUpdate: function(){
-            console.log("beforeUpdate")
-        },
-        updated: function(){
-            console.log("updated")
-        },
-        beforeDestroy: function(){
-            console.log("beforeDestroy")
-        },
-        destroyed: function(){
-            console.log("destroyed")
-        },
+        
     })
     </script>
 </body>

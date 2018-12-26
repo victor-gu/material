@@ -12,12 +12,19 @@
 3. VM：ViewModel，就是连接数据和视图的桥梁，当 Model 发生改变的时候，ViewModel 便将数据映射到视图
 
 #### 指令
-> {{}}相当于v-text, {{}}里面可以写表达式
+> {{}}里面可以写表达式，有个限制就是，每个绑定都只能包含单个表达式
 
 1. v-text: (string) 插入一段文本, 效果等同于{{}}, 但v-text的权重高于 {{}}
 2. v-html: (string) 插入一段html
 3. v-show: (boolean) show 值会直接影响 div 在文档中是否**显示**
 4. v-if: (boolean) 值会直接影响 div 在文档中是否**存在**
+    > 因为 v-if 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 \<template> 元素当做不可见的包裹元素，并在上面使用 v-if。最终的渲染结果将不包含 \<template> 元素
+
+        <template v-if="ok">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
 5. v-else-if: (boolean) 必须跟 v-if 或者 v-else-if 元素后面
 6. v-else: (不需要表达式) 必须跟 v-if 或者 v-else-if 元素后面
 7. v-on: (function) 绑定一个方法, 简写: `@`
@@ -26,7 +33,40 @@
 10. v-pre: {{}} 不编译，当字符串输出
 11. v-cloak: 防止加载过慢, 出现{{}}
 12. v-once: 内容只解释一次
-13. v-for: (number, string, object) `<ul v-for="(item, index) in data"></ul>`, 每改变一次数据就要重新循环整个数据，当循环数据较多时，性能较差，加入`:key=""`后，就会对比数据，当没有变化的数据就不会循环
+13. v-for: (number, string, object) `<ul v-for="(item, index) in data"></ul>`建议尽可能在使用 v-for 时提供 key，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升
+
+#### key 管理可复用的元素
+> Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。这么做除了使 Vue 变得非常快之外，还有其它一些好处。例如，如果你允许用户在不同的登录方式之间切换
+
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address">
+        </template>
+* 那么在上面的代码中切换 loginType 将不会清除用户已经输入的内容。因为两个模板使用了相同的元素，\<input> 不会被替换掉——仅仅是替换了它的 placeholder
+* 这样也不总是符合实际需求，所以 Vue 为你提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 key 属性即可
+
+#### $set 
+> 当实例对象 data 先设置好了结构，比如：data: {dataform: {}}，在后期想添加一个属性 username 时，这个 username 不会自动绑定到视图当中，所以调用 $set(原对象，新属性名，属性值) 进行绑定到视图当中，只有当实例被创建时 data 中存在的属性才是响应式的
+
+        <div id="app">
+            <input type="button" value="set" @click="set">
+            <span>{{dataform.username}}</span>
+        </div>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dataform: {}
+            },
+            methods: {
+                set: function(){
+                    this.$set(this.dataform, 'username', '123')
+                }
+            }
+        })
 
 #### 实例化基本属性
 
@@ -156,35 +196,24 @@
 * compute 会产生依赖缓存
 * 当 watch 监听 computed 时，watch 在这种情况下无效，仅会触发 computed.setter
 
+#### 生命周期钩子
+> 所有的生命周期钩子自动绑定 this 上下文到实例中，因此你可以访问数据，对属性和方法进行运算。这意味着你不能使用箭头函数来定义一个生命周期方法 (例如 created: () => this.fetchTodos())。这是因为箭头函数绑定了父上下文，因此 this 与你期待的 Vue 实例不同，this.fetchTodos 的行为未定义
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* beforeCreate：在实例初始化之后，数据观测 (data observer) 和 event/watcher 事件配置之前被调用
+* created：在实例创建完成后被立即调用。在这一步，实例已完成以下的配置：数据观测 (data observer)，属性和方法的运算，watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见
+* beforeMount：在挂载开始之前被调用：相关的 render 函数首次被调用
+* mounted：el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。如果 root 实例挂载了一个文档内元素，当 mounted 被调用时 vm.$el 也在文档内
+* beforeUpdate：数据更新时调用，发生在虚拟 DOM 打补丁之前。这里适合在更新之前访问现有的 DOM，比如手动移除已添加的事件监听器
+* updated：由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子
+* activated：keep-alive 组件激活时调用
+* deactivated：keep-alive 组件停用时调用
+* beforeDestroy：实例销毁之前调用。在这一步，实例仍然完全可用
+* destroyed：Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁
 
 #### 绑定 class
 
 ###### 对象语法：`<div :class="{classNam1: 1 == 1, className2: 1 == 2}"></div>`
-> v-bind:class="{样式名: 结果为 boolean 的表达式}"，表达式结果为 true，则元素 class="样式名"，否则元素 class=""
+> v-bind:class="{样式名: 结果为 boolean 的表达式}"，表达式结果为 true，则元素 class="样式名"，否则元素 class="", v-bind:class 指令也可以与普通的 class 属性共存，`<div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>`
 
 ###### 数组语法：`<div :class="[class1, class2, 'className3', active ? 'className4' : '']"></div>`
 > v-bind:class="[]"，数组元素可以为表达式，也可以为字符串，如果是字符串则直接输出为样式名
@@ -195,6 +224,28 @@
 ###### 对象语法：`<div :style="{color: color, fontSize: fontSize, backgroundColor: '#ccc'}"></div>`
 
 ###### 数组语法：`<div :style="[styleObject, {backgroundColor: '#ccc'}]"></div>`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### 自定义指令
 > 自定义指令和定义组件的方式很类式，也是有全局指令和局部指令之分
@@ -259,24 +310,7 @@
         }
     })
 
-#### $set 
-> 当实例对象 data 先设置好了结构，比如：data: {dataform: {}}，在后期想添加一个属性 username 时，这个 username 不会自动绑定到视图当中，所以调用 $set(原对象，新属性名，属性值) 进行绑定到视图当中，只有当实例被创建时 data 中存在的属性才是响应式的
 
-        <div id="app">
-            <input type="button" value="set" @click="set">
-            <span>{{dataform.username}}</span>
-        </div>
-        var vm = new Vue({
-            el: '#app',
-            data: {
-                dataform: {}
-            },
-            methods: {
-                set: function(){
-                    this.$set(this.dataform, 'username', '123')
-                }
-            }
-        })
 
 #### $ref
 > 当必须要操作节点是可以用`ref`, 获取用`this.$refs.focus`,focus为定义的
