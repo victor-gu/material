@@ -225,9 +225,102 @@
 
 ###### 数组语法：`<div :style="[styleObject, {backgroundColor: '#ccc'}]"></div>`
 
+#### 数组更新检测
 
+###### 变异方法
+> Vue 包含一组观察数组的变异方法，所以它们也将会触发视图更新
 
+* push()
+* pop()
+* shift()
+* unshift()
+* splice()
+* sort()
+* reverse()
 
+###### 注意事项
+> 由于 JavaScript 的限制，Vue 不能检测以下变动的数组
+
+* 当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+* 当你修改数组的长度时，例如：vm.items.length = newLength
+
+###### 解决办法
+
+* Vue.set (vm.$set)：`Vue.set(vm.items, indexOfItem, newValue)`
+* Array.prototype.splice：`vm.items.splice(indexOfItem, 1, newValue)`
+
+#### 对象更改检测注意事项
+> 还是由于 JavaScript 的限制，Vue 不能检测对象属性的添加或删除
+
+* Vue.set (vm.$set)：`Vue.set(vm.items, indexOfItem, newValue)`
+
+#### $ref
+> 当必须要操作节点是可以用`ref`, 获取用`this.$refs.focus`,focus为定义的
+
+#### 事件修饰符
+> 对事件添加一些通用的限制，比如阻止事件冒泡，Vue 对这种事件的限制提供了特定的写法，称之为修饰符 用法：v-on:事件.修饰符
+
+* 阻止事件冒泡.stop: `<div @click.stop="event1(1)">`
+* 使用事件捕获模式.capture: `<div @click.capture="event1(1)">`
+* 事件只作用本身.self，类似于已阻止事件冒泡: `<div @click.self="event1(1)">`
+* 阻止浏览器默认行为.prevent: `<div @click.prevent="event1(1)">`
+* 只作用一次.once: `<div @click.stop="once(1)">`
+* 修饰符可以串联.click.prevent.once: `<div @click.prevent.once="event1(1)">`
+
+#### 按键修饰符
+
+* ASCII：`<input @keyup.13="submit">`
+* 回车键：`<input @keyup.enter="submit">`
+* 自定义按键：`<input @keyup.number1="submit"/>`
+    Vue.config.keyCodes.number1 = 49
+
+###### 全部的按键别名：
+
+* .enter
+* .tab
+* .delete (捕获“删除”和“退格”键)
+* .esc
+* .space
+* .up
+* .down
+* .left
+* .right
+
+###### 可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器
+
+* .ctrl
+* .alt
+* .shift
+* .meta
+
+        <!-- Alt + C -->
+        <input @keyup.alt.67="clear">
+
+###### .exact 修饰符
+> .exact 修饰符允许你控制由精确的系统修饰符组合触发的事件
+
+        <!-- 即使 Alt 或 Shift 被一同按下时也会触发 -->
+        <button @click.ctrl="onClick">A</button>
+        <!-- 有且只有 Ctrl 被按下的时候才触发 -->
+        <button @click.ctrl.exact="onCtrlClick">A</button>
+        <!-- 没有任何系统修饰符被按下的时候才触发 -->
+        <button @click.exact="onClick">A</button>
+
+###### 鼠标按钮修饰符
+> 这些修饰符会限制处理函数仅响应特定的鼠标按钮
+
+* .left
+* .right
+* .middle
+
+#### 表单修饰符
+
+* 在 "change" 而不是 "input" 事件中更新
+    `<input v-model.lazy="counter">`
+* 自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值）
+    `<input v-model.number="counter" type="number">`
+* 自动过滤用户输入的首尾空格
+    `<input v-model.trim="counter">`
 
 
 
@@ -312,34 +405,6 @@
 
 
 
-#### $ref
-> 当必须要操作节点是可以用`ref`, 获取用`this.$refs.focus`,focus为定义的
-
-#### 事件修饰符
-> 对事件添加一些通用的限制，比如阻止事件冒泡，Vue 对这种事件的限制提供了特定的写法，称之为修饰符 用法：v-on:事件.修饰符
-
-* 阻止事件冒泡.stop: `<div @click.stop="event1(1)">`
-* 使用事件捕获模式.capture: `<div @click.capture="event1(1)">`
-* 事件只作用本身.self，类似于已阻止事件冒泡: `<div @click.self="event1(1)">`
-* 阻止浏览器默认行为.prevent: `<div @click.prevent="event1(1)">`
-* 只作用一次.once: `<div @click.stop="once(1)">`
-* 修饰符可以串联.click.prevent.once: `<div @click.prevent.once="event1(1)">`
-
-#### 按键修饰符
-
-* ASCII：`<input @keyup.13="submit">`
-* 回车键：`<input @keyup.enter="submit">`
-* 自定义按键：`<input @keyup.number1="submit"/>`
-    Vue.config.keyCodes.number1 = 49
-
-#### 表单修饰符
-
-* 在 "change" 而不是 "input" 事件中更新
-    `<input v-model.lazy="counter">`
-* 自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值）
-    `<input v-model.number="counter" type="number">`
-* 自动过滤用户输入的首尾空格
-    `<input v-model.trim="counter">`
 
 #### 组件
 > 组件（Component）是前端在单页面应用（SPA）上最好的一种实现方式，把所有功能模块拆解成单独的组件，每个组件都有独立的作用域，且还可以相互通信

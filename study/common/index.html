@@ -26,7 +26,8 @@
             </li>
         </ul>
 
-        <input type="text" v-model="loginType">
+        <input type="text" @keyup.ctrl.space="key" v-model="loginType">
+        <input type="checkbox" id="checkbox" v-model="checked">
     </div>
 
     <script>
@@ -35,9 +36,14 @@
         el: '#app',
         data: {
             loginType: "username",
-            dataList: [1,2,3]
+            dataList: [1,2,3],
+            checked: false
         },
-        
+        methods: {
+            key: function(){
+                console.log(666);
+            }
+        }
     })
     </script>
 </body>
