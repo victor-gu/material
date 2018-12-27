@@ -12,22 +12,9 @@
 
 <body>
     <div id="app">
-        <template v-show="1">
-            <label>Username</label>
-            <input placeholder="Enter your username" key="555">
-        </template>
-        <!-- <template v-else>
-            <label>Email</label>
-            <input placeholder="Enter your email address">
-        </template> -->
-        <ul>
-            <li v-for="(item, index) in dataList">
-                {{item}}
-            </li>
-        </ul>
-
-        <input type="text" @keyup.ctrl.space="key" v-model="loginType">
-        <input type="checkbox" id="checkbox" v-model="checked">
+        <component-test>
+            
+        </component-test>
     </div>
 
     <script>
@@ -35,13 +22,17 @@
     var vm = new Vue({
         el: '#app',
         data: {
-            loginType: "username",
-            dataList: [1,2,3],
-            checked: false
+            pick: "",
+            test: "test"
         },
         methods: {
-            key: function(){
-                console.log(666);
+            click: function(){
+                this.test = "test1"
+            }
+        },
+        components: {
+            "componentTest": {
+                template: '<div><button type="submit"><slot>Submit</slot></button><div></div></div>'
             }
         }
     })
