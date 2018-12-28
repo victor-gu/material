@@ -12,9 +12,11 @@
 
 <body>
     <div id="app">
-        <component-test>
-            
-        </component-test>
+        <ul>
+            <li @click="check">shu</li>
+            <li @click="check">shu1</li>
+        </ul>
+        <keep-alive><div :is="input1"></div></keep-alive>
     </div>
 
     <script>
@@ -22,17 +24,20 @@
     var vm = new Vue({
         el: '#app',
         data: {
-            pick: "",
-            test: "test"
+            input1: "shu"
         },
         methods: {
-            click: function(){
-                this.test = "test1"
+            check: function(e){
+                console.log(e.target.innerText);
+                this.input1 = e.target.innerText;
             }
         },
         components: {
-            "componentTest": {
-                template: '<div><button type="submit"><slot>Submit</slot></button><div></div></div>'
+            "shu": {
+                template: `<input type="text">`
+            },
+            "shu1": {
+                template: `<h1>shu</h1>`
             }
         }
     })

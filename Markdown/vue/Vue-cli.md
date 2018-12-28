@@ -8,10 +8,15 @@
 
 #### 参数
 
-* webpack.config.json类似于gulp的gulpfile.js文件
-* entry：打包入口文件
-* output：打包出来的文件配置
-* rules：打包规则
+* webpack.config.json (类似于gulp的gulpfile.js文件)
+    * entry：打包入口文件
+    * output：打包出来的文件配置
+    * rules：打包规则
+* package.json
+    * scripts对象里的dev，可更改dev为start,打开为`npm run start`,可直接`npm start`，只有start可以省略run
+        * --open：自动打开
+        * --hot：热更新
+        * --port 88：更改端口
 
 ###### 由于windows系统的某方面问题，vue脚手架安装(vue init ...)可能会出现第一证书丢失, 报错：vue-cli · Failed to download repo vuejs-templates/webpack-simple: unable to verify the first certificate，这时可以离线安装
 
