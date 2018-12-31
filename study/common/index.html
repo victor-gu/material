@@ -12,34 +12,24 @@
 
 <body>
     <div id="app">
-        <ul>
-            <li @click="check">shu</li>
-            <li @click="check">shu1</li>
-        </ul>
-        <keep-alive><div :is="input1"></div></keep-alive>
+        <input type="text" v-model="msg">
+        <h1>{{msg | text}}</h1>
     </div>
 
     <script>
-    var data = { a: 1 }
     var vm = new Vue({
         el: '#app',
-        data: {
-            input1: "shu"
-        },
-        methods: {
-            check: function(e){
-                console.log(e.target.innerText);
-                this.input1 = e.target.innerText;
+        data: function(){
+            return {
+                msg: "shu"
             }
         },
-        components: {
-            "shu": {
-                template: `<input type="text">`
-            },
-            "shu1": {
-                template: `<h1>shu</h1>`
+        filters: {
+            text: function(value){
+                return value+"$";
             }
         }
+        
     })
     </script>
 </body>
