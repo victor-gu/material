@@ -13,20 +13,21 @@
 <body>
     <div id="app">
         <input type="text" v-model="msg">
-        <h1>{{msg | text}}</h1>
+        <h1>{{msg | text("77")}}</h1>
     </div>
 
     <script>
     var vm = new Vue({
         el: '#app',
+        template: "",
         data: function(){
             return {
                 msg: "shu"
             }
         },
         filters: {
-            text: function(value){
-                return value+"$";
+            text: function(value, x){
+                return value+"$" + x;
             }
         }
         
