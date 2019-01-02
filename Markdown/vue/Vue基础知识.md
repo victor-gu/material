@@ -162,7 +162,7 @@
 * Vue在getter上面作了基于对应属性的依赖缓存，也就是说多次调用同一个属性，get只会执行一次。而事件在每次触发时都会被调用，当然在改变该属性值的时候会再次被调用
 
 5. 监听器 watch
-> Vue 提供了对单个属性的监听器，当该属性发生改变的时候，自动触发，此项使用不当会影响性能，所以慎用
+> Vue 提供了对单个属性的监听器，当该属性发生改变的时候，自动触发，此项使用不当会影响性能，所以慎用，一般用来监听单个属性，基本数据类型,复杂数据类型深度监视
 
         {
             data: {
@@ -190,6 +190,18 @@
             }
         }
 
+###### 监听引用类型
+> 监听引用类型的时候会监听不到，这时添加可以深度监听
+
+        watch: {
+            msg: {
+                deep: true,
+                handler: function(newV, oldV){
+                    console.log(newV, oldV);
+                }
+            }
+        }
+
 ###### watch 与 compute 区别
 
 * computed 创建新的属性， watch 监听 data 已有的属性
@@ -203,11 +215,11 @@
 > 所有的生命周期钩子自动绑定 this 上下文到实例中，因此你可以访问数据，对属性和方法进行运算。这意味着你不能使用箭头函数来定义一个生命周期方法 (例如 created: () => this.fetchTodos())。这是因为箭头函数绑定了父上下文，因此 this 与你期待的 Vue 实例不同，this.fetchTodos 的行为未定义
 
 * beforeCreate：在实例初始化之后，数据观测 (data observer) 和 event/watcher 事件配置之前被调用
-* created：在实例创建完成后被立即调用。在这一步，实例已完成以下的配置：数据观测 (data observer)，属性和方法的运算，watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见
-* beforeMount：在挂载开始之前被调用：相关的 render 函数首次被调用
-* mounted：el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。如果 root 实例挂载了一个文档内元素，当 mounted 被调用时 vm.$el 也在文档内
-* beforeUpdate：数据更新时调用，发生在虚拟 DOM 打补丁之前。这里适合在更新之前访问现有的 DOM，比如手动移除已添加的事件监听器
-* updated：由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子
+* created：在实例创建完成后被立即调用。在这一步，实例已完成以下的配置：数据观测 (data observer)，属性和方法的运算，watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见，可以在这里操作数据
+* beforeMount：在挂载开始之前被调用：相关的 render 函数首次被调用,组件还没有渲染到dom
+* mounted：el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。如果 root 实例挂载了一个文档内元素，当 mounted 被调用时 vm.$el 也在文档内，vue已经渲染到了dom
+* beforeUpdate：数据更新时调用，发生在虚拟 DOM 打补丁之前。这里适合在更新之前访问现有的 DOM，比如手动移除已添加的事件监听器，在更新dom之前
+* updated：由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子，在更新dom之后
 * activated：keep-alive 组件激活时调用
 * deactivated：keep-alive 组件停用时调用
 * beforeDestroy：实例销毁之前调用。在这一步，实例仍然完全可用
@@ -259,6 +271,31 @@
 
 #### $ref
 > 当必须要操作节点是可以用`ref`, 获取用`this.$refs.focus`,focus为定义的
+
+* 如果是给标签绑定ref属性，在组件内部使用this.$refs.xxx是获取的js的DOM对象
+* 如果是给组件绑定ref属性,那么this.$refs.xxx获取的是组件对象
+
+#### $nextTick
+> 当时动态生成的dom，使用ref是无法获取到节点的，这时应该用到$nextTick，$nextTick是在dom更新循环结束之后执行延迟回调，在修改数据之后使用$nextTick，可以在回调中获取到更新后的dom
+
+        <div id="app">
+            <input type="text" v-if="show" ref="show1">
+        </div>
+
+        var vm = new Vue({
+            el: '#app',
+            data: function(){
+                return {
+                    show: false
+                }
+            },
+            mounted: function(){
+                this.show = true;
+                this.$nextTick(function(){
+                    this.$refs.show1.focus();
+                })
+            }
+        })
 
 #### 事件修饰符
 > 对事件添加一些通用的限制，比如阻止事件冒泡，Vue 对这种事件的限制提供了特定的写法，称之为修饰符 用法：v-on:事件.修饰符

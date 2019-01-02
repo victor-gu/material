@@ -12,23 +12,31 @@
 
 <body>
     <div id="app">
-        <input type="text" v-model="msg">
-        <h1>{{msg | text("77")}}</h1>
+        <input type="text" v-if="show" v-model="msg.name" ref="show1">
     </div>
 
     <script>
     var vm = new Vue({
         el: '#app',
-        template: "",
         data: function(){
             return {
-                msg: "shu"
+                msg: {name: "jack"},
+                show: false
             }
         },
-        filters: {
-            text: function(value, x){
-                return value+"$" + x;
+        watch: {
+            msg: {
+                deep: true,
+                handler: function(value, x){
+                    console.log(value, x);
+                }
             }
+        },
+        mounted: function(){
+            this.show = true;
+            this.$nextTick(function(){
+                this.$refs.show1.focus();
+            })
         }
         
     })
