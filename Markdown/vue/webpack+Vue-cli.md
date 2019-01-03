@@ -17,6 +17,7 @@
         * --open：自动打开
         * --hot：热更新
         * --port 88：更改端口
+        * --inline: 自动刷新
 
 ###### 由于windows系统的某方面问题，vue脚手架安装(vue init ...)可能会出现第一证书丢失, 报错：vue-cli · Failed to download repo vuejs-templates/webpack-simple: unable to verify the first certificate，这时可以离线安装
 
