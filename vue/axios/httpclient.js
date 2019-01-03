@@ -15,7 +15,8 @@ export default {
             axios({
                 method: 'get',
                 url: filterUrl(url),
-                params: params || {}
+                params: params || {},
+                timeout: 30000,
             }).then(res => {
                 resolve(res);
             }).catch(error => {
@@ -29,6 +30,7 @@ export default {
                 method: 'post',
                 url: filterUrl(url),
                 data: params || {},
+                timeout: 30000,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
