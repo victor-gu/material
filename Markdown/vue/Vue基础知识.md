@@ -11,6 +11,12 @@
 2. V：View，视图，也就是 HTML
 3. VM：ViewModel，就是连接数据和视图的桥梁，当 Model 发生改变的时候，ViewModel 便将数据映射到视图
 
+#### 虚拟DOM
+> 所谓虚拟DOM的诞生，是我们可以不直接操作DOM元素，值操作数据便可以重新渲染页面，而隐藏在背后的原理便是其diff算法，它的核心基于两个简单的假设
+
+* 两个相同的组件产生类似的DOM结构，不同的组件产生不同的DOM结构
+* 同一层级的组节点,他们可以通过唯一的id进行区分
+
 #### 指令
 > {{}}里面可以写表达式，有个限制就是，每个绑定都只能包含单个表达式
 
@@ -48,25 +54,6 @@
         </template>
 * 那么在上面的代码中切换 loginType 将不会清除用户已经输入的内容。因为两个模板使用了相同的元素，\<input> 不会被替换掉——仅仅是替换了它的 placeholder
 * 这样也不总是符合实际需求，所以 Vue 为你提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 key 属性即可
-
-#### $set 
-> 当实例对象 data 先设置好了结构，比如：data: {dataform: {}}，在后期想添加一个属性 username 时，这个 username 不会自动绑定到视图当中，所以调用 $set(原对象，新属性名，属性值) 进行绑定到视图当中，只有当实例被创建时 data 中存在的属性才是响应式的
-
-        <div id="app">
-            <input type="button" value="set" @click="set">
-            <span>{{dataform.username}}</span>
-        </div>
-        var vm = new Vue({
-            el: '#app',
-            data: {
-                dataform: {}
-            },
-            methods: {
-                set: function(){
-                    this.$set(this.dataform, 'username', '123')
-                }
-            }
-        })
 
 #### 实例化基本属性
 
@@ -268,6 +255,25 @@
 > 还是由于 JavaScript 的限制，Vue 不能检测对象属性的添加或删除
 
 * Vue.set (vm.$set)：`Vue.set(vm.items, indexOfItem, newValue)`
+
+#### $set 
+> 当实例对象 data 先设置好了结构，比如：data: {dataform: {}}，在后期想添加一个属性 username 时，这个 username 不会自动绑定到视图当中，所以调用 $set(原对象，新属性名，属性值) 进行绑定到视图当中，只有当实例被创建时 data 中存在的属性才是响应式的
+
+        <div id="app">
+            <input type="button" value="set" @click="set">
+            <span>{{dataform.username}}</span>
+        </div>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dataform: {}
+            },
+            methods: {
+                set: function(){
+                    this.$set(this.dataform, 'username', '123')
+                }
+            }
+        })
 
 #### $ref
 > 当必须要操作节点是可以用`ref`, 获取用`this.$refs.focus`,focus为定义的

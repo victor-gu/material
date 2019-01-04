@@ -1,4 +1,4 @@
-## Vue-cli
+## webpack + Vue-cli
 
 1. 全局安装：`npm install -g vue-cli`
 2. 局部安装：`vue init webpack-simple 项目名`
