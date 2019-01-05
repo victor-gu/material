@@ -1,12 +1,23 @@
 ## webpack + Vue-cli
 
 1. 全局安装：`npm install -g vue-cli`
-2. 局部安装：`vue init webpack-simple 项目名`
+2. 局部安装：`vue init <template-name> 项目名`
 3. `cd 项目名`
 4. `npm install`
 5. `npm run dev`
 
-#### 参数
+#### templale-name
+
+1. webpack：一个功能齐全的webpack+vue-loader设置，具有热重载，linting，测试和css提示功能
+2. webpack-simple：一个简单的webpack+vue-loader设置，用于快速的原型设计
+3. browserify：全功能的browserify+vueify设置用热重载，linting和热重载
+4. browserify-simple：一个简单的browserify+vueify设置，用于快速的原型设计
+5. pwa基于webpack模板的vue-cli的pwa模板
+6. simple：单个html文件中最简单的vue设置
+
+[模板下载地址](https://github.com/vuejs-templates/)
+
+#### webpack-simple参数
 
 * webpack.config.json (类似于gulp的gulpfile.js文件)
     * entry：打包入口文件
@@ -18,6 +29,17 @@
         * --hot：热更新
         * --port 88：更改端口
         * --inline: 自动刷新
+
+#### webpack参数
+
+* config/index.js
+    * host：ip地址
+    * port：端口
+    * autoOpenBrowser：自动打开l浏览器
+* main.js
+    * Vue.config.productionTip：是否显示提示信息
+* build/webpack.base.conf.js
+    * @：指定了路径的别名
 
 ###### 由于windows系统的某方面问题，vue脚手架安装(vue init ...)可能会出现第一证书丢失, 报错：vue-cli · Failed to download repo vuejs-templates/webpack-simple: unable to verify the first certificate，这时可以离线安装
 
