@@ -9,4 +9,5 @@ jsonp：https://blog.csdn.net/firebird_one/article/details/78675836
 vue，ios单页面的橡皮筋效果：https://github.com/cssmagic/blog/issues/1
 vue: 全选，反选     // 单个复选框，绑定到布尔值
 vue训练：https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/#%E5%8A%9F%E8%83%BD
-lodash工具库
+lodash.js工具库
+moment.js

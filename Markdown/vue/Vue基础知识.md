@@ -12,7 +12,7 @@
 3. VM：ViewModel，就是连接数据和视图的桥梁，当 Model 发生改变的时候，ViewModel 便将数据映射到视图
 
 #### 虚拟DOM
-> 所谓虚拟DOM的诞生，是我们可以不直接操作DOM元素，值操作数据便可以重新渲染页面，而隐藏在背后的原理便是其diff算法，它的核心基于两个简单的假设
+> 所谓虚拟DOM的诞生，是我们可以不直接操作DOM元素，只操作数据便可以重新渲染页面，而隐藏在背后的原理便是其diff算法，它的核心基于两个简单的假设
 
 * 两个相同的组件产生类似的DOM结构，不同的组件产生不同的DOM结构
 * 同一层级的组节点,他们可以通过唯一的id进行区分
@@ -67,7 +67,7 @@
 * 也支持class选择器
 
         var vm = new Vue({
-            el: '#app'
+            el: '.app'
         })
 
 2. 数据对象 data
@@ -77,8 +77,10 @@
 
         var vm = new Vue({
             el: '#app',
-            data: {
-                key1: '文本'
+            data: function(){
+                return {
+                    key1: '文本'
+                }
             }
         }
 
@@ -170,6 +172,7 @@
                 changeA: function (newVal, oldVal) {
                     //自动触发此方法
                     console.log('new: %s, old: %s', newVal, oldVal)
+                    //不能使用箭头函数，this有问题
                 }
             },
             watch: {
@@ -192,7 +195,7 @@
 ###### watch 与 compute 区别
 
 * computed 创建新的属性， watch 监听 data 已有的属性
-* compute 会产生依赖缓存
+* computed 会产生依赖缓存
 * 当 watch 监听 computed 时，watch 在这种情况下无效，仅会触发 computed.setter
 
 6. template
@@ -282,7 +285,7 @@
 * 如果是给组件绑定ref属性,那么this.$refs.xxx获取的是组件对象
 
 #### $nextTick
-> 当时动态生成的dom，使用ref是无法获取到节点的，这时应该用到$nextTick，$nextTick是在dom更新循环结束之后执行延迟回调，在修改数据之后使用$nextTick，可以在回调中获取到更新后的dom
+> 当时动态生成的dom，使用ref是无法获取到节点的，这时应该用到\$nextTick，\$nextTick是在dom更新循环结束之后执行延迟回调，在修改数据之后使用$nextTick，可以在回调中获取到更新后的dom
 
         <div id="app">
             <input type="text" v-if="show" ref="show1">
@@ -377,7 +380,7 @@
         <input type="checkbox" id="checkbox" v-model="checked">
         <label for="checkbox">{{ checked }}</label>
 
-> 多个复选框，绑定到同一个数组，没选中一个复选框，checked数组中就会添加一个input的value的数组项，取消则会删除
+> 多个复选框，绑定到同一个数组，每选中一个复选框，checked数组中就会添加一个input的value的数组项，取消则会删除
 
         <input type="checkbox" id="checkbox" value="checkbox" v-model="checked">
         <input type="checkbox" id="checkbox1" value="checkbox1" v-model="checked">
@@ -407,19 +410,6 @@
         vm.toggle === 'yes'
         // 当没有选中时
         vm.toggle === 'no'
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #### 自定义指令
 > 自定义指令和定义组件的方式很类式，也是有全局指令和局部指令之分
@@ -484,7 +474,16 @@
         }
     })
 
+#### 自定义插件
+> 像使用Vue.use(router)一样使用
 
+    function installer(){}
+
+    installer.install = function(Vue){
+        console.log(Vue);
+    }
+
+    export default installer;
 
 
 
