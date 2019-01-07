@@ -41,6 +41,10 @@
     * Vue.config.productionTip：是否显示提示信息
 * build/webpack.base.conf.js
     * @：指定了路径的别名
+* webpack默认没有引入sass，可以引入sass，
+    * `npm install sass-loader node-sass webpack --save-dev`
+    * `npm install style-loader css-loader --save-dev`
+
 
 ###### 由于windows系统的某方面问题，vue脚手架安装(vue init ...)可能会出现第一证书丢失, 报错：vue-cli · Failed to download repo vuejs-templates/webpack-simple: unable to verify the first certificate，这时可以离线安装
 
