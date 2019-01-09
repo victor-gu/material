@@ -12,6 +12,7 @@ vue训练：https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/#%E5%8A%
 lodash.js工具库
 moment.js
 VeeValidate
+vue图片预览：vue-preview
 
-
-第二节：全局组件的封装加name，路由传参，过滤器，组件内的钩子函数
+第二节：全局组件的封装加name，路由传参，过滤器，组件内的钩子函数，lazy
+第三节：vue-preivew，mint-button，mint-toast
