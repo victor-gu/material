@@ -13,6 +13,7 @@ lodash.js工具库
 moment.js
 VeeValidate
 vue图片预览：vue-preview
+pxcook
 
 第二节：全局组件的封装加name，路由传参，过滤器，组件内的钩子函数，lazy
 第三节：vue-preivew，mint-button，mint-toast
