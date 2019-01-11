@@ -33,7 +33,7 @@
 #### webpack参数
 
 * config/index.js
-    * host：ip地址
+    * host：ip地址, 更改为"0.0.0.0"后，localhost和本地ip地址都可以访问
     * port：端口
     * autoOpenBrowser：自动打开l浏览器
     * useEslint：是否使用Eslint
