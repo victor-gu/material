@@ -197,6 +197,7 @@
 * computed 创建新的属性， watch 监听 data 已有的属性
 * computed 会产生依赖缓存
 * 当 watch 监听 computed 时，watch 在这种情况下无效，仅会触发 computed.setter
+* computed可以监听多个属性，比如计算购物车的总价格
 
 6. template
 > 如果template里面有值，优先渲染template，或者渲染el
