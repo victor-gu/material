@@ -37,6 +37,7 @@
     * port：端口
     * autoOpenBrowser：自动打开l浏览器
     * useEslint：是否使用Eslint
+    * productionSourceMap: false：加快打包速度，减小打包体积
 * main.js
     * Vue.config.productionTip：是否显示提示信息
 * build/webpack.base.conf.js
