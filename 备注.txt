@@ -1,4 +1,4 @@
-
+﻿
 
 获取城市天气：http://wthrcdn.etouch.cn/weather_mini?city=北京  get请求
 获取城市：https://www.imooc.com/article/35794?block_id=tuijian_wz
@@ -22,3 +22,5 @@ easy-mock
 第二节：全局组件的封装加name，路由传参，过滤器，组件内的钩子函数，lazy
 第三节：vue-preivew，mint-button，mint-toast, router-view添加class，用v-if全部是用图片懒加载，axios的拦截器
 第四节：控制字数显示过滤器，loadmore加载更多，axios的合并请求axios.all()，组件内内的beforeRoute控制title的文字
+
+ceshi
