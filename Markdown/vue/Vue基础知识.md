@@ -444,7 +444,7 @@
         //后于 bind 触发
         //参数 element： 使用指令的元素
         //参数 binding： 使用指令的属性对象
-        //参数 vnode： 整个 Vue 实例
+        //参数 vnode： 整个 Vue 实例，vnode.context可以访问到当前实例
         inserted: function(eleement, binding, vnode){
             console.log('inserted');
         },
