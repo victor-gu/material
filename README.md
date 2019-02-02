@@ -42,4 +42,6 @@
 
 ### [壁纸](https://alpha.wallhaven.cc/) https://alpha.wallhaven.cc/
 
+### [本地图片压缩](https://tinypng.com/) https://tinypng.com/
+
 [MarkDown](https://www.appinn.com/markdown/)
