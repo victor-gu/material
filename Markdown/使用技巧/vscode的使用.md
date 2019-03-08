@@ -44,6 +44,12 @@ VSCode配置 Debugger for Chrome插件")
         * 把GITHUB GIST的内容粘贴然后回车
     * token : 75397d355541e59e018b83a506d5b15ca470ef50
     * GIST ID : f7f4fc26e230f6321f43093ef7bdeb09
+16. eslint-plugin-vue：自动修复eslint报错
+    * vscode安装eslint，vetur 插件
+    * npm install eslint-plugin-vue --save-dev
+    * 找到 .eslint.js文件，添加plugins: [ "vue" ]
+    * 修改vscode首选项配置
+    * 重启vscode
 
 #### 常用快捷键：
 
