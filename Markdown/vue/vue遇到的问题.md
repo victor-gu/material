@@ -8,3 +8,7 @@
 #### ESlint全局变量报错：xx is not defined
 
 ###### 解决： /* global layer */，这样使用就告诉了eslint，我全局变量里面有xx，不要再报错了
+
+#### ESlint声明未使用报错：'xxx' is assigned a value but never used
+
+######解决：1. 在声明变量的当前行加上一条注释 // eslint-disable-line no-unused-vars。2. 找到eslint.json，\{"rules":\{ "no-unused-vars":0 }}
