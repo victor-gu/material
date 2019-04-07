@@ -129,6 +129,52 @@
 5. 在做数据查询时，建议用Get方式
 6. post是通过HTTP post机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址，用户看不到这个过程
 
+#### reduce归并方法
+
+* 接收两个参数，reduce(fn[, initval])
+* initval为初始值
+* 函数需要返回一个值，这个值会在下一次迭代中作为prev的值，没有初始值时，prev为数组的第一项
+* fn有个四个参数，prev(前一个值)，cur(当前值)，index(当前索引)，array(数组对象)
+
+        var names = [ 'Tom', 'Jack', 'Toy', 'Tom' ]; 输出：{ 'Tom': 2, 'Jack': 1, 'Toy': 1 }
+        var countedNames = names.reduce(function (allNames, name) { 
+        if (name in allNames) {
+            allNames[name]++;
+        }
+        else {
+            allNames[name] = 1;
+        }
+        return allNames;
+        }, {});
+
+#### JavaScript 判断对象中是否有某属性
+
+1. 点( . )或者方括号( [ ] )
+> 通过点或者方括号可以获取对象的属性值，如果对象上不存在该属性，则会返回undefined。当然，这里的“不存在”指的是对象自身和原型链上都不存在，如果原型链有该属性，则会返回原型链上的属性值，局限性就是：不能用在x的属性值存在，但可能为 undefined的场景
+2. in 运算符
+> 如果指定的属性在指定的对象或其原型链中，则in 运算符返回true，局限性就是无法区分自身和原型链上的属性
+3. hasOwnProperty()
+> `test.hasOwnProperty('toString')    //false  原型链上属性`，可以看到，只有自身存在该属性时，才会返回true。适用于只判断自身属性的场景
+
+#### 在 JS 对象中使用 . 和 [] 操作属性的区别
+> 点方法后面跟的必须是一个指定的属性名称，而中括号方法里面可以是变量
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
