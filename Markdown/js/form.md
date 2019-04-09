@@ -132,17 +132,44 @@
 
 #### 利用这个files对象，我们可以实现很多功能
 
+1. 选择图片本地预览图片
+    * 利用window的url工具将文件生成url，再将url赋值给img的src属性
 
 
+#### window.URL
+###### 方法
+* window.URL.createObjectURL(param)
+> param为fileList对象或者blob对象，返回的事blob对象
+* window.URL.revokeObjectURL()
+> 在每次调用 createObjectURL() 方法时，都会创建一个新的 URL 对象，即使你已经用相同的对象作为参数创建过。当不再需要这些 URL 对象时，每个对象必须通过调用 URL.revokeObjectURL() 方法来释放。浏览器会在文档退出的时候自动释放它们，但是为了获得最佳性能和内存使用状况，你应该在安全的时机主动释放掉它们。
 
+#### fileReader
+> 方法并不会返回读取结果，这一结果存储在result属性中
 
+* 方法
+    1. readAsBinaryString：参数：file：将文件读取为二进制编码
+    2. readAsText：参数：file：将文件读取为文本
+    3. readAsDataURL：参数：file：将文件读取为DataURL
+    4. abort：参数：file：终端读取操作
 
+* 事件
+    1. onabort：中断
+    2. onerror：出错
+    3. onloadstart：开始
+    4. onprogress：正在读取
+    5. onload：成功读取
+    6. onloadend：读取完成，无论成功失败
 
+            var reader = new FileReader(); 
+            //将文件以Data URL形式读入页面 
+            reader.readAsDataURL(file); 
+            reader.onload=function(e){ 
+              var result=document.getElementById("result"); 
+              //显示文件 
+              result.innerHTML='<img src="' + this.result +'" alt="" />'; 
+            } 
 
-
-
-
-
+https://www.cnblogs.com/MrZouJian/p/5909263.html
 
 
 
