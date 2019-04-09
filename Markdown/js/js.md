@@ -154,11 +154,29 @@
 2. in 运算符
 > 如果指定的属性在指定的对象或其原型链中，则in 运算符返回true，局限性就是无法区分自身和原型链上的属性
 3. hasOwnProperty()
-> `test.hasOwnProperty('toString')    //false  原型链上属性`，可以看到，只有自身存在该属性时，才会返回true。适用于只判断自身属性的场景
+> `test.hasOwnProperty('toString')    //false  原型链上属性`，可以看到，只有自身存在该属性时，才会返回true，同样可以解决undefined的场景。适用于只判断自身属性的场景
 
 #### 在 JS 对象中使用 . 和 [] 操作属性的区别
 > 点方法后面跟的必须是一个指定的属性名称，而中括号方法里面可以是变量
 
+#### js将字符串作为函数调用
+
+* eval(str)
+> eval(str) 函数可计算某个字符串，并执行其中的的 JavaScript 代码。注意，eval方法的参数只能是字符串，如果传递的不是字符串的话，会直接返回传值，而非调用。由于eval方法效率低，而且不安全，不建议使用
+
+        function test(str){
+            alert(str);
+        }
+        var a='test';
+        eval(a+'('+123+')');
+* 把方法名当成属性名
+> 函数在js里面可以被保存在对象中，因此通过对象的属性访问,调用字符串方法
+
+        function test(str){
+            alert(str);
+        }
+        var param='哈哈';
+        window['test'](param);//直接执行
 
 
 
