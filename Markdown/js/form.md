@@ -130,6 +130,20 @@
 * 结果中有一个files字段：这个是fileList对象，是一个只读对象，不能修改，因为它不能修改，所以很难实现对已选中多个文件的删除某个文件等操作
 * 里面记录了文件的name，size，type，和修改时间等，可知这个对象只存放了一些文件的信息，相当于是本地文件的索引，并不是把文件放到input中了，上传文件时它会再去找到实际的本地文件
 
+###### 属性
+
+* File.lastModified：返回文件的上次修改时间，以UNIX纪元（1970年1月1日午夜）为单位，以毫秒为单位
+* File.lastModifiedDate：返回对象引用的文件的最后一次修改
+* File.name：返回File对象引用的文件的名称
+* File.webkitRelativePath：返回相对于其的URL的路径File
+* File.size：以字节为单位返回文件的大小，继承自Blob
+* File.type：返回文件的MIME类型：继承自Blob
+
+###### 方法
+> 该File接口并没有定义任何方法，但继承方法的Blob接口
+
+* Blob.slice([start[, end[, contentType]]])：返回一个新Blob对象，该对象包含源的指定字节范围内的数据Blob
+
 #### 利用这个files对象，我们可以实现很多功能
 
 1. 选择图片本地预览图片
@@ -162,10 +176,11 @@
 > 方法并不会返回读取结果，这一结果存储在result属性中
 
 * 方法
-    1. readAsBinaryString：参数：file：将文件读取为二进制编码
-    2. readAsText：参数：file：将文件读取为文本
-    3. readAsDataURL：参数：file：将文件读取为DataURL
-    4. abort：终端读取操作
+    1. readAsBinaryString：参数：file/blob：result属性中将包含所读取文件的原始二进制数据
+    2. readAsText：参数：file/blob：result属性中将包含一个字符串以表示所读取的文件内容
+    3. readAsDataURL：参数：file/blob：result属性中将包含一个data: URL格式的字符串以表示所读取文件的内容
+    4. readAsArrayBuffer()：参数：file/blob： result 属性中保存的将是被读取文件的 ArrayBuffer 数据对象
+    5. abort：终止读取操作
 
 * 事件
     1. onabort：中断
@@ -198,17 +213,36 @@
 * ondragleave：当被鼠标拖动的对象离开其容器范围内时触发此事件
 * ondrop：在一个拖动过程中，释放鼠标键时触发此事件
 
+#### blob
 
+* Blob 对象表示一个不可变、原始数据的类文件对象。Blob 表示的不一定是JavaScript原生格式的数据
+* File接口就是基于Blob，继承blob功能并将其扩展为支持用户系统上的文件，也就是说：File接口中的Flie对象就是继承与Blob对象
 
+###### 创建
 
-blobs
+* var aBlob = new Blob( array, options );
+    * array 是一个由ArrayBuffer, ArrayBufferView, Blob, DOMString 等对象构成的 Array ，或者其他类似对象的混合体，它将会被放进 Blob。DOMStrings会被编码为UTF-8
+    * options 是一个可选的BlobPropertyBag字典，它可能会指定如下两个属性：
+        * type，默认值为 ""，它代表了将会被放入到blob中的数组内容的MIME类型。
+        * endings，默认值为"transparent"，用于指定包含行结束符\n的字符串如何被写入。 它是以下两个值中的一个： "native"，代表行结束符会被更改为适合宿主操作系统文件系统的换行符，或者 "transparent"，代表会保持blob中保存的结束符不变 
 
+###### 属性
 
+* Blob.size：Blob 对象中所包含数据的大小
+* Blob.type：一个字符串，表明该Blob对象所包含数据的MIME类型。如果类型未知，则该值为空字符串
+* Blob.isClosed：布尔值，指示 Blob.close() 是否在该对象上调用过。 关闭的 blob 对象不可读
 
+###### 方法
 
+* Blob.slice([start,[ end ,[contentType]]])：返回一个新的 Blob对象，包含了源 Blob对象中指定范围内的数据
+* Blob.close()：关闭 Blob 对象，以便能释放底层资源
 
+###### Blob对象的使用
 
+* 图片分片上传
+* 监听用户粘贴操作，显示图片
 
+参考：https://www.cnblogs.com/wangfajing/p/7202139.html?utm_source=itdadao&utm_medium=referral
 
 
 
