@@ -5,19 +5,17 @@
     <script src="./js/jquery-3.2.1.js"></script>
 </head>
 <body>
-    <input type="file" name="file1" multiple>
-    <div id="result"></div>
+    <div id="result" style="width: 200px; height: 200px; background:red;"></div>
     <script>
-      $("input[name='file1']").change( function(e){
-          var reader = new FileReader();
-          reader.readAsBinaryString($("input[name='file1']")[0].files[0])
-          reader.onload=function(e){ 
-            var result=document.getElementById("result"); 
-            console.log(e);
-            //显示文件 
-            result.innerHTML='<img src="' + this.result +'" alt="" />'; 
-          } 
-        })
+      $('#result').bind('dragenter dragover', function(e){
+        console.log(33);
+        e.originalEvent.stopPropagation();
+        e.originalEvent.preventDefault();
+      });
+      $('#result').bind('drop', function(e){
+        e.originalEvent.stopPropagation();
+        e.originalEvent.preventDefault();
+      });
     </script>
 </body>
 </html>

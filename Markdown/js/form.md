@@ -134,7 +134,9 @@
 
 1. 选择图片本地预览图片
     * 利用window的url工具将文件生成url，再将url赋值给img的src属性
-
+    * 利用fileReader读取文件
+2. 实现文件拖拽并上传文件
+> 因为拖拽的区域只是一个div，无法进行上传操作，所以需要加一个form和input，让拖拽进去的文件进入input中,取出files后，用$("#file1")[0].files=files;将文件赋值给input
 
 #### window.URL
 ###### 方法
@@ -143,6 +145,19 @@
 * window.URL.revokeObjectURL()
 > 在每次调用 createObjectURL() 方法时，都会创建一个新的 URL 对象，即使你已经用相同的对象作为参数创建过。当不再需要这些 URL 对象时，每个对象必须通过调用 URL.revokeObjectURL() 方法来释放。浏览器会在文档退出的时候自动释放它们，但是为了获得最佳性能和内存使用状况，你应该在安全的时机主动释放掉它们。
 
+        var files = e.originalEvent.dataTransfer.files;
+        $("#file1")[0].files=files;   //关键：将取到的文件赋值给input，用于ajax提交文件！！！
+        var formData = new FormData($("#form1")[0]);
+        $.ajax({
+          url : "/it/orderManage/saveActivity",
+          type : 'POST',
+          data : formData,
+          processData : false,
+          contentType : false,
+          async : true,
+          success : function() {}
+        });
+
 #### fileReader
 > 方法并不会返回读取结果，这一结果存储在result属性中
 
@@ -150,7 +165,7 @@
     1. readAsBinaryString：参数：file：将文件读取为二进制编码
     2. readAsText：参数：file：将文件读取为文本
     3. readAsDataURL：参数：file：将文件读取为DataURL
-    4. abort：参数：file：终端读取操作
+    4. abort：终端读取操作
 
 * 事件
     1. onabort：中断
@@ -164,12 +179,25 @@
             //将文件以Data URL形式读入页面 
             reader.readAsDataURL(file); 
             reader.onload=function(e){ 
+              console.log(e.target.result);
               var result=document.getElementById("result"); 
               //显示文件 
-              result.innerHTML='<img src="' + this.result +'" alt="" />'; 
+              result.innerHTML='<img src="' + this.result +'" alt="" />';
             } 
 
-https://www.cnblogs.com/MrZouJian/p/5909263.html
+#### 拖拽事件
+
+1. 在拖动目标上触发事件 (源元素)
+* ondragstart：用户开始拖动元素时触发
+* ondrag：元素正在拖动时触发
+* ondragend：用户完成元素拖动后触发
+
+2. 释放目标时触发的事件
+* ondragenter：当被鼠标拖动的对象进入其容器范围内时触发此事件
+* ondragover：当某被拖动的对象在另一对象容器范围内拖动时触发此事件
+* ondragleave：当被鼠标拖动的对象离开其容器范围内时触发此事件
+* ondrop：在一个拖动过程中，释放鼠标键时触发此事件
+
 
 
 
