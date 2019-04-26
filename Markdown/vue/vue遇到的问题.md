@@ -12,3 +12,24 @@
 #### ESlint声明未使用报错：'xxx' is assigned a value but never used
 
 ######解决：1. 在声明变量的当前行加上一条注释 // eslint-disable-line no-unused-vars。2. 找到eslint.json，\{"rules":\{ "no-unused-vars":0 }}
+
+#### element select在edge浏览器有个bug，官网就是如此，el-select选择几次后，会出现刷新页面，有时会出现跳转到一个404页面，（并不是所有的edge都会）
+
+######解决
+
+    <el-select @visible-change="visibleChange">
+        /// options
+    </el-select>
+
+    export default {
+        methods: {
+            visibleChange(isVisible) {
+                const isEdge = window.navigator.userAgent.includes('Edge');
+                if (isEdge && !isVisible) {
+                    document
+                        .querySelectorAll('body > .el-select-dropdown.el-popper')
+                        .forEach((it) => it.remove());
+                }
+            },
+        },
+    }
