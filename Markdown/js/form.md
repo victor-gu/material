@@ -255,5 +255,49 @@ https://www.codewars.com/dashboard
 https://github.com/guangyuan-Tang/web-gather
 
 
+async/awite
+
+    export function image(id, cb) {
+      // img添加权限指令
+      if (id !== 0) {
+        axios({
+          url: '/attachments/' + id,
+          method: 'get',
+          responseType: 'arraybuffer'
+        }).then((response) => {
+          // var mimeType = response.headers['content-type'].toLowerCase();
+          // let blob = new Blob([response.data], {
+          //   type: mimeType
+          // });
+          // cb(window.URL.createObjectURL(blob));
+          var mimeType = response.headers['content-type'].toLowerCase();
+          var imgBase64 = new Buffer(response.data, 'binary').toString('base64');
+          cb('data:' + mimeType + ';base64,' + imgBase64);
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
+    }
+
+    report(val) {
+      axios({
+        method: 'get',
+        url: '/attachments/' + val,
+        responseType: 'arraybuffer'
+      }).then(function(resp) {
+        var mimeType = resp.headers['content-type'].toLowerCase();
+        let blob = new Blob([resp.data], {
+          type: mimeType
+        });
+        let aLink = document.createElement('a');
+        let evt = document.createEvent('HTMLEvents');
+        evt.initEvent('click', true, true);
+        aLink.download = new Date().getTime().toString() + '.pdf';
+        aLink.href = URL.createObjectURL(blob);
+        aLink.click();
+      }).catch(function() {});
+    }
+
+
 
 *一辈子很短，努力的做好两件事就好；第一件事是热爱生活，好好的去爱身边的人；第二件事是努力学习，在工作中取得不一样的成绩，实现自己的价值。*
