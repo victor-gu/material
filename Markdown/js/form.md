@@ -241,14 +241,12 @@
 
 * 图片分片上传
 * 监听用户粘贴操作，显示图片
-
+https://blog.csdn.net/joshua2011/article/details/81939889
 blob：blob:url
 
 参考：https://www.cnblogs.com/wangfajing/p/7202139.html?utm_source=itdadao&utm_medium=referral
 
 微信文件助手
-cron
-mixin
 语言训练：
 https://www.codewars.com/dashboard
 光源github：
