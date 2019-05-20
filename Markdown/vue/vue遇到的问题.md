@@ -39,3 +39,8 @@
 ###### 解决
 * 在 static 文件夹中新建一个 config.json，把你要写的配置写入
 * 用http的请求的方式读取数据，不能直接引用读取文件，打包后再修改config.js后不会发生变化
+
+#### element的table组件expand会渲染两次模板内容
+
+* 原因： The fixed attribute in \<el-table-column\> will causes \<el-table-body\> to be rendered twice
+* 具有fixed属性的table会这样，因为现在 fixed table 的实现方式就是用多个 table 拼装而成的，实现方式不一样，去掉fixed属性就好了
