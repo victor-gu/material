@@ -51,6 +51,9 @@ VSCode配置 Debugger for Chrome插件")
     * 修改vscode首选项配置
     * 重启vscode
 17. minapp：微信小程序标签，属性智能补全（同时支持原生小程序，mpvue，wepy框架）
+18. line-counter：统计代码行数
+19. background：vscode背景图片
+
 
 #### 常用快捷键：
 
