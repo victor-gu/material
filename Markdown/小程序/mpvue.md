@@ -65,3 +65,8 @@ npm run build --report
 * 建议发送http请求在onLoad生命钩子里，可以减少白屏时间
 * onShow：在模块显示的时候执行，切换tab和返回到该模块时，该钩子会执行，多次触发
 * onHide：在模块隐藏的时候执行，切换tab和返回到该模块时，该钩子会执行，多次触发
+
+4. 不支持过滤器filters，不可以在template中使用methods中的方法，不支持Vue-router
+5. mpvue 建议使用v-model.lazy绑定方式以优化性能，此外 v-model 在老基础库下输入框输入时可能存在光标重设的问题
+6. 通过 this.$root.$mp.query 进行获取小程序在 page onLoad 时候传递的 options。通过 this.$root.$mp.appOptions 进行获取小程序在 app onLaunch/onShow 时候传递的 options
+7. 新添加的页面有时候不会渲染出来，因为 webpack 编译的文件使用配置的 entry决定的，新增的页面并没用添加进 entry，所以需要手动 npm run dev 一下
