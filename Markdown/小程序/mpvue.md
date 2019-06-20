@@ -70,3 +70,6 @@ npm run build --report
 5. mpvue 建议使用v-model.lazy绑定方式以优化性能，此外 v-model 在老基础库下输入框输入时可能存在光标重设的问题
 6. 通过 this.$root.$mp.query 进行获取小程序在 page onLoad 时候传递的 options。通过 this.$root.$mp.appOptions 进行获取小程序在 app onLaunch/onShow 时候传递的 options
 7. 新添加的页面有时候不会渲染出来，因为 webpack 编译的文件使用配置的 entry决定的，新增的页面并没用添加进 entry，所以需要手动 npm run dev 一下
+8. 小程序转发：path要写app.json中所配置的绝对路径，将app.json中配置该页面的路径直接复制过来就好了，转发后的页面，也需要先扫一下微信开发者工具，更新到最新代码才可以
+9. 背景图片手机无法预览：小程序官方文档说明：本地资源无法通过 WXSS 获取
+10. 小程序分享报错 Cannot read property 'apply' of null;at page XXX onShareAppMessage function：onShareAppMessage()分享函数，不能再子组件去触发父级的分享，把 onShareAppMessage 放在父级就好啦
