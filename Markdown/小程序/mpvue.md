@@ -79,3 +79,18 @@ npm run build --report
 14. 新增页面需要重新npm run dev
 15. 小程序双括号内不支持方法，所以vue里面的filter都不能用
 16. 微信小程序的 javascript 运行环境和浏览器不同，页面的脚本逻辑是在JsCore中运行
+
+#### mpvue + iView weapp 问题
+> 若原生组件通过click事件，即this.triggerEvent('click', { index })来进行父子组件通信，mpvue无法从event.mp中读取到正确的detail，原因是因为mpvue将click事件编译为tap导致this.triggerEvent('click', { index })无法找到click句柄
+
+###### 暂时解决方案
+修改组件库click事件名称，例如：
+> this.triggerEvent('click', { index }) => this.triggerEvent('iclick', { index })
+
+###### 对应的模板中：
+> @click => @iclick
+
+###### 受影响组件(仅传值情况受影响)
+
+* action-sheet
+* modal
