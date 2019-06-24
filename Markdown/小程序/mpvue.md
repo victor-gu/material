@@ -81,16 +81,23 @@ npm run build --report
 16. 微信小程序的 javascript 运行环境和浏览器不同，页面的脚本逻辑是在JsCore中运行
 
 #### mpvue + iView weapp 问题
-> 若原生组件通过click事件，即this.triggerEvent('click', { index })来进行父子组件通信，mpvue无法从event.mp中读取到正确的detail，原因是因为mpvue将click事件编译为tap导致this.triggerEvent('click', { index })无法找到click句柄
 
-###### 暂时解决方案
-修改组件库click事件名称，例如：
-> this.triggerEvent('click', { index }) => this.triggerEvent('iclick', { index })
+1. 若原生组件通过click事件，即this.triggerEvent('click', { index })来进行父子组件通信，mpvue无法从event.mp中读取到正确的detail，原因是因为mpvue将click事件编译为tap导致this.triggerEvent('click', { index })无法找到click句柄
 
-###### 对应的模板中：
-> @click => @iclick
+    * 暂时解决方案：修改组件库click事件名称，例如：
 
-###### 受影响组件(仅传值情况受影响)
+          this.triggerEvent('click', { index }) => this.triggerEvent('iclick', { index })
 
-* action-sheet
-* modal
+    * 对应的模板中：
+
+          @click => @iclick
+
+    * 受影响组件(仅传值情况受影响)
+      * action-sheet
+      * modal
+
+2. 微信小程序中，关于第三方组件，不允许直接修改样式，但是可以通过i-class的方式进行添加样式，但是这样不能覆盖修改第三方组件已经写好的样式
+
+    * 修改源码添加需要修改样式的class，已修改组件有：
+        * action-sheet添加i-class-actions类，支持修改选择项样式
+    * 为了不污染其他部分样式，我们一般希望这里添加scoped，此时样式作用域不能深入到子组件中，所以可以通过深度作用选择器（ >>> ）来解决，less或者sass等预编译，是不支持>>>操作符的，可以使用/deep/来替换>>>
