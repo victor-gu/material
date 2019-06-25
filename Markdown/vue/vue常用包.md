@@ -15,4 +15,5 @@
 * screenfull：全屏
 * xlsx：Excel解析
 * driver.js：引导页
+* particles.js：离子动画效果
 

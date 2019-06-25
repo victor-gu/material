@@ -53,6 +53,9 @@ VSCode配置 Debugger for Chrome插件")
 17. minapp：微信小程序标签，属性智能补全（同时支持原生小程序，mpvue，wepy框架）
 18. line-counter：统计代码行数
 19. background：vscode背景图片
+20. Color Highlight：颜色突出显示
+21. SVG Viewer：svg预览及转换为png文件
+22. power mode：炫酷的打代码插件，在setting.json中加入"powermode.enabled": true：开启，"powermode.enableShake": false取消震动
 
 
 #### 常用快捷键：
