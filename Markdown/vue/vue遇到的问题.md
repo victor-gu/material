@@ -44,3 +44,12 @@
 
 * 原因： The fixed attribute in \<el-table-column\> will causes \<el-table-body\> to be rendered twice
 * 具有fixed属性的table会这样，因为现在 fixed table 的实现方式就是用多个 table 拼装而成的，实现方式不一样，去掉fixed属性就好了
+
+#### vue中如何动态的绑定图片，vue中通过data返回图片路径
+> 在data中必须用require加载，否则会当成字符串来处理
+
+        data() {
+            return {
+                logo: require('@/assets/user/default.png')
+            }
+        }
