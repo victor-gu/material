@@ -53,3 +53,20 @@
                 logo: require('@/assets/user/default.png')
             }
         }
+
+#### 不同的路由中加载同一个组件，切换时默认情况下这两个页面切换时并不会触发 vue 的 created 或者 mounted 钩子
+
+        {
+            path: '/login',
+            component: () => import('@/views/login/index')
+        }
+        {
+            path: '/login1',
+            component: () => import('@/views/login/index')
+        }
+###### 解决
+* watch $route 的变化
+* router-view 上加上一个唯一的 key：`<router-view :key="key"></router-view>`
+
+#### 为了不污染其他部分样式，我们一般希望这里添加scoped，此时样式作用域不能深入到子组件中
+> 可以通过深度作用选择器（ >>> ）来解决，less或者sass等预编译，是不支持>>>操作符的，可以使用/deep/来替换>>>
