@@ -44,4 +44,8 @@
 
 ### [本地图片压缩](https://tinypng.com/) https://tinypng.com/
 
+### [svg转化为base64](https://codepen.io/jakob-e/pen/doMoML) https://codepen.io/jakob-e/pen/doMoML
+
+### [svg优化](https://jakearchibald.github.io/svgomg/) https://jakearchibald.github.io/svgomg/
+
 [MarkDown](https://www.appinn.com/markdown/)
