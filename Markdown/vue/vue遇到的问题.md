@@ -70,3 +70,33 @@
 
 #### 为了不污染其他部分样式，我们一般希望这里添加scoped，此时样式作用域不能深入到子组件中
 > 可以通过深度作用选择器（ >>> ）来解决，less或者sass等预编译，是不支持>>>操作符的，可以使用/deep/来替换>>>
+
+#### 全局挂载scss变量，不用每个地方用到的都引入一遍scss文件
+
+        1. 安装 npm i sass-resources-loader --save-dev
+        2. 然后修改vue-cli的build/utils.js，找到scss的加载设置：
+            return {
+                css: generateLoaders(),
+                postcss: generateLoaders(),
+                less: generateLoaders('less'),
+                sass: generateLoaders('sass', { indentedSyntax: true }),
+                scss: generateLoaders('sass'),
+                stylus: generateLoaders('stylus'),
+                styl: generateLoaders('stylus')
+            }
+            修改为：
+            return {
+                css: generateLoaders(),
+                postcss: generateLoaders(),
+                less: generateLoaders('less'),
+                sass: generateLoaders('sass', { indentedSyntax: true }),
+                scss: generateLoaders('sass').concat({
+                loader:'sass-resources-loader',
+                options:{
+                    resources:path.resolve(__dirname,'./../src/assets/scss/base.scss')
+                }
+                }),
+                stylus: generateLoaders('stylus'),
+                styl: generateLoaders('stylus')
+            }
+        其中path.resolve需要传入待引入的scss文件，__dirname代表当前目录，然后一步步找到自己的base.scss
