@@ -100,3 +100,8 @@
                 styl: generateLoaders('stylus')
             }
         其中path.resolve需要传入待引入的scss文件，__dirname代表当前目录，然后一步步找到自己的base.scss
+
+#### 重置data中的值
+> 我们可以通过this.$data获取当前状态下的data，通过this.$options.data()获取该组件初始状态下的data。然后只要使用Object.assign(this.$data, this.$options.data())就可以将当前状态的data重置为初始状态
+
+`Object.assign(this.$data, this.$options.data())`
