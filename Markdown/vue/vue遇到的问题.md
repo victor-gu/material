@@ -105,3 +105,16 @@
 > 我们可以通过this.$data获取当前状态下的data，通过this.$options.data()获取该组件初始状态下的data。然后只要使用Object.assign(this.$data, this.$options.data())就可以将当前状态的data重置为初始状态
 
 `Object.assign(this.$data, this.$options.data())`
+
+#### Eslint报诸如`Attribute "for" should be on a new line vue/max-attributes-per-line`的错
+
+###### 解决
+
+        "vue/max-attributes-per-line": [2, {
+            "singleline": 12,
+            "multiline": {
+                "max": 1,
+                "allowFirstLine": false
+            }
+        }],
+        调节singleline的大小
