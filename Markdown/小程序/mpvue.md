@@ -101,3 +101,7 @@ npm run build --report
     * 修改源码添加需要修改样式的class，已修改组件有：
         * action-sheet添加i-class-actions类，支持修改选择项样式
     * 为了不污染其他部分样式，我们一般希望这里添加scoped，此时样式作用域不能深入到子组件中，所以可以通过深度作用选择器（ >>> ）来解决，less或者sass等预编译，是不支持>>>操作符的，可以使用/deep/来替换>>>
+
+3. iView Weapp微信小程序UI组件库中i-input的使用
+      * 在使用i-input输入值时，可以增加其bind:change="myInput" 属性，没有双向绑定
+      * 设置maxlength，如果不设置maxlength属性的话，在小程序开发工具中将无法进行输入，但在真机上可以
