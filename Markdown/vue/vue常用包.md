@@ -16,4 +16,5 @@
 * xlsx：Excel解析
 * driver.js：引导页
 * particles.js：离子动画效果
+* webpack-bundle-analyzer：查看代码模块大小，优化资源
 
