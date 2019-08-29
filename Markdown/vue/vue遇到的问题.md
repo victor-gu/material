@@ -118,3 +118,10 @@
             }
         }],
         调节singleline的大小
+
+#### ie报Invalid Host/Origin header问题
+> 这是webpack本身出于安全考虑，因为不检查主机的应用程序容易受到DNS重新绑定攻击。但是，在我们的开发环境下，可以禁用掉disableHostCheck这一配置项
+
+###### 解决
+
+* 找到webpack.dev.conf.js，在devServer添加 disableHostCheck: true
