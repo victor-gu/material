@@ -125,3 +125,9 @@
 ###### 解决
 
 * 找到webpack.dev.conf.js，在devServer添加 disableHostCheck: true
+
+#### element-ui当只有一个input框时，键盘回车事件就会刷新页面
+
+###### 解决
+
+* 在el-form中写一个属性：@submit.native.prevent
