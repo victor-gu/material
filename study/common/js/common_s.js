@@ -333,12 +333,12 @@ var common = {
 
 
     /* [imgToBase64 压缩图片]
-* @param  {[type]} file      [file对象 event.target.files[0]]
-* @param  {[type]} maxWidth  [最大宽度]
-* @param  {[type]} maxHeight [最大高度]
-* @param  {[type]} callBack  [回调函数，参数为base64码]
-* @return {[type]}           [description]
-*/
+        * @param  {[type]} file      [file对象 event.target.files[0]]
+        * @param  {[type]} maxWidth  [最大宽度]
+        * @param  {[type]} maxHeight [最大高度]
+        * @param  {[type]} callBack  [回调函数，参数为base64码]
+        * @return {[type]}           [description]
+    */
     imgToBase64: function(file, maxWidth, maxHeight, callBack) {
         // 压缩图片需要的一些元素和对象
         var reader = new FileReader();
@@ -380,12 +380,12 @@ var common = {
         reader.readAsDataURL(file);
     },
   
-  /**
-   * [base64ToFileObject base64码转blob二进制，再转file对象]
-   * @param  {[type]} base64 [base64码]
-   * @param  {[type]} name [文件名]
-   * @return {[type]} newFile [返回新的file对象]
-   */
+    /**
+        * [base64ToFileObject base64码转blob二进制，再转file对象]
+        * @param  {[type]} base64 [base64码]
+        * @param  {[type]} name [文件名]
+        * @return {[type]} newFile [返回新的file对象]
+     */
     base64ToFileObject: function(base64, name) {
         var type = base64.split(',')[0].match(/:(.*?);/)[1];
         base64 = base64.split(',')[1];
