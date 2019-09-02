@@ -352,14 +352,14 @@ var common = {
             var targetHeight = originHeight;
             // 图片尺寸超过最大限制
             if (originWidth > maxWidth || originHeight > maxHeight) {
-            if (originWidth / originHeight > maxWidth / maxHeight) {
-                // 更宽，按照宽度限定尺寸
-                targetWidth = maxWidth;
-                targetHeight = Math.round(maxWidth * (originHeight / originWidth));
-            } else {
-                targetHeight = maxHeight;
-                targetWidth = Math.round(maxHeight * (originWidth / originHeight));
-            }
+                if (originWidth / originHeight > maxWidth / maxHeight) {
+                    // 更宽，按照宽度限定尺寸
+                    targetWidth = maxWidth;
+                    targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+                } else {
+                    targetHeight = maxHeight;
+                    targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+                }
             }
             // 缩放图片需要的canvas
             var canvas = document.createElement('canvas');
