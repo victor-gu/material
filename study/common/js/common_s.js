@@ -331,6 +331,74 @@ var common = {
     },
 
 
+
+    /* [imgToBase64 压缩图片]
+* @param  {[type]} file      [file对象 event.target.files[0]]
+* @param  {[type]} maxWidth  [最大宽度]
+* @param  {[type]} maxHeight [最大高度]
+* @param  {[type]} callBack  [回调函数，参数为base64码]
+* @return {[type]}           [description]
+*/
+    imgToBase64: function(file, maxWidth, maxHeight, callBack) {
+        // 压缩图片需要的一些元素和对象
+        var reader = new FileReader();
+        var img = new Image();
+        img.onload = function() {
+            // 图片原始尺寸
+            var originWidth = this.width;
+            var originHeight = this.height;
+            // 目标尺寸
+            var targetWidth = originWidth;
+            var targetHeight = originHeight;
+            // 图片尺寸超过最大限制
+            if (originWidth > maxWidth || originHeight > maxHeight) {
+            if (originWidth / originHeight > maxWidth / maxHeight) {
+                // 更宽，按照宽度限定尺寸
+                targetWidth = maxWidth;
+                targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+            } else {
+                targetHeight = maxHeight;
+                targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+            }
+            }
+            // 缩放图片需要的canvas
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            // canvas对图片进行缩放
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            // 清除画布
+            context.clearRect(0, 0, targetWidth, targetHeight);
+            // 图片压缩
+            context.drawImage(img, 0, 0, targetWidth, targetHeight);
+            var base64 = canvas.toDataURL();
+            callBack(base64);
+        };
+        reader.onload = function(e) {
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    },
+  
+  /**
+   * [base64ToFileObject base64码转blob二进制，再转file对象]
+   * @param  {[type]} base64 [base64码]
+   * @param  {[type]} name [文件名]
+   * @return {[type]} newFile [返回新的file对象]
+   */
+    base64ToFileObject: function(base64, name) {
+        var type = base64.split(',')[0].match(/:(.*?);/)[1];
+        base64 = base64.split(',')[1];
+        base64 = window.atob(base64);
+        var ia = new Uint8Array(base64.length);
+        for (var i = 0; i < base64.length; i++) {
+            ia[i] = base64.charCodeAt(i);
+        }
+        var blob = new Blob([ia], { type: type });
+        return new File([blob], name + '.png');
+    },
+
+
  
     /**
      * [select下拉框]
