@@ -56,6 +56,8 @@ VSCode配置 Debugger for Chrome插件")
 20. Color Highlight：颜色突出显示
 21. SVG Viewer：svg预览及转换为png文件
 22. power mode：炫酷的打代码插件，在setting.json中加入"powermode.enabled": true：开启，"powermode.enableShake": false取消震动
+21. Document This：快速生成代码注释
+22. Project Manager：项目管理
 
 
 #### 常用快捷键：
