@@ -131,3 +131,10 @@
 ###### 解决
 
 * 在el-form中写一个属性：@submit.native.prevent
+
+#### ie对ajax的get请求缓存处理
+
+###### 解决
+
+* get请求添加时间戳
+* 添加请求头：`config.headers['Cache-Control'] = 'no-cache';config.headers['Pragma'] = 'no-cache'`
