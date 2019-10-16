@@ -56,4 +56,8 @@
 
 ### [网站搜集](https://github.com/mingyun/mingyun.github.io/issues/92) https://github.com/mingyun/mingyun.github.io/issues/92
 
+### [git](https://github.com/Neveryu) https://github.com/Neveryu
+
+### [图片优化](https://www.infoq.cn/article/gxV277O5ZZsR5w5er4pE) https://www.infoq.cn/article/gxV277O5ZZsR5w5er4pE
+
 [MarkDown](https://www.appinn.com/markdown/)
